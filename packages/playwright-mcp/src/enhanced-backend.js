@@ -4,6 +4,35 @@ const { smartSnapshot, parseSnapshot } = require('./smart-snapshot');
 const { resolveQuery, flattenNodes } = require('./query-resolver');
 const { CUSTOM_TOOLS, CUSTOM_TOOL_NAMES } = require('./tools');
 
+// Description overrides for upstream tools — steer the agent toward efficient tools
+const TOOL_DESCRIPTION_OVERRIDES = {
+  browser_take_screenshot: [
+    'Take a screenshot of the current page.',
+    'WARNING: Screenshots consume ~1,600 vision tokens each and are slow.',
+    'STRONGLY PREFER browser_smart_snapshot instead — it returns a compact text representation',
+    'that is 5-10x more token-efficient and provides element refs you can act on directly.',
+    'Only use screenshots when you need to verify visual layout, see images, or when text-based tools fail.',
+  ].join(' '),
+
+  browser_snapshot: [
+    'Capture full accessibility snapshot of the current page.',
+    'NOTE: Consider using browser_smart_snapshot instead — it returns a pruned, compact version',
+    'that is ~5x fewer tokens. Use this full snapshot only when you need the complete page structure.',
+  ].join(' '),
+
+  browser_click: [
+    'Perform click on a web page.',
+    'TIP: Use browser_find first to locate the element by intent (e.g. browser_find({ intent: "submit button" }))',
+    'then click the returned ref. This is faster and more reliable than reading the full snapshot.',
+  ].join(' '),
+
+  browser_fill_form: [
+    'Fill multiple form fields at once in a single call.',
+    'PREFERRED over calling browser_type repeatedly for each field.',
+    'Pass all fields in the fields array to minimize round-trips.',
+  ].join(' '),
+};
+
 // Regex to find the Snapshot section in a tool response.
 // Matches: ### Snapshot\n```yaml\n<content>\n```
 const SNAPSHOT_REGEX = /(### Snapshot\n```yaml\n)([\s\S]*?)(\n```)/;
@@ -31,7 +60,17 @@ class EnhancedBrowserServerBackend {
 
   async listTools() {
     const originalTools = await this._backend.listTools();
-    return [...originalTools, ...CUSTOM_TOOLS];
+
+    // Apply description overrides to steer agent toward efficient tools
+    const enhancedTools = originalTools.map(tool => {
+      const override = TOOL_DESCRIPTION_OVERRIDES[tool.name];
+      if (override) {
+        return { ...tool, description: override };
+      }
+      return tool;
+    });
+
+    return [...enhancedTools, ...CUSTOM_TOOLS];
   }
 
   async callTool(name, rawArguments, progress) {
