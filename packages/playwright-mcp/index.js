@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Copyright (c) Microsoft Corporation.
  *
@@ -15,5 +14,80 @@
  * limitations under the License.
  */
 
-const { createConnection } = require('playwright/lib/mcp/index');
+const nodePath = require('path');
+
+// Playwright's exports field restricts deep imports, so we resolve via filesystem paths.
+const playwrightDir = nodePath.dirname(require.resolve('playwright/package.json'));
+const { BrowserServerBackend } = require(nodePath.join(playwrightDir, 'lib/mcp/browser/browserServerBackend'));
+const { resolveConfig } = require(nodePath.join(playwrightDir, 'lib/mcp/browser/config'));
+const { contextFactory } = require(nodePath.join(playwrightDir, 'lib/mcp/browser/browserContextFactory'));
+const mcpServer = require(nodePath.join(playwrightDir, 'lib/mcp/sdk/server'));
+const { EnhancedBrowserServerBackend } = require('./src/enhanced-backend');
+
+const packageJSON = require('./package.json');
+
+/**
+ * Create an MCP connection with enhanced browser tools.
+ *
+ * Accepts all standard Playwright MCP config options, plus:
+ * - smartSnapshot: boolean — automatically prune all snapshots for token efficiency
+ * - extensionPath: string — path to a Chrome extension directory to load
+ *
+ * @param {object} userConfig - Configuration options
+ * @param {function} [contextGetter] - Optional custom BrowserContext getter
+ * @returns {Promise<Server>} MCP Server instance
+ */
+async function createConnection(userConfig = {}, contextGetter) {
+  // Extract our custom config fields
+  const smartSnapshotMode = !!userConfig.smartSnapshot;
+  const extensionPath = userConfig.extensionPath;
+
+  // Clean config: remove our custom fields before passing to upstream
+  const cleanConfig = { ...userConfig };
+  delete cleanConfig.smartSnapshot;
+  delete cleanConfig.extensionPath;
+
+  // Inject extension path into launch args
+  if (extensionPath) {
+    const absPath = nodePath.resolve(extensionPath);
+    cleanConfig.browser = cleanConfig.browser || {};
+    cleanConfig.browser.launchOptions = cleanConfig.browser.launchOptions || {};
+    cleanConfig.browser.launchOptions.args = cleanConfig.browser.launchOptions.args || [];
+    cleanConfig.browser.launchOptions.args.push(
+      `--disable-extensions-except=${absPath}`,
+      `--load-extension=${absPath}`
+    );
+  }
+
+  const config = await resolveConfig(cleanConfig);
+
+  let factory;
+  if (contextGetter) {
+    factory = new SimpleBrowserContextFactory(contextGetter);
+  } else {
+    factory = contextFactory(config);
+  }
+
+  const originalBackend = new BrowserServerBackend(config, factory);
+  const enhancedBackend = new EnhancedBrowserServerBackend(originalBackend, { smartSnapshotMode });
+
+  return mcpServer.createServer('Playwright', packageJSON.version, enhancedBackend, false);
+}
+
+class SimpleBrowserContextFactory {
+  constructor(contextGetter) {
+    this.name = 'custom';
+    this.description = 'Connect to a browser using a custom context getter';
+    this._contextGetter = contextGetter;
+  }
+
+  async createContext() {
+    const browserContext = await this._contextGetter();
+    return {
+      browserContext,
+      close: () => browserContext.close(),
+    };
+  }
+}
+
 module.exports = { createConnection };
