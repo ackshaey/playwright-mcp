@@ -193,15 +193,9 @@ function isJunkNode(node) {
   // contentinfo role = footer in ARIA — drop it entirely
   if (node.role === 'contentinfo') return true;
 
-  // Images without meaningful names (decorative)
-  if (node.role === 'img') {
-    if (!node.name || nameLower === '' || nameLower === 'image' || nameLower === 'photo'
-        || nameLower === 'icon' || nameLower === 'logo' || nameLower === 'decoration'
-        || nameLower === 'decorative' || nameLower === 'spacer'
-        || nameLower.startsWith('http') || nameLower.startsWith('data:')) {
-      return true;
-    }
-  }
+  // Images — drop all unless they're inside a button/link (handled by parent)
+  // Agent can't interact with images directly; they just waste tokens
+  if (node.role === 'img') return true;
 
   // Links with junk destinations
   if (node.role === 'link') {
@@ -213,6 +207,27 @@ function isJunkNode(node) {
 
   // Purely decorative roles
   if (JUNK_ROLES.has(node.role) && !node.ref) return true;
+
+  // Noise element patterns by name or inline text
+  const textLower = (node.inlineText || '').toLowerCase().trim();
+  const combinedText = nameLower + ' ' + textLower;
+  const noiseNamePatterns = [
+    /zoomable/i,
+    /magnification/i,
+    /carousel/i,
+    /slider\s*control/i,
+    /social\s*share/i,
+    /share\s*on\s*social/i,
+    /hover\s*to\s*zoom/i,
+    /item\s*\d+\s*of\s*\d+/i,
+    /arrow\s*(up|down|left|right|prev|next)/i,
+    /toggle\s*favorite/i,
+    /add\s*to\s*favorites/i,
+    /add\s*to\s*wishlist/i,
+    /rating\s*star/i,
+    /^(SKU|sku):/,
+  ];
+  if (noiseNamePatterns.some(p => p.test(combinedText))) return true;
 
   return false;
 }
@@ -230,6 +245,24 @@ function isJunkContainer(node) {
   // Site header/banner — usually nav chrome, not page content
   if (node.role === 'banner') return true;
 
+  // Common noise sections by heading/name patterns
+  const containerNameLower = (node.name || '').toLowerCase();
+  const noisePatterns = [
+    /also\s*in\s*this\s*collection/i,
+    /you\s*may\s*also\s*(like|need|enjoy)/i,
+    /recently\s*viewed/i,
+    /recommended\s*for\s*you/i,
+    /customers\s*also\s*(bought|viewed|liked)/i,
+    /similar\s*(items|products)/i,
+    /related\s*products/i,
+    /trending\s*now/i,
+    /shop\s*the\s*look/i,
+    /complete\s*the\s*(look|set|room)/i,
+    /people\s*also\s*bought/i,
+    /social\s*share/i,
+  ];
+  if (noisePatterns.some(p => p.test(containerNameLower))) return true;
+
   // Named junk regions
   if ((node.role === 'region' || node.role === 'complementary' || node.role === 'navigation')
       && JUNK_LANDMARK_NAMES.has(nameLower)) {
@@ -240,6 +273,20 @@ function isJunkContainer(node) {
   if ((node.role === 'dialog' || node.role === 'alertdialog' || node.role === 'alert')
       && /cookie|consent|gdpr|privacy/i.test(nameLower)) {
     return true;
+  }
+
+  // Heading that introduces a noise section — drop the heading and its siblings will get caught individually
+  if (node.role === 'heading') {
+    const headingLower = (node.name || '').toLowerCase();
+    const noiseHeadings = [
+      /also\s*in\s*this\s*collection/i,
+      /you\s*may\s*also\s*(like|need|enjoy)/i,
+      /recently\s*viewed/i,
+      /recommended\s*for\s*you/i,
+      /choose\s*your\s*coordinating/i,
+      /complete\s*the\s*(look|set|room)/i,
+    ];
+    if (noiseHeadings.some(p => p.test(headingLower))) return true;
   }
 
   return false;
@@ -323,6 +370,13 @@ function flattenToLines(nodes, depth) {
   for (const node of nodes) {
     // Skip pseudo-property lines that leaked through parsing (e.g., "/url", "text")
     if (node.role && (node.role.startsWith('/') || node.role === 'text')) continue;
+
+    // Skip empty listitems with no name, text, or useful children
+    if (node.role === 'listitem' && !node.name && !node.inlineText
+        && (!node.children || node.children.length === 0)) continue;
+
+    // Skip empty lists with no children
+    if (node.role === 'list' && (!node.children || node.children.length === 0)) continue;
 
     const parts = [];
 

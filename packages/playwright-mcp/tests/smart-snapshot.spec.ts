@@ -331,7 +331,7 @@ test.describe('smartSnapshot (end-to-end)', () => {
     expect(result).toContain('[ref=e4] heading "Welcome"');
   });
 
-  test('drops decorative images', () => {
+  test('drops all images (agent cannot interact with them)', () => {
     const yaml = [
       '- img "icon" [ref=e1]',
       '- img "logo" [ref=e2]',
@@ -339,9 +339,7 @@ test.describe('smartSnapshot (end-to-end)', () => {
       '- button "Buy" [ref=e4]',
     ].join('\n');
     const result = smartSnapshot(yaml);
-    expect(result).not.toContain('icon');
-    expect(result).not.toContain('logo');
-    expect(result).toContain('img "Product Photo Large"');
+    expect(result).not.toContain('img');
     expect(result).toContain('[ref=e4] button "Buy"');
   });
 
