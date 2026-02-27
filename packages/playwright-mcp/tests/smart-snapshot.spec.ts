@@ -271,7 +271,8 @@ test.describe('smartSnapshot (end-to-end)', () => {
     expect(result).toContain('[ref=e6] textbox "Search products..."');
     expect(result).toContain('[ref=e7] button "Search"');
     expect(result).toContain('[ref=e9] link "Summer Sale"');
-    expect(result).toContain('[ref=e11] link "Privacy Policy"');
+    // Privacy Policy should be filtered out as footer junk
+    expect(result).not.toContain('Privacy Policy');
 
     // Should NOT contain raw 'generic:' container lines
     const lines = result.split('\n');
@@ -297,5 +298,79 @@ test.describe('smartSnapshot (end-to-end)', () => {
     expect(result).toContain('navigation:');
     expect(result).toContain('[ref=e1] link "Home"');
     expect(result).toContain('[ref=e2] link "About"');
+  });
+
+  test('drops footer (contentinfo) entirely', () => {
+    const yaml = [
+      '- main:',
+      '  - button "Submit" [ref=e1]',
+      '- contentinfo:',
+      '  - link "Privacy Policy" [ref=e2]',
+      '  - link "Terms of Use" [ref=e3]',
+      '  - link "Site Map" [ref=e4]',
+    ].join('\n');
+    const result = smartSnapshot(yaml);
+    expect(result).toContain('[ref=e1] button "Submit"');
+    expect(result).not.toContain('Privacy Policy');
+    expect(result).not.toContain('Terms of Use');
+    expect(result).not.toContain('Site Map');
+  });
+
+  test('drops cookie consent banners', () => {
+    const yaml = [
+      '- dialog "Cookie Consent":',
+      '  - button "Accept All Cookies" [ref=e1]',
+      '  - button "Reject Cookies" [ref=e2]',
+      '  - link "Cookie Policy" [ref=e3]',
+      '- main:',
+      '  - heading "Welcome" [ref=e4]',
+    ].join('\n');
+    const result = smartSnapshot(yaml);
+    expect(result).not.toContain('Cookie');
+    expect(result).not.toContain('Reject');
+    expect(result).toContain('[ref=e4] heading "Welcome"');
+  });
+
+  test('drops decorative images', () => {
+    const yaml = [
+      '- img "icon" [ref=e1]',
+      '- img "logo" [ref=e2]',
+      '- img "Product Photo Large" [ref=e3]',
+      '- button "Buy" [ref=e4]',
+    ].join('\n');
+    const result = smartSnapshot(yaml);
+    expect(result).not.toContain('icon');
+    expect(result).not.toContain('logo');
+    expect(result).toContain('img "Product Photo Large"');
+    expect(result).toContain('[ref=e4] button "Buy"');
+  });
+
+  test('truncates at max lines with hint', () => {
+    // Build a snapshot with 100 buttons
+    const lines = [];
+    for (let i = 1; i <= 100; i++) {
+      lines.push(`- button "Button ${i}" [ref=e${i}]`);
+    }
+    const yaml = lines.join('\n');
+    const result = smartSnapshot(yaml, { maxLines: 20 });
+    const outputLines = result.split('\n');
+    // 20 content lines + 1 blank + 1 truncation message + 1 tip = 23
+    expect(outputLines.length).toBeLessThanOrEqual(24);
+    expect(result).toContain('truncated');
+    expect(result).toContain('browser_find');
+  });
+
+  test('drops newsletter signup regions', () => {
+    const yaml = [
+      '- region "Newsletter Signup":',
+      '  - textbox "Email" [ref=e1]',
+      '  - button "Subscribe" [ref=e2]',
+      '- main:',
+      '  - button "Add to Cart" [ref=e3]',
+    ].join('\n');
+    const result = smartSnapshot(yaml);
+    expect(result).not.toContain('Newsletter');
+    expect(result).not.toContain('Subscribe');
+    expect(result).toContain('[ref=e3] button "Add to Cart"');
   });
 });

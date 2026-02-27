@@ -29,13 +29,52 @@ const PRUNABLE_ROLES = new Set([
   'emphasis', 'strong', 'subscript', 'superscript', 'time',
 ]);
 
+// --- Junk filters: names and patterns that indicate non-useful page regions ---
+
+// Landmark names that indicate junk regions (matched case-insensitive)
+const JUNK_LANDMARK_NAMES = new Set([
+  'footer', 'site footer', 'page footer', 'global footer',
+  'cookie', 'cookie banner', 'cookie consent', 'cookie notice', 'cookie policy',
+  'gdpr', 'privacy banner', 'consent banner', 'consent manager',
+  'newsletter', 'newsletter signup', 'subscribe', 'email signup',
+  'social media', 'social links', 'follow us', 'connect with us',
+  'back to top', 'scroll to top',
+  'breadcrumb', 'breadcrumbs',
+  'advertisement', 'ad', 'sponsored',
+  'chat widget', 'live chat', 'help widget',
+  'skip to content', 'skip to main', 'skip navigation',
+]);
+
+// Patterns in element names that indicate junk (regex, case-insensitive)
+const JUNK_NAME_PATTERNS = [
+  /^(©|copyright|\u00a9)/i,
+  /cookie\s*(policy|preferences|settings|consent|notice)/i,
+  /privacy\s*(policy|notice|settings)/i,
+  /terms\s*(of\s*(use|service)|&\s*conditions)/i,
+  /do not sell/i,
+  /manage\s*(cookies|preferences|consent)/i,
+  /accept\s*(all\s*)?(cookies|all)/i,
+  /reject\s*(all\s*)?cookies/i,
+  /subscribe\s*to\s*(our\s*)?newsletter/i,
+  /sign\s*up\s*for\s*(our\s*)?(emails|newsletter)/i,
+  /follow\s*us\s*on/i,
+  /download\s*(the|our)\s*app/i,
+  /accessibility\s*statement/i,
+  /site\s*map/i,
+  /powered\s*by/i,
+];
+
+// Roles that are almost never useful for agent interaction
+const JUNK_ROLES = new Set([
+  'separator', 'figure', 'math', 'definition', 'term', 'feed',
+  'note', 'subscript', 'superscript', 'time',
+]);
+
+// Max output lines — if the snapshot exceeds this, truncate and add a hint
+const MAX_OUTPUT_LINES = 80;
+
 /**
  * Parse a single line content (after "- " prefix and indentation) into a node object.
- * Examples:
- *   'button "Submit" [ref=e5]'
- *   'generic [active] [ref=e1]: Hello, world!'
- *   'navigation:'
- *   'heading "Welcome" [ref=e2]'
  */
 function parseLine(content) {
   const node = {
@@ -47,7 +86,6 @@ function parseLine(content) {
     hasChildren: false,
   };
 
-  // Check if line ends with ":" indicating children (but not after inline text)
   let workingContent = content;
   const colonIdx = workingContent.indexOf(':');
 
@@ -74,22 +112,16 @@ function parseLine(content) {
   workingContent = workingContent.replace(/\[[^\]]+\]/g, '').trim();
 
   // Extract inline text (after colon at end)
-  // A line like 'generic: Hello' has children indicator AND inline text
-  // A line like 'navigation:' just has children indicator
-  // A line like 'textbox "Email" [ref=e5]: user@example.com' has inline text
   if (colonIdx !== -1) {
     const afterColon = content.substring(colonIdx + 1).trim();
-    // Remove ref and attributes from afterColon to see if there's actual text
     const cleanAfterColon = afterColon
       .replace(/\[ref=[^\]]+\]/g, '')
       .replace(/\[[^\]]+\]/g, '')
       .replace(/"[^"]*"/g, '')
       .trim();
     if (cleanAfterColon.length > 0) {
-      // There's text content after the colon
       node.inlineText = content.substring(colonIdx + 1).trim();
     }
-    // If nothing is after the colon, it indicates children
     if (afterColon.length === 0) {
       node.hasChildren = true;
     }
@@ -98,7 +130,6 @@ function parseLine(content) {
   // Extract role: first word remaining
   const roleMatch = workingContent.match(/^(\S+)/);
   if (roleMatch) {
-    // Remove trailing colon from role
     node.role = roleMatch[1].replace(/:$/, '');
   }
 
@@ -119,12 +150,8 @@ function parseSnapshot(yamlText) {
   for (const line of lines) {
     if (!line.trim()) continue;
 
-    // Detect indentation: count leading spaces before "- "
     const indentMatch = line.match(/^(\s*)- (.+)$/);
-    if (!indentMatch) {
-      // Line without "- " prefix — might be continuation text, skip it
-      continue;
-    }
+    if (!indentMatch) continue;
 
     const indent = indentMatch[1].length;
     const depth = indent / 2;
@@ -134,7 +161,6 @@ function parseSnapshot(yamlText) {
     node.depth = depth;
     node.children = [];
 
-    // Pop stack until we find the parent (depth < current)
     while (stack.length > 1 && stack[stack.length - 1].depth >= depth) {
       stack.pop();
     }
@@ -142,7 +168,6 @@ function parseSnapshot(yamlText) {
     const parent = stack[stack.length - 1];
     parent.children.push(node);
 
-    // If this node can have children, push it onto the stack
     if (node.hasChildren || node.role) {
       stack.push(node);
     }
@@ -152,12 +177,84 @@ function parseSnapshot(yamlText) {
 }
 
 /**
+ * Check if a node is in a junk region (footer, cookie banner, etc.)
+ */
+function isJunkNode(node) {
+  const nameLower = (node.name || '').toLowerCase().trim();
+
+  // Check if this is a junk landmark by name
+  if (JUNK_LANDMARK_NAMES.has(nameLower)) return true;
+
+  // Check junk name patterns
+  for (const pattern of JUNK_NAME_PATTERNS) {
+    if (pattern.test(nameLower)) return true;
+  }
+
+  // contentinfo role = footer in ARIA — drop it entirely
+  if (node.role === 'contentinfo') return true;
+
+  // Images without meaningful names (decorative)
+  if (node.role === 'img') {
+    if (!node.name || nameLower === '' || nameLower === 'image' || nameLower === 'photo'
+        || nameLower === 'icon' || nameLower === 'logo' || nameLower === 'decoration'
+        || nameLower === 'decorative' || nameLower === 'spacer'
+        || nameLower.startsWith('http') || nameLower.startsWith('data:')) {
+      return true;
+    }
+  }
+
+  // Links with junk destinations
+  if (node.role === 'link') {
+    if (JUNK_LANDMARK_NAMES.has(nameLower)) return true;
+    for (const pattern of JUNK_NAME_PATTERNS) {
+      if (pattern.test(nameLower)) return true;
+    }
+  }
+
+  // Purely decorative roles
+  if (JUNK_ROLES.has(node.role) && !node.ref) return true;
+
+  return false;
+}
+
+/**
+ * Check if a node is a junk container whose entire subtree should be dropped.
+ * These are landmark nodes wrapping footer/cookie/newsletter sections.
+ */
+function isJunkContainer(node) {
+  const nameLower = (node.name || '').toLowerCase().trim();
+
+  // Footer landmarks
+  if (node.role === 'contentinfo') return true;
+
+  // Named junk regions
+  if ((node.role === 'region' || node.role === 'complementary' || node.role === 'navigation')
+      && JUNK_LANDMARK_NAMES.has(nameLower)) {
+    return true;
+  }
+
+  // Dialog/alert for cookie consent
+  if ((node.role === 'dialog' || node.role === 'alertdialog' || node.role === 'alert')
+      && /cookie|consent|gdpr|privacy/i.test(nameLower)) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * Recursively prune the tree, removing decorative nodes and lifting their children.
  */
 function pruneTree(nodes) {
   const result = [];
 
   for (const node of nodes) {
+    // Drop entire junk containers (footer, cookie banners, etc.)
+    if (isJunkContainer(node)) continue;
+
+    // Drop individual junk nodes
+    if (isJunkNode(node)) continue;
+
     // Always recurse into children first
     const prunedChildren = node.children ? pruneTree(node.children) : [];
 
@@ -171,34 +268,25 @@ function pruneTree(nodes) {
     const hasChildren = prunedChildren.length > 0;
 
     if (hasRef || isInteractive) {
-      // Always keep interactive elements and elements with refs
       node.children = prunedChildren;
       result.push(node);
     } else if (isLandmark || isSemantic) {
-      // Keep landmark/semantic elements if they have content
       if (hasName || hasText || hasChildren) {
         node.children = prunedChildren;
         result.push(node);
-      } else {
-        // Empty landmark — skip
       }
     } else if (isPrunable) {
-      // Flatten: lift children to parent level
       if (hasName || hasText) {
-        // Has meaningful content — keep it but flatten children
         node.children = prunedChildren;
         result.push(node);
       } else {
-        // Pure container — lift children
         result.push(...prunedChildren);
       }
     } else {
-      // Unknown role — keep if it has content or children
       if (hasRef || hasName || hasText || hasChildren) {
         node.children = prunedChildren;
         result.push(node);
       }
-      // Otherwise drop it
     }
   }
 
@@ -218,29 +306,24 @@ function flattenToLines(nodes, depth) {
   for (const node of nodes) {
     const parts = [];
 
-    // Ref comes first for quick scanning
     if (node.ref) {
       parts.push(`[ref=${node.ref}]`);
     }
 
-    // Role
     if (node.role) {
       parts.push(node.role);
     }
 
-    // Quoted name
     if (node.name) {
       parts.push(`"${node.name}"`);
     }
 
-    // Attributes (excluding common noise)
     for (const attr of node.attributes) {
       if (attr !== 'active' && attr !== 'focusable') {
         parts.push(`[${attr}]`);
       }
     }
 
-    // Inline text
     if (node.inlineText) {
       parts.push(`= "${node.inlineText}"`);
     }
@@ -250,11 +333,9 @@ function flattenToLines(nodes, depth) {
     if (node.children && node.children.length > 0) {
       const isContainer = LANDMARK_ROLES.has(node.role) || SEMANTIC_ROLES.has(node.role);
       if (isContainer && !node.ref) {
-        // Container with children: show as header, indent children
         lines.push(`${indent}${line}:`);
         lines.push(...flattenToLines(node.children, depth + 1));
       } else {
-        // Element with children: show element, then children at same level
         if (line.trim()) lines.push(`${indent}${line}`);
         lines.push(...flattenToLines(node.children, depth));
       }
@@ -267,16 +348,33 @@ function flattenToLines(nodes, depth) {
 }
 
 /**
- * Main entry point: parse, prune, flatten.
+ * Main entry point: parse, prune, flatten, cap.
  * Takes raw YAML snapshot text, returns compact ref-based representation.
+ *
+ * @param {string} yamlText - Raw AXTree YAML from Playwright
+ * @param {object} [options]
+ * @param {number} [options.maxLines=80] - Max output lines before truncation
+ * @returns {string} Compact snapshot text
  */
-function smartSnapshot(yamlText) {
+function smartSnapshot(yamlText, options) {
   if (!yamlText || !yamlText.trim()) return '';
+
+  const maxLines = (options && options.maxLines) || MAX_OUTPUT_LINES;
 
   const nodes = parseSnapshot(yamlText);
   const pruned = pruneTree(nodes);
   const lines = flattenToLines(pruned);
-  return lines.join('\n');
+
+  if (lines.length <= maxLines) {
+    return lines.join('\n');
+  }
+
+  // Truncate and add hint
+  const truncated = lines.slice(0, maxLines);
+  truncated.push('');
+  truncated.push(`... (${lines.length - maxLines} more elements truncated)`);
+  truncated.push('TIP: Use browser_find({ intent: "..." }) to locate specific elements.');
+  return truncated.join('\n');
 }
 
 module.exports = {
@@ -285,8 +383,11 @@ module.exports = {
   pruneTree,
   flattenToLines,
   smartSnapshot,
+  isJunkNode,
+  isJunkContainer,
   INTERACTIVE_ROLES,
   LANDMARK_ROLES,
   SEMANTIC_ROLES,
   PRUNABLE_ROLES,
+  MAX_OUTPUT_LINES,
 };
