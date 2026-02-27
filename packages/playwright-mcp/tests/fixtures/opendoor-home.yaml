@@ -1,0 +1,131 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - button "Skip navigation menu and view main content" [ref=e9] [cursor=pointer]: Skip to main content
+        - link "Go to Home page" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+        - list [ref=e15]:
+          - listitem [ref=e16]:
+            - link "View link" [ref=e17] [cursor=pointer]:
+              - /url: /homes/atlanta?market=atlanta
+              - text: Buy
+              - img [ref=e19]
+          - listitem [ref=e21]:
+            - link "View link" [ref=e22] [cursor=pointer]:
+              - /url: /how-it-works-sell
+              - text: Sell
+              - img [ref=e24]
+          - listitem [ref=e26]:
+            - link "View link" [ref=e27] [cursor=pointer]:
+              - /url: /agents
+              - text: Agents
+        - generic [ref=e30]:
+          - link "Sign in to your account" [ref=e31] [cursor=pointer]:
+            - /url: "#"
+            - text: Sign in
+          - button "More options" [ref=e33] [cursor=pointer]:
+            - img [ref=e34]
+      - main [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e42]:
+            - generic [ref=e44]:
+              - generic [ref=e45]:
+                - heading "Make the easy move." [level=1] [ref=e46]
+                - paragraph [ref=e47]: Get a cash offer and explore the ways we can help you sell your home.
+              - generic [ref=e57]:
+                - combobox "Enter your home address" [ref=e61]
+                - img [ref=e62]
+            - generic [ref=e79]:
+              - generic [ref=e80]:
+                - generic [ref=e81]:
+                  - generic "Rating star" [ref=e83]:
+                    - img "Rating star" [ref=e85]
+                  - generic "Rating star" [ref=e87]:
+                    - img "Rating star" [ref=e89]
+                  - generic "Rating star" [ref=e91]:
+                    - img "Rating star" [ref=e93]
+                  - generic "Rating star" [ref=e95]:
+                    - img "Rating star" [ref=e97]
+                  - generic "Rating star" [ref=e99]:
+                    - img "Rating star" [ref=e101]
+                - generic [ref=e102]:
+                  - generic [ref=e103]: Seller in San Antonio
+                  - paragraph [ref=e104]: Verified Customer
+                  - img [ref=e105]
+                - generic [ref=e108]: A great experience from the beginning...
+              - button "See reviews" [ref=e110] [cursor=pointer]:
+                - generic [ref=e111]: See reviews
+          - generic [ref=e116]:
+            - heading "Start your sale with an offer in hand" [level=2] [ref=e118]
+            - paragraph [ref=e120]: Skip the work with a cash offer from Opendoor.
+          - generic [ref=e121]:
+            - img "map background hero" [ref=e123]
+            - generic [ref=e127]:
+              - generic [ref=e128]:
+                - heading "Over 2 million" [level=2] [ref=e129]
+                - heading "and counting" [level=2] [ref=e130]
+              - paragraph [ref=e132]: Every 2 minutes, a homeowner requests an offer from Opendoor.
+              - button "Get cash offer" [ref=e133] [cursor=pointer]
+          - generic [ref=e138]:
+            - heading "Join our customers and move without the hassle" [level=2] [ref=e142]:
+              - text: Join our customers
+              - generic [ref=e143]: and move without the hassle
+            - generic [ref=e144]:
+              - generic [ref=e146]:
+                - generic [ref=e147]:
+                  - paragraph [ref=e149]: “To them it’s not about the sale, it’s about trying to help families move on. They treated me like I was their only client, and I had that one-on-one attention.”
+                  - link "cosmos-landing-page-review-list-with-flapple-hp-customer-review-0" [ref=e150] [cursor=pointer]:
+                    - /url: https://www.opendoor.com/articles/charlisa-boyd
+                    - paragraph [ref=e151]: Read more
+                - generic [ref=e152]:
+                  - paragraph [ref=e153]: Charlisa Boyd
+                  - paragraph [ref=e154]: Sold to Opendoor in Raleigh, NC
+              - generic [ref=e156]:
+                - generic [ref=e157]:
+                  - paragraph [ref=e159]: “Opendoor’s offer came in right near our appraisal, but we never had to list the house or do showings. For the kind of value Opendoor gives you, it’s just a no-brainer.”
+                  - link "cosmos-landing-page-review-list-with-flapple-hp-customer-review-1" [ref=e160] [cursor=pointer]:
+                    - /url: https://www.opendoor.com/articles/adam-leon
+                    - paragraph [ref=e161]: Read more
+                - generic [ref=e162]:
+                  - paragraph [ref=e163]: Adam Leon
+                  - paragraph [ref=e164]: Sold to Opendoor in Phoenix, AZ
+              - generic [ref=e166]:
+                - generic [ref=e167]:
+                  - paragraph [ref=e169]: “We’re of the age where we didn’t want to do a lot of work on the house. We just wanted out of there! Move on with life—and Opendoor helped us do that.”
+                  - link "cosmos-landing-page-review-list-with-flapple-hp-customer-review-2" [ref=e170] [cursor=pointer]:
+                    - /url: https://www.opendoor.com/articles/george-and-carol-bertoty
+                    - paragraph [ref=e171]: Read more
+                - generic [ref=e172]:
+                  - paragraph [ref=e173]: George and Carol Bertoty
+                  - paragraph [ref=e174]: Sold to Opendoor in Henderson, NV
+              - generic [ref=e176]:
+                - generic [ref=e177]:
+                  - paragraph [ref=e179]: We didn’t want the extra stress of buyers backing out, financing delays, all that. That’s when our agent suggested selling to Opendoor, and it was such a smooth sale.
+                  - link "cosmos-landing-page-review-list-with-flapple-hp-customer-review-3" [ref=e180] [cursor=pointer]:
+                    - /url: https://www.opendoor.com/articles/kurt-christi-ohlenbusch
+                    - paragraph [ref=e181]: Read more
+                - generic [ref=e182]:
+                  - paragraph [ref=e183]: Kurt and Christi Ohlenbusch
+                  - paragraph [ref=e184]: Sold to Opendoor in Dallas, TX
+              - generic [ref=e186]:
+                - generic [ref=e187]:
+                  - paragraph [ref=e189]: It was quick, it was painless, and the price offered was exceedingly fair. It alleviated all of the hassles that we would have gone through — listing it, staging it and on and on.
+                  - link "cosmos-landing-page-review-list-with-flapple-hp-customer-review-4" [ref=e190] [cursor=pointer]:
+                    - /url: https://www.opendoor.com/articles/anne-and-jim-nash
+                    - paragraph [ref=e191]: Read more
+                - generic [ref=e192]:
+                  - paragraph [ref=e193]: Anne and Jim Nash
+                  - paragraph [ref=e194]: Sold to Opendoor in Sacramento, CA
+          - generic [ref=e199]:
+            - generic [ref=e201]:
+              - heading "Questions?" [level=2] [ref=e202]
+              - heading "We have answers." [level=2] [ref=e203]
+              - paragraph [ref=e204]: Tell us about your selling goals. We’ll help you reach them.
+            - generic [ref=e205]:
+              - button "888-352-7075" [ref=e206] [cursor=pointer]
+              - button "support@opendoor.com" [ref=e207] [cursor=pointer]
+              - button "Visit our help center" [ref=e208] [cursor=pointer]
+    - region "Notifications (F8)"
+  - alert [ref=e210]

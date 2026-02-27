@@ -1,0 +1,2854 @@
+- generic [active] [ref=e1]:
+  - img
+  - link "Skip to Content":
+    - /url: "#breadcrumbs"
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]:
+        - list [ref=e6]:
+          - listitem [ref=e7]:
+            - link "Pottery Barn Business to Business Business to Business" [ref=e8] [cursor=pointer]:
+              - /url: https://www.potterybarn.com/pages/business-to-business/?cm_sp=tiptopbanner-_-desktop-_-b2b_overview
+          - listitem [ref=e9]:
+            - link "Baby" [ref=e10] [cursor=pointer]:
+              - /url: https://www.potterybarnkids.com/pages/baby/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+          - listitem [ref=e11]:
+            - link "Kids" [ref=e12] [cursor=pointer]:
+              - /url: https://www.potterybarnkids.com/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+          - listitem [ref=e13]:
+            - link "Teen" [ref=e14] [cursor=pointer]:
+              - /url: https://www.pbteen.com/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+          - listitem [ref=e15]:
+            - link "Dorm" [ref=e16] [cursor=pointer]:
+              - /url: https://www.pbteen.com/shop/dorm/?cm_cat=PB&cm_ite=Link&cm_ven=CrossBrandReferral&cm_pla=Header
+          - listitem [ref=e17]:
+            - link "Williams Sonoma" [ref=e18] [cursor=pointer]:
+              - /url: https://www.williams-sonoma.com/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+          - listitem [ref=e19]:
+            - link "Williams Sonoma Home WS Home" [ref=e20] [cursor=pointer]:
+              - /url: https://www.williams-sonoma.com/pages/williams-sonoma-home/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+          - listitem [ref=e21]:
+            - link "West Elm" [ref=e22] [cursor=pointer]:
+              - /url: https://www.westelm.com/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+          - listitem [ref=e23]:
+            - link "Rejuvenation" [ref=e24] [cursor=pointer]:
+              - /url: https://www.rejuvenation.com/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+          - listitem [ref=e25]:
+            - link "Mark & Graham" [ref=e26] [cursor=pointer]:
+              - /url: https://www.markandgraham.com/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+          - listitem [ref=e27]:
+            - link "GreenRow" [ref=e28] [cursor=pointer]:
+              - /url: https://www.greenrow.com/?cm_ven=CrossBrandReferral&cm_cat=PB&cm_pla=Header&cm_ite=Link
+        - generic:
+          - generic:
+            - list
+        - generic [ref=e29]:
+          - paragraph [ref=e32]:
+            - link "Zero interest promo financing on purchases of $750 or more ›" [ref=e33] [cursor=pointer]:
+              - /url: https://www.potterybarn.com/ccvalueprop/?fromPageType=Homepage&userAction=LearnMore&fromPageLoc=TippyTop
+          - generic [ref=e34]:
+            - generic [ref=e35] [cursor=pointer]:
+              - paragraph: My Store & Events ›
+            - generic:
+              - generic:
+                - definition
+                - definition
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - definition
+                            - definition
+    - generic [ref=e36]:
+      - generic [ref=e37]:
+        - generic [ref=e38]: My Store
+        - list [ref=e42]:
+          - listitem [ref=e43]:
+            - link "Account" [ref=e44] [cursor=pointer]:
+              - /url: /account/?cm_type=gnav&cm_sp=HeaderLinks-_-MyAccount-_-MainSite
+              - generic [ref=e46]: Account
+            - button "Account Menu" [ref=e47] [cursor=pointer]:
+              - img "Dropdown" [ref=e49]
+          - listitem [ref=e51]:
+            - link "Track Order" [ref=e52] [cursor=pointer]:
+              - /url: /customer-service/order-shipment-tracking/?cm_type=gnav&cm_sp=headerlinks-_-desktop-_-trackorder
+              - generic [ref=e53]: Track Order
+          - listitem [ref=e54]:
+            - link "Recents" [ref=e55] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e57]: Recents
+            - button "Recents Menu" [ref=e58] [cursor=pointer]:
+              - img "Dropdown" [ref=e60]
+          - listitem [ref=e62]:
+            - link "Favorites" [ref=e63] [cursor=pointer]:
+              - /url: /favorites/?cm_type=gnav&cm_sp=headerlinks-_-desktop-_-favorites
+              - generic [ref=e64]: Favorites
+          - listitem [ref=e65]:
+            - link "Cart (0)" [ref=e66] [cursor=pointer]:
+              - /url: /shoppingcart/?cm_type=gnav&cm_sp=headerlinks-_-desktop-_-cart
+              - generic [ref=e67]: Cart
+              - generic [ref=e68]: (0)
+      - link "Pottery Barn" [ref=e70] [cursor=pointer]:
+        - /url: /
+        - img "Pottery Barn" [ref=e71]
+      - generic [ref=e86]:
+        - searchbox "Search" [ref=e87]
+        - button "search" [ref=e88] [cursor=pointer]
+      - generic: "|"
+      - generic [ref=e89]:
+        - navigation "secondary" [ref=e91]:
+          - list [ref=e94]:
+            - listitem [ref=e95]:
+              - generic [ref=e96] [cursor=pointer]: Inspiration
+              - button "Inspiration Menu":
+                - img "Dropdown" [ref=e98] [cursor=pointer]
+            - listitem [ref=e100]:
+              - link "Shop by Style" [ref=e101] [cursor=pointer]:
+                - /url: /shop-by-style/
+              - button "Shop by Style Menu":
+                - img "Dropdown" [ref=e103] [cursor=pointer]
+            - listitem [ref=e105]:
+              - link "Shop by Room" [ref=e106] [cursor=pointer]:
+                - /url: /shop/shop-by-room/living-rooms/
+              - button "Shop by Room Menu":
+                - img "Dropdown" [ref=e108] [cursor=pointer]
+            - listitem [ref=e110]:
+              - link "Easter" [ref=e111] [cursor=pointer]:
+                - /url: /shop/new/easter-feature-shop/
+            - listitem [ref=e112]:
+              - link "Collaborations" [ref=e113] [cursor=pointer]:
+                - /url: /shop/collaborations/
+              - button "Collaborations Menu":
+                - img "Dropdown" [ref=e115] [cursor=pointer]
+            - listitem [ref=e117]:
+              - link "Free Design Services" [ref=e118] [cursor=pointer]:
+                - /url: /design-services/
+              - button "Free Design Services Menu":
+                - img "Dropdown" [ref=e120] [cursor=pointer]
+            - listitem [ref=e122]:
+              - link "Contract Grade" [ref=e123] [cursor=pointer]:
+                - /url: /shop/furniture/contract-grade-furniture/
+              - button "Contract Grade Menu":
+                - img "Dropdown" [ref=e125] [cursor=pointer]
+            - listitem [ref=e127]:
+              - link "Wedding Registry" [ref=e128] [cursor=pointer]:
+                - /url: /registry/
+              - button "Wedding Registry Menu":
+                - img "Dropdown" [ref=e130] [cursor=pointer]
+        - navigation "primary" [ref=e132]:
+          - list [ref=e133]:
+            - listitem [ref=e134]:
+              - link "New" [ref=e135] [cursor=pointer]:
+                - /url: /shop/new/
+              - button "New Menu":
+                - img "Dropdown" [ref=e137] [cursor=pointer]
+            - listitem [ref=e139]:
+              - link "Furniture" [ref=e140] [cursor=pointer]:
+                - /url: /shop/furniture/
+              - button "Furniture Menu":
+                - img "Dropdown" [ref=e142] [cursor=pointer]
+            - listitem [ref=e144]:
+              - link "Outdoor" [ref=e145] [cursor=pointer]:
+                - /url: /shop/outdoor/
+              - button "Outdoor Menu":
+                - img "Dropdown" [ref=e147] [cursor=pointer]
+            - listitem [ref=e149]:
+              - link "Bedding" [ref=e150] [cursor=pointer]:
+                - /url: /shop/bedding/
+              - button "Bedding Menu":
+                - img "Dropdown" [ref=e152] [cursor=pointer]
+            - listitem [ref=e154]:
+              - link "Bath" [ref=e155] [cursor=pointer]:
+                - /url: /shop/bath/
+              - button "Bath Menu":
+                - img "Dropdown" [ref=e157] [cursor=pointer]
+            - listitem [ref=e159]:
+              - link "Lighting" [ref=e160] [cursor=pointer]:
+                - /url: /shop/lighting/
+              - button "Lighting Menu":
+                - img "Dropdown" [ref=e162] [cursor=pointer]
+            - listitem [ref=e164]:
+              - link "Rugs" [ref=e165] [cursor=pointer]:
+                - /url: /shop/rugs/
+              - button "Rugs Menu":
+                - img "Dropdown" [ref=e167] [cursor=pointer]
+            - listitem [ref=e169]:
+              - link "Windows" [ref=e170] [cursor=pointer]:
+                - /url: /shop/window-treatments/
+              - button "Windows Menu":
+                - img "Dropdown" [ref=e172] [cursor=pointer]
+            - listitem [ref=e174]:
+              - link "Pillows & Decor" [ref=e175] [cursor=pointer]:
+                - /url: /shop/accessories-decor/
+              - button "Pillows & Decor Menu":
+                - img "Dropdown" [ref=e177] [cursor=pointer]
+            - listitem [ref=e179]:
+              - link "Art & Mirrors" [ref=e180] [cursor=pointer]:
+                - /url: /shop/mirrors-wall-art/
+              - button "Art & Mirrors Menu":
+                - img "Dropdown" [ref=e182] [cursor=pointer]
+            - listitem [ref=e184]:
+              - link "Tabletop & Bar" [ref=e185] [cursor=pointer]:
+                - /url: /shop/dinnerware-entertaining/
+              - button "Tabletop & Bar Menu":
+                - img "Dropdown" [ref=e187] [cursor=pointer]
+            - listitem [ref=e189]:
+              - link "Storage" [ref=e190] [cursor=pointer]:
+                - /url: /shop/organization/
+              - button "Storage Menu":
+                - img "Dropdown" [ref=e192] [cursor=pointer]
+            - listitem [ref=e194]:
+              - link "Holidays" [ref=e195] [cursor=pointer]:
+                - /url: /shop/holiday-decor/
+              - button "Holidays Menu":
+                - img "Dropdown" [ref=e197] [cursor=pointer]
+            - listitem [ref=e199]:
+              - link "Gifts" [ref=e200] [cursor=pointer]:
+                - /url: /shop/gifts/
+              - button "Gifts Menu":
+                - img "Dropdown" [ref=e202] [cursor=pointer]
+            - listitem [ref=e204]:
+              - link "Sale" [ref=e205] [cursor=pointer]:
+                - /url: /shop/sale/
+              - button "Sale Menu":
+                - img "Dropdown" [ref=e207] [cursor=pointer]
+    - generic [ref=e216]:
+      - generic:
+        - generic:
+          - definition
+          - definition
+      - generic [ref=e217]:
+        - paragraph [ref=e220]:
+          - link "Free Shipping Shop 1000s of Items ›" [ref=e221] [cursor=pointer]:
+            - /url: https://www.potterybarn.com/shop/sale/sale-free-shipping/
+            - generic [ref=e222]:
+              - text: Free Shipping
+              - text: Shop 1000s of Items ›
+        - paragraph [ref=e225]:
+          - link "Up to 60% off Shop all Sale ›" [ref=e226] [cursor=pointer]:
+            - /url: https://www.potterybarn.com/shop/sale/exclusive-savings/
+            - generic [ref=e227]:
+              - text: Up to 60% off
+              - text: Shop all Sale ›
+        - paragraph [ref=e230]:
+          - link "Arrives in 1-4 Weeks Shop In-Stock Furniture ›" [ref=e231] [cursor=pointer]:
+            - /url: https://www.potterybarn.com/shop/furniture/all-in-stock-furniture/
+            - generic [ref=e232]:
+              - text: Arrives in 1-4 Weeks
+              - text: Shop In-Stock Furniture ›
+        - paragraph [ref=e235]:
+          - link "Easter Essentials Shop Tabletop, Decor & More ›" [ref=e236] [cursor=pointer]:
+            - /url: https://www.potterybarn.com/shop/new/easter-feature-shop/
+            - generic [ref=e237]:
+              - text: Easter Essentials
+              - text: Shop Tabletop, Decor & More ›
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - definition
+                        - definition
+    - generic:
+      - dialog [ref=e238]:
+        - dialog [ref=e240]:
+          - generic [ref=e241]:
+            - generic [ref=e243]:
+              - img [ref=e254]
+              - generic [ref=e255]:
+                - img [ref=e266]
+                - generic [ref=e270]:
+                  - group [ref=e271]:
+                    - textbox "email" [ref=e273]:
+                      - /placeholder: Email Address*
+                  - textbox "phone" [ref=e274]:
+                    - /placeholder: Mobile Number*
+                  - paragraph [ref=e286]:
+                    - text: Enter your mobile number to receive marketing text messages about new items, great savings and more. You understand that consent is not required to make a purchase. Message and data rates may apply. Message frequency varies. Wireless Carriers are not liable for delayed or undelivered messages. Text HELP for help and STOP to cancel. For questions, Please
+                    - link "contact us" [ref=e287] [cursor=pointer]:
+                      - /url: https://www.potterybarn.com/customer-service/email-us/?cm_type=lnav
+                    - text: .
+                    - link "Terms" [ref=e288] [cursor=pointer]:
+                      - /url: https://www.potterybarn.com/about-us/terms.html?cm_type=fnav#textmessages
+                    - text: .
+                  - generic [ref=e290]:
+                    - button "SIGN UP NOW" [ref=e291] [cursor=pointer]
+                    - generic [ref=e292] [cursor=pointer]: No, Thanks
+                - link "Minimize" [ref=e293] [cursor=pointer]:
+                  - /url: "#"
+                - paragraph [ref=e304]:
+                  - text: "*California residents: For more information about our terms, please see our"
+                  - link "Financial Incentive Terms" [ref=e305] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/about-us/privacy-policy.html#financial-incentives
+                  - text: . You can request that we
+                  - link "Do Not Sell My Info" [ref=e306] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/about-us/privacy-policy.html#do-not-sell
+                  - text: . Please visit our
+                  - link "Privacy Policy" [ref=e307] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/about-us/privacy-policy.html
+                  - text: to learn how we use your information.
+            - text: ":"
+      - text: ✕
+  - main [ref=e308]:
+    - generic [ref=e310]:
+      - list [ref=e312]:
+        - listitem [ref=e313]:
+          - text: <
+          - link "Furniture" [ref=e314] [cursor=pointer]:
+            - /url: /shop/furniture/
+        - listitem [ref=e315]:
+          - text: <
+          - link "Beds & Headboards" [ref=e316] [cursor=pointer]:
+            - /url: /shop/furniture/beds-headboards/
+      - generic [ref=e317]:
+        - generic [ref=e321]:
+          - generic [ref=e322]:
+            - generic [ref=e323]:
+              - button "Toggle favorite item" [ref=e324] [cursor=pointer]:
+                - img "add to favorites" [ref=e325]
+              - generic [ref=e326]:
+                - paragraph [ref=e327] [cursor=pointer]: Hover to Zoom
+                - generic [ref=e332]:
+                  - list [ref=e333]:
+                    - listitem [ref=e334]:
+                      - group "Zoomable product image with magnification controls" [ref=e337]:
+                        - generic [ref=e338]: Zoomable product image with magnification controls
+                        - img "Layton Upholstered Rounded Ledge Bed, Performance Textured Chenille Oatmeal, Full" [ref=e343]
+                    - listitem [ref=e345]:
+                      - group [ref=e348]:
+                        - generic [ref=e349]: Zoomable product image with magnification controls
+                        - img [ref=e354]
+                    - listitem [ref=e356]:
+                      - group [ref=e359]:
+                        - generic [ref=e360]: Zoomable product image with magnification controls
+                        - img [ref=e365]
+                    - listitem [ref=e367]:
+                      - group [ref=e370]:
+                        - generic [ref=e371]: Zoomable product image with magnification controls
+                        - img [ref=e376]
+                    - listitem [ref=e378]:
+                      - group [ref=e381]:
+                        - generic [ref=e382]: Zoomable product image with magnification controls
+                        - img [ref=e387]
+                    - listitem [ref=e389]:
+                      - group [ref=e392]:
+                        - generic [ref=e393]: Zoomable product image with magnification controls
+                        - img [ref=e398]
+                    - listitem [ref=e400]:
+                      - group [ref=e403]:
+                        - generic [ref=e404]: Zoomable product image with magnification controls
+                        - img [ref=e409]
+                    - listitem [ref=e411]:
+                      - group [ref=e414]:
+                        - generic [ref=e415]: Zoomable product image with magnification controls
+                        - img [ref=e420]
+                    - listitem [ref=e422]:
+                      - group [ref=e425]:
+                        - generic [ref=e426]: Zoomable product image with magnification controls
+                        - img [ref=e431]
+                  - generic [ref=e433]: Item 1 of 9
+            - generic [ref=e440]:
+              - list [ref=e441]:
+                - listitem [ref=e442]:
+                  - button "Layton Upholstered Rounded Ledge Bed, Performance Textured Chenille Oatmeal, Full" [pressed] [ref=e446] [cursor=pointer]
+                - listitem [ref=e447]:
+                  - button "Layton Upholstered Rounded Ledge Bed" [ref=e451] [cursor=pointer]
+                - listitem [ref=e452]:
+                  - button "Layton Upholstered Rounded Ledge Bed" [ref=e456] [cursor=pointer]
+                - listitem [ref=e457]:
+                  - button "Layton Upholstered Rounded Ledge Bed" [ref=e461] [cursor=pointer]
+                - listitem [ref=e462]:
+                  - button "Layton Upholstered Rounded Ledge Bed" [ref=e466] [cursor=pointer]
+                - listitem [ref=e467]:
+                  - button "Layton Upholstered Rounded Ledge Bed" [ref=e471] [cursor=pointer]
+                - listitem [ref=e472]:
+                  - button [ref=e476] [cursor=pointer]
+                - listitem [ref=e477]:
+                  - button [ref=e481] [cursor=pointer]
+                - listitem [ref=e482]:
+                  - button [ref=e486] [cursor=pointer]
+              - button "Arrow Down" [ref=e487] [cursor=pointer]:
+                - img "Arrow Down" [ref=e488]
+              - generic [ref=e491]: Item 1 of 9
+          - generic [ref=e493]:
+            - generic [ref=e497]: Recently Viewed Swatches
+            - generic "Social share container" [ref=e505]:
+              - button "Share on social media" [ref=e507] [cursor=pointer]:
+                - img "Social Share Icon" [ref=e508]
+                - generic [ref=e509]: Share
+        - generic [ref=e512]:
+          - generic [ref=e514]:
+            - list [ref=e518]:
+              - listitem [ref=e519]: Contract Grade
+            - heading "Layton Upholstered Rounded Ledge Bed" [level=1] [ref=e523]
+          - generic [ref=e524]:
+            - generic [ref=e528]:
+              - generic [ref=e529]:
+                - list [ref=e532]:
+                  - listitem [ref=e533]:
+                    - list [ref=e534]:
+                      - generic [ref=e535]:
+                        - generic [ref=e536]: Limited Time Offer
+                        - text: $1,299
+                      - generic [ref=e537]: $1,399
+                - list [ref=e539]:
+                  - listitem [ref=e540]:
+                    - checkbox "Show All" [checked] [ref=e541]
+                  - listitem [ref=e542]:
+                    - checkbox "On Sale" [ref=e543]
+              - generic [ref=e544]:
+                - generic [ref=e545]:
+                  - generic [ref=e547]: Select Options 1 and 2
+                  - button "Clear Options" [ref=e549] [cursor=pointer]
+                - generic [ref=e550]:
+                  - heading "Size Full Bed" [level=1] [ref=e552]:
+                    - button "Size Full Bed" [ref=e553] [cursor=pointer]:
+                      - generic [ref=e557]:
+                        - generic [ref=e559]: Size
+                        - generic [ref=e560]: Full Bed
+                  - heading "Fabric and Color Oatmeal, Performance Textured Chenille Fabric and Color" [level=1] [ref=e563]:
+                    - button "Fabric and Color Oatmeal, Performance Textured Chenille Fabric and Color" [ref=e564] [cursor=pointer]:
+                      - generic [ref=e568]:
+                        - generic [ref=e570]: Fabric and Color
+                        - generic [ref=e571]: Oatmeal, Performance Textured Chenille
+                        - img "Fabric and Color" [ref=e573]
+              - list [ref=e580]:
+                - listitem [ref=e581]: Your Selections
+                - listitem [ref=e582]:
+                  - generic [ref=e583]:
+                    - checkbox [checked] [ref=e584]
+                    - generic "Size Full Bed" [ref=e585]: "Size: Full Bed"
+                - listitem [ref=e586]:
+                  - generic [ref=e587]:
+                    - checkbox [checked] [ref=e588]
+                    - generic "Fabric and Color Oatmeal, Performance Textured Chenille" [ref=e589]: "Fabric and Color: Oatmeal, Performance Textured Chenille"
+                - listitem
+            - generic [ref=e590]:
+              - generic [ref=e592]:
+                - generic:
+                  - generic:
+                    - list
+                - generic [ref=e593]:
+                  - group [ref=e595]:
+                    - generic [ref=e596]:
+                      - heading [level=3]
+                    - generic [ref=e599]:
+                      - generic [ref=e600]:
+                        - generic [ref=e601]:
+                          - radio "White glove delivery" [checked] [ref=e602]
+                          - paragraph [ref=e603]: White glove delivery
+                        - paragraph [ref=e605]: Arrives Jul. 21 - Aug. 4
+                      - generic [ref=e606]:
+                        - generic [ref=e607]:
+                          - paragraph [ref=e608]: to
+                          - button "Update your zip code to search delivery availability" [ref=e609] [cursor=pointer]: "94102"
+                        - generic:
+                          - paragraph
+                      - generic [ref=e611]:
+                        - generic [ref=e612]:
+                          - img "checkmark" [ref=e613]
+                          - paragraph [ref=e614]: Delivery to your room of choice.
+                        - generic [ref=e615]:
+                          - img "checkmark" [ref=e616]
+                          - paragraph [ref=e617]: Unpacking and assembly.
+                        - generic [ref=e618]:
+                          - img "checkmark" [ref=e619]
+                          - paragraph [ref=e620]: Recycle and remove packaging.
+                  - button "Need it sooner? Shop similar in stock items" [ref=e623] [cursor=pointer]
+                - generic [ref=e629]:
+                  - checkbox "Add 3-year Allstate Protection Plan for $179.99" [ref=e630] [cursor=pointer]
+                  - generic [ref=e631]:
+                    - text: Add 3-year Allstate Protection Plan for $179.99
+                    - button "What's covered" [ref=e632] [cursor=pointer]
+                - generic:
+                  - paragraph
+              - generic [ref=e635]:
+                - heading "You May Also Need" [level=3] [ref=e636]:
+                  - paragraph [ref=e637]: You May Also Need
+                - generic [ref=e638]:
+                  - generic [ref=e639]:
+                    - checkbox "Add-On Item Westin Heavenly&#174; Bed, Full, 13.25&quot;h" [ref=e640] [cursor=pointer]
+                    - link "Westin Heavenly® Bed, Full, 13.25\"h" [ref=e642] [cursor=pointer]:
+                      - /url: /products/westin-heavenly-bed-mp/?sku=435377
+                      - img "Westin Heavenly® Bed, Full, 13.25\"h" [ref=e644]
+                  - link "Westin Heavenly® Bed, Full, 13.25\"h $2,045" [ref=e647] [cursor=pointer]:
+                    - /url: /products/westin-heavenly-bed-mp/?sku=435377
+                    - heading "Westin Heavenly® Bed, Full, 13.25\"h" [level=3] [ref=e648]
+                    - list [ref=e650]:
+                      - listitem [ref=e651]: $2,045
+            - generic [ref=e654]:
+              - generic [ref=e655]:
+                - generic [ref=e658]:
+                  - generic [ref=e662]:
+                    - button "decrease" [ref=e663] [cursor=pointer]:
+                      - img "decrease" [ref=e664]
+                    - spinbutton "Quantity" [ref=e665]: "1"
+                    - button "increase" [ref=e666] [cursor=pointer]:
+                      - img "increase" [ref=e667]
+                  - generic [ref=e668]:
+                    - list [ref=e670]:
+                      - listitem [ref=e671]:
+                        - list [ref=e672]:
+                          - generic [ref=e673]:
+                            - generic [ref=e674]: Limited Time Offer
+                            - text: $1,299
+                          - generic [ref=e675]: $1,399
+                    - paragraph
+                - button "Add To Cart" [ref=e679] [cursor=pointer]
+              - button "Add To Registry" [ref=e682] [cursor=pointer]
+              - generic [ref=e684]:
+                - generic [ref=e685]:
+                  - img "Pottery Barn Credit Card" [ref=e686]
+                  - generic [ref=e687]:
+                    - paragraph [ref=e688]:
+                      - generic [ref=e689]:
+                        - text: See if you're pre-approved – you could earn up to $129 (10% back in rewards)
+                        - superscript [ref=e690]: "1"
+                        - text: today – OR – get
+                        - generic [ref=e691]:
+                          - text: zero interest financing
+                          - superscript [ref=e692]: "2"
+                        - text: with a new Pottery Barn credit card.
+                    - link "Learn more about Pottery Barn Credit Card" [ref=e694] [cursor=pointer]:
+                      - /url: /ccvalueprop/?fromPageType=ProductPage&userAction=learnmore
+                      - text: Learn More
+                - paragraph [ref=e696]:
+                  - text: As low as $82/month or 0% APR with Affirm  .
+                  - link "Prequalify now - Learn more about Affirm Financing (opens in modal)" [ref=e697] [cursor=pointer]:
+                    - /url: javascript:void(0)
+                    - text: Prequalify now
+          - generic [ref=e699]:
+            - heading "Choose Your Coordinating Nightstand" [level=4] [ref=e700]
+            - generic [ref=e702]:
+              - img "Cayman Nightstand (27&quot;)" [ref=e705]
+              - generic [ref=e706]:
+                - generic [ref=e707]:
+                  - text: Cayman Nightstand (27")
+                  - list [ref=e709]:
+                    - listitem [ref=e710]:
+                      - text: $549
+                      - generic [ref=e711]: "- $1,098"
+                - button "Select Options" [ref=e713] [cursor=pointer]
+          - list [ref=e716]:
+            - listitem [ref=e717]:
+              - heading "Product Details" [level=1] [ref=e718]:
+                - button "Product Details" [ref=e719] [cursor=pointer]:
+                  - generic [ref=e721]: Product Details
+            - listitem [ref=e723]:
+              - heading "Dimensions" [level=1] [ref=e724]:
+                - button "Dimensions" [ref=e725] [cursor=pointer]:
+                  - generic [ref=e727]: Dimensions
+              - text: Please select preferred configuration to see dimensions.
+          - generic [ref=e730]:
+            - generic [ref=e731]: Still deciding?
+            - generic [ref=e732]:
+              - img "design crew" [ref=e733]
+              - link "Request a Free Design Appointment›" [ref=e734] [cursor=pointer]:
+                - /url: https://www.potterybarn.com/appointments/virtual-choice/
+            - generic [ref=e735]:
+              - img "ai" [ref=e736]
+              - generic [ref=e737]: View Similar Beds & Headboards›
+          - paragraph [ref=e739]: "SKU: 7208271"
+      - link "[+]Feedback" [ref=e741] [cursor=pointer]:
+        - /url: javascript:O_LC('product.potterybarn.com')
+      - generic [ref=e744]:
+        - generic [ref=e754]:
+          - heading "Also In This Collection" [level=2] [ref=e757]
+          - generic [ref=e761]:
+            - list [ref=e762]:
+              - listitem [ref=e763]:
+                - link "Layton Upholstered Platform Bed Toggle favorite item increase Quick View Layton Upholstered Platform Bed Limited Time Offer $ 1,099 – $ 1,899 $ 1,199 – $ 1,999" [ref=e766] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-platform-bed/
+                  - generic [ref=e767]:
+                    - img "Layton Upholstered Platform Bed" [ref=e768]
+                    - button "Toggle favorite item" [ref=e769]:
+                      - img "add to favorites" [ref=e770]
+                    - generic [ref=e771]:
+                      - img "increase" [ref=e772]
+                      - text: Quick View
+                  - list [ref=e774]:
+                    - listitem [ref=e775]: Layton Upholstered Platform Bed
+                    - listitem
+                    - listitem [ref=e776]:
+                      - list [ref=e777]:
+                        - listitem [ref=e778]:
+                          - list [ref=e779]:
+                            - listitem [ref=e780]: Limited Time Offer
+                            - listitem [ref=e781]:
+                              - generic [ref=e782]:
+                                - generic [ref=e783]: $ 1,099
+                                - generic [ref=e784]:
+                                  - text: –
+                                  - generic [ref=e785]: $ 1,899
+                              - generic [ref=e786]:
+                                - generic [ref=e787]: $ 1,199
+                                - generic [ref=e788]:
+                                  - text: –
+                                  - generic [ref=e789]: $ 1,999
+                    - listitem
+                    - listitem
+              - listitem [ref=e790]:
+                - link "Layton Rounded Bed Toggle favorite item increase Quick View Layton Rounded Bed Limited Time Offer $ 1,199 – $ 1,999 $ 1,299 – $ 2,099" [ref=e793] [cursor=pointer]:
+                  - /url: /products/layton-rounded-bed/
+                  - generic [ref=e794]:
+                    - img "Layton Rounded Bed" [ref=e795]
+                    - button "Toggle favorite item" [ref=e796]:
+                      - img "add to favorites" [ref=e797]
+                    - generic [ref=e798]:
+                      - img "increase" [ref=e799]
+                      - text: Quick View
+                  - list [ref=e801]:
+                    - listitem [ref=e802]: Layton Rounded Bed
+                    - listitem
+                    - listitem [ref=e803]:
+                      - list [ref=e804]:
+                        - listitem [ref=e805]:
+                          - list [ref=e806]:
+                            - listitem [ref=e807]: Limited Time Offer
+                            - listitem [ref=e808]:
+                              - generic [ref=e809]:
+                                - generic [ref=e810]: $ 1,199
+                                - generic [ref=e811]:
+                                  - text: –
+                                  - generic [ref=e812]: $ 1,999
+                              - generic [ref=e813]:
+                                - generic [ref=e814]: $ 1,299
+                                - generic [ref=e815]:
+                                  - text: –
+                                  - generic [ref=e816]: $ 2,099
+                    - listitem
+                    - listitem
+              - listitem [ref=e817]:
+                - link "Layton Upholstered Bed Toggle favorite item increase Quick View Layton Upholstered Bed Limited Time Offer $ 1,299 – $ 2,099 $ 1,399 – $ 2,199" [ref=e820] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-bed/
+                  - generic [ref=e821]:
+                    - img "Layton Upholstered Bed" [ref=e822]
+                    - button "Toggle favorite item" [ref=e823]:
+                      - img "add to favorites" [ref=e824]
+                    - generic [ref=e825]:
+                      - img "increase" [ref=e826]
+                      - text: Quick View
+                  - list [ref=e828]:
+                    - listitem [ref=e829]: Layton Upholstered Bed
+                    - listitem
+                    - listitem [ref=e830]:
+                      - list [ref=e831]:
+                        - listitem [ref=e832]:
+                          - list [ref=e833]:
+                            - listitem [ref=e834]: Limited Time Offer
+                            - listitem [ref=e835]:
+                              - generic [ref=e836]:
+                                - generic [ref=e837]: $ 1,299
+                                - generic [ref=e838]:
+                                  - text: –
+                                  - generic [ref=e839]: $ 2,099
+                              - generic [ref=e840]:
+                                - generic [ref=e841]: $ 1,399
+                                - generic [ref=e842]:
+                                  - text: –
+                                  - generic [ref=e843]: $ 2,199
+                    - listitem
+                    - listitem
+              - listitem [ref=e844]:
+                - link "Layton Upholstered Storage Bed Toggle favorite item increase Quick View Layton Upholstered Storage Bed Limited Time Offer $ 2,099 – $ 2,899" [ref=e847] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-storage-bed/
+                  - generic [ref=e848]:
+                    - img "Layton Upholstered Storage Bed" [ref=e849]
+                    - button "Toggle favorite item" [ref=e850]:
+                      - img "add to favorites" [ref=e851]
+                    - generic [ref=e852]:
+                      - img "increase" [ref=e853]
+                      - text: Quick View
+                  - list [ref=e855]:
+                    - listitem [ref=e856]: Layton Upholstered Storage Bed
+                    - listitem
+                    - listitem [ref=e857]:
+                      - list [ref=e858]:
+                        - listitem [ref=e859]:
+                          - list [ref=e860]:
+                            - listitem [ref=e861]: Limited Time Offer
+                            - listitem [ref=e862]:
+                              - generic [ref=e863]:
+                                - generic [ref=e864]: $ 2,099
+                                - generic [ref=e865]:
+                                  - text: –
+                                  - generic [ref=e866]: $ 2,899
+                    - listitem
+                    - listitem
+              - listitem [ref=e867]:
+                - link "Layton Leather Bed Toggle favorite item increase Quick View Layton Leather Bed Limited Time Offer $ 1,919 – $ 2,599 $ 2,399 – $ 2,699" [ref=e870] [cursor=pointer]:
+                  - /url: /products/layton-leather-bed/
+                  - generic [ref=e871]:
+                    - img "Layton Leather Bed" [ref=e872]
+                    - button "Toggle favorite item" [ref=e873]:
+                      - img "add to favorites" [ref=e874]
+                    - generic [ref=e875]:
+                      - img "increase" [ref=e876]
+                      - text: Quick View
+                  - list [ref=e878]:
+                    - listitem [ref=e879]: Layton Leather Bed
+                    - listitem
+                    - listitem [ref=e880]:
+                      - list [ref=e881]:
+                        - listitem [ref=e882]:
+                          - list [ref=e883]:
+                            - listitem [ref=e884]: Limited Time Offer
+                            - listitem [ref=e885]:
+                              - generic [ref=e886]:
+                                - generic [ref=e887]: $ 1,919
+                                - generic [ref=e888]:
+                                  - text: –
+                                  - generic [ref=e889]: $ 2,599
+                              - generic [ref=e890]:
+                                - generic [ref=e891]: $ 2,399
+                                - generic [ref=e892]:
+                                  - text: –
+                                  - generic [ref=e893]: $ 2,699
+                    - listitem
+                    - listitem
+              - listitem [ref=e894]:
+                - link "Layton Low Upholstered Bed Toggle favorite item increase Quick View Layton Low Upholstered Bed Limited Time Offer $ 1,199 – $ 1,999 $ 1,299 – $ 2,099" [ref=e897] [cursor=pointer]:
+                  - /url: /products/layton-low-upholstered-bed/
+                  - generic [ref=e898]:
+                    - img "Layton Low Upholstered Bed" [ref=e899]
+                    - button "Toggle favorite item" [ref=e900]:
+                      - img "add to favorites" [ref=e901]
+                    - generic [ref=e902]:
+                      - img "increase" [ref=e903]
+                      - text: Quick View
+                  - list [ref=e905]:
+                    - listitem [ref=e906]: Layton Low Upholstered Bed
+                    - listitem
+                    - listitem [ref=e907]:
+                      - list [ref=e908]:
+                        - listitem [ref=e909]:
+                          - list [ref=e910]:
+                            - listitem [ref=e911]: Limited Time Offer
+                            - listitem [ref=e912]:
+                              - generic [ref=e913]:
+                                - generic [ref=e914]: $ 1,199
+                                - generic [ref=e915]:
+                                  - text: –
+                                  - generic [ref=e916]: $ 1,999
+                              - generic [ref=e917]:
+                                - generic [ref=e918]: $ 1,299
+                                - generic [ref=e919]:
+                                  - text: –
+                                  - generic [ref=e920]: $ 2,099
+                    - listitem
+                    - listitem
+              - listitem [ref=e921]:
+                - link "Layton Upholstered Sleigh Bed Toggle favorite item increase Quick View Layton Upholstered Sleigh Bed Limited Time Offer $ 1,399 – $ 2,199 $ 1,499 – $ 2,299" [ref=e924] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-sleigh-bed/
+                  - generic [ref=e925]:
+                    - img "Layton Upholstered Sleigh Bed" [ref=e926]
+                    - button "Toggle favorite item" [ref=e927]:
+                      - img "add to favorites" [ref=e928]
+                    - generic [ref=e929]:
+                      - img "increase" [ref=e930]
+                      - text: Quick View
+                  - list [ref=e932]:
+                    - listitem [ref=e933]: Layton Upholstered Sleigh Bed
+                    - listitem
+                    - listitem [ref=e934]:
+                      - list [ref=e935]:
+                        - listitem [ref=e936]:
+                          - list [ref=e937]:
+                            - listitem [ref=e938]: Limited Time Offer
+                            - listitem [ref=e939]:
+                              - generic [ref=e940]:
+                                - generic [ref=e941]: $ 1,399
+                                - generic [ref=e942]:
+                                  - text: –
+                                  - generic [ref=e943]: $ 2,199
+                              - generic [ref=e944]:
+                                - generic [ref=e945]: $ 1,499
+                                - generic [ref=e946]:
+                                  - text: –
+                                  - generic [ref=e947]: $ 2,299
+                    - listitem
+                    - listitem
+              - listitem [ref=e948]:
+                - link "Toscana Extendable Dining Table (60\"-124.5\") Toggle favorite item Bestseller increase Quick View Toscana Extendable Dining Table (60\"-124.5\") Limited Time Offer $ 369 – $ 2,159 $ 369 – $ 2,399" [ref=e951] [cursor=pointer]:
+                  - /url: https://www.potterybarn.com/products/toscana-extending-dining-table-seadrift/?subGroupId=toscana-extending-dining-table-seadrift-SPAF-finish-remainder
+                  - generic [ref=e952]:
+                    - img "Toscana Extendable Dining Table (60\"-124.5\")" [ref=e953]
+                    - button "Toggle favorite item" [ref=e954]:
+                      - img "add to favorites" [ref=e955]
+                    - list [ref=e956]:
+                      - listitem [ref=e957]:
+                        - generic [ref=e959]: Bestseller
+                    - generic [ref=e960]:
+                      - img "increase" [ref=e961]
+                      - text: Quick View
+                  - list [ref=e963]:
+                    - listitem
+                    - listitem [ref=e964]: Toscana Extendable Dining Table (60"-124.5")
+                    - listitem
+                    - listitem
+                    - listitem [ref=e965]:
+                      - list [ref=e966]:
+                        - listitem [ref=e967]:
+                          - list [ref=e968]:
+                            - listitem [ref=e969]: Limited Time Offer
+                            - listitem [ref=e970]:
+                              - generic [ref=e971]:
+                                - generic [ref=e972]: $ 369
+                                - generic [ref=e973]:
+                                  - text: –
+                                  - generic [ref=e974]: $ 2,159
+                              - generic [ref=e975]:
+                                - generic [ref=e976]: $ 369
+                                - generic [ref=e977]:
+                                  - text: –
+                                  - generic [ref=e978]: $ 2,399
+                    - listitem
+                    - listitem
+                    - listitem
+              - listitem [ref=e979]:
+                - link "Toscana Round Extendable Dining Table (54\"-78\") Toggle favorite item Bestseller increase Quick View Toscana Round Extendable Dining Table (54\"-78\") Limited Time Offer $ 369 – $ 1,839 $ 369 – $ 2,299" [ref=e982] [cursor=pointer]:
+                  - /url: /products/toscana-extending-pedestal-table/
+                  - generic [ref=e983]:
+                    - img "Toscana Round Extendable Dining Table (54\"-78\")" [ref=e984]
+                    - button "Toggle favorite item" [ref=e985]:
+                      - img "add to favorites" [ref=e986]
+                    - list [ref=e987]:
+                      - listitem [ref=e988]:
+                        - generic [ref=e990]: Bestseller
+                    - generic [ref=e991]:
+                      - img "increase" [ref=e992]
+                      - text: Quick View
+                  - list [ref=e994]:
+                    - listitem
+                    - listitem [ref=e995]: Toscana Round Extendable Dining Table (54"-78")
+                    - listitem
+                    - listitem
+                    - listitem [ref=e996]:
+                      - list [ref=e997]:
+                        - listitem [ref=e998]:
+                          - list [ref=e999]:
+                            - listitem [ref=e1000]: Limited Time Offer
+                            - listitem [ref=e1001]:
+                              - generic [ref=e1002]:
+                                - generic [ref=e1003]: $ 369
+                                - generic [ref=e1004]:
+                                  - text: –
+                                  - generic [ref=e1005]: $ 1,839
+                              - generic [ref=e1006]:
+                                - generic [ref=e1007]: $ 369
+                                - generic [ref=e1008]:
+                                  - text: –
+                                  - generic [ref=e1009]: $ 2,299
+                    - listitem
+                    - listitem
+                    - listitem
+              - listitem [ref=e1010]:
+                - link "Layton Upholstered Banquette Toggle favorite item increase Quick View Layton Upholstered Banquette Limited Time Offer $ 800 – $ 2,599 $ 1,000 – $ 2,599" [ref=e1013] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-banquette/
+                  - generic [ref=e1014]:
+                    - img "Layton Upholstered Banquette" [ref=e1015]
+                    - button "Toggle favorite item" [ref=e1016]:
+                      - img "add to favorites" [ref=e1017]
+                    - generic [ref=e1018]:
+                      - img "increase" [ref=e1019]
+                      - text: Quick View
+                  - list [ref=e1021]:
+                    - listitem [ref=e1022]: Layton Upholstered Banquette
+                    - listitem
+                    - listitem [ref=e1023]:
+                      - list [ref=e1024]:
+                        - listitem [ref=e1025]:
+                          - list [ref=e1026]:
+                            - listitem [ref=e1027]: Limited Time Offer
+                            - listitem [ref=e1028]:
+                              - generic [ref=e1029]:
+                                - generic [ref=e1030]: $ 800
+                                - generic [ref=e1031]:
+                                  - text: –
+                                  - generic [ref=e1032]: $ 2,599
+                              - generic [ref=e1033]:
+                                - generic [ref=e1034]: $ 1,000
+                                - generic [ref=e1035]:
+                                  - text: –
+                                  - generic [ref=e1036]: $ 2,599
+                    - listitem
+                    - listitem
+              - listitem [ref=e1037]:
+                - link "Layton Leather Stool Toggle favorite item increase Quick View Layton Leather Stool Limited Time Offer $ 423 – $ 799 $ 529 – $ 799" [ref=e1040] [cursor=pointer]:
+                  - /url: /products/layton-leather-bar-counter-stool/
+                  - generic [ref=e1041]:
+                    - img "Layton Leather Stool" [ref=e1042]
+                    - button "Toggle favorite item" [ref=e1043]:
+                      - img "add to favorites" [ref=e1044]
+                    - generic [ref=e1045]:
+                      - img "increase" [ref=e1046]
+                      - text: Quick View
+                  - list [ref=e1048]:
+                    - listitem [ref=e1049]: Layton Leather Stool
+                    - listitem
+                    - listitem [ref=e1050]:
+                      - list [ref=e1051]:
+                        - listitem [ref=e1052]:
+                          - list [ref=e1053]:
+                            - listitem [ref=e1054]: Limited Time Offer
+                            - listitem [ref=e1055]:
+                              - generic [ref=e1056]:
+                                - generic [ref=e1057]: $ 423
+                                - generic [ref=e1058]:
+                                  - text: –
+                                  - generic [ref=e1059]: $ 799
+                              - generic [ref=e1060]:
+                                - generic [ref=e1061]: $ 529
+                                - generic [ref=e1062]:
+                                  - text: –
+                                  - generic [ref=e1063]: $ 799
+                    - listitem
+                    - listitem
+              - listitem [ref=e1064]:
+                - link "Layton Upholstered Dining Chair Toggle favorite item Bestseller increase Quick View Layton Upholstered Dining Chair Sale $ 256.99 – $ 569 $ 429 – $ 569" [ref=e1067] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-dining-chair/
+                  - generic [ref=e1068]:
+                    - img "Layton Upholstered Dining Chair" [ref=e1069]
+                    - button "Toggle favorite item" [ref=e1070]:
+                      - img "add to favorites" [ref=e1071]
+                    - list [ref=e1072]:
+                      - listitem [ref=e1073]:
+                        - generic [ref=e1075]: Bestseller
+                    - generic [ref=e1076]:
+                      - img "increase" [ref=e1077]
+                      - text: Quick View
+                  - list [ref=e1079]:
+                    - listitem
+                    - listitem [ref=e1080]: Layton Upholstered Dining Chair
+                    - listitem
+                    - listitem
+                    - listitem [ref=e1081]:
+                      - list [ref=e1082]:
+                        - listitem [ref=e1083]:
+                          - list [ref=e1084]:
+                            - listitem [ref=e1085]: Sale
+                            - listitem [ref=e1086]:
+                              - generic [ref=e1087]:
+                                - generic [ref=e1088]: $ 256.99
+                                - generic [ref=e1089]:
+                                  - text: –
+                                  - generic [ref=e1090]: $ 569
+                              - generic [ref=e1091]:
+                                - generic [ref=e1092]: $ 429
+                                - generic [ref=e1093]:
+                                  - text: –
+                                  - generic [ref=e1094]: $ 569
+                    - listitem
+                    - listitem
+                    - listitem
+              - listitem [ref=e1095]:
+                - link "Layton Upholstered Swivel Stool Toggle favorite item Bestseller increase Quick View Layton Upholstered Swivel Stool Limited Time Offer $ 423 – $ 729 $ 529 – $ 729" [ref=e1098] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-swivel-bar-counter-stool/
+                  - generic [ref=e1099]:
+                    - img "Layton Upholstered Swivel Stool" [ref=e1100]
+                    - button "Toggle favorite item" [ref=e1101]:
+                      - img "add to favorites" [ref=e1102]
+                    - list [ref=e1103]:
+                      - listitem [ref=e1104]:
+                        - generic [ref=e1106]: Bestseller
+                    - generic [ref=e1107]:
+                      - img "increase" [ref=e1108]
+                      - text: Quick View
+                  - list [ref=e1110]:
+                    - listitem
+                    - listitem [ref=e1111]: Layton Upholstered Swivel Stool
+                    - listitem
+                    - listitem
+                    - listitem [ref=e1112]:
+                      - list [ref=e1113]:
+                        - listitem [ref=e1114]:
+                          - list [ref=e1115]:
+                            - listitem [ref=e1116]: Limited Time Offer
+                            - listitem [ref=e1117]:
+                              - generic [ref=e1118]:
+                                - generic [ref=e1119]: $ 423
+                                - generic [ref=e1120]:
+                                  - text: –
+                                  - generic [ref=e1121]: $ 729
+                              - generic [ref=e1122]:
+                                - generic [ref=e1123]: $ 529
+                                - generic [ref=e1124]:
+                                  - text: –
+                                  - generic [ref=e1125]: $ 729
+                    - listitem
+                    - listitem
+                    - listitem
+              - listitem [ref=e1126]:
+                - link "Layton Leather Metal Stool Toggle favorite item increase Quick View Layton Leather Metal Stool Limited Time Offer $ 359 – $ 549 $ 449 – $ 549" [ref=e1129] [cursor=pointer]:
+                  - /url: /products/layton-leather-metal-stool/
+                  - generic [ref=e1130]:
+                    - img "Layton Leather Metal Stool" [ref=e1131]
+                    - button "Toggle favorite item" [ref=e1132]:
+                      - img "add to favorites" [ref=e1133]
+                    - generic [ref=e1134]:
+                      - img "increase" [ref=e1135]
+                      - text: Quick View
+                  - list [ref=e1137]:
+                    - listitem [ref=e1138]: Layton Leather Metal Stool
+                    - listitem
+                    - listitem [ref=e1139]:
+                      - list [ref=e1140]:
+                        - listitem [ref=e1141]:
+                          - list [ref=e1142]:
+                            - listitem [ref=e1143]: Limited Time Offer
+                            - listitem [ref=e1144]:
+                              - generic [ref=e1145]:
+                                - generic [ref=e1146]: $ 359
+                                - generic [ref=e1147]:
+                                  - text: –
+                                  - generic [ref=e1148]: $ 549
+                              - generic [ref=e1149]:
+                                - generic [ref=e1150]: $ 449
+                                - generic [ref=e1151]:
+                                  - text: –
+                                  - generic [ref=e1152]: $ 549
+                    - listitem
+                    - listitem
+              - listitem [ref=e1153]:
+                - link "Layton Grand Leather Dining Chair Toggle favorite item increase Quick View Layton Grand Leather Dining Chair Limited Time Offer $ 423 – $ 649 $ 529 – $ 649" [ref=e1156] [cursor=pointer]:
+                  - /url: /products/layton-leather-grand-dining-chair/
+                  - generic [ref=e1157]:
+                    - img "Layton Grand Leather Dining Chair" [ref=e1158]
+                    - button "Toggle favorite item" [ref=e1159]:
+                      - img "add to favorites" [ref=e1160]
+                    - generic [ref=e1161]:
+                      - img "increase" [ref=e1162]
+                      - text: Quick View
+                  - list [ref=e1164]:
+                    - listitem [ref=e1165]: Layton Grand Leather Dining Chair
+                    - listitem
+                    - listitem [ref=e1166]:
+                      - list [ref=e1167]:
+                        - listitem [ref=e1168]:
+                          - list [ref=e1169]:
+                            - listitem [ref=e1170]: Limited Time Offer
+                            - listitem [ref=e1171]:
+                              - generic [ref=e1172]:
+                                - generic [ref=e1173]: $ 423
+                                - generic [ref=e1174]:
+                                  - text: –
+                                  - generic [ref=e1175]: $ 649
+                              - generic [ref=e1176]:
+                                - generic [ref=e1177]: $ 529
+                                - generic [ref=e1178]:
+                                  - text: –
+                                  - generic [ref=e1179]: $ 649
+                    - listitem
+                    - listitem
+              - listitem [ref=e1180]:
+                - link "Layton Grand Upholstered Dining Chair Toggle favorite item Bestseller increase Quick View Layton Grand Upholstered Dining Chair $ 309 – $ 489" [ref=e1183] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-grand-dining-chair/
+                  - generic [ref=e1184]:
+                    - img "Layton Grand Upholstered Dining Chair" [ref=e1185]
+                    - button "Toggle favorite item" [ref=e1186]:
+                      - img "add to favorites" [ref=e1187]
+                    - list [ref=e1188]:
+                      - listitem [ref=e1189]:
+                        - generic [ref=e1191]: Bestseller
+                    - generic [ref=e1192]:
+                      - img "increase" [ref=e1193]
+                      - text: Quick View
+                  - list [ref=e1195]:
+                    - listitem
+                    - listitem [ref=e1196]: Layton Grand Upholstered Dining Chair
+                    - listitem
+                    - listitem
+                    - listitem [ref=e1197]:
+                      - list [ref=e1198]:
+                        - listitem [ref=e1199]:
+                          - generic [ref=e1200]: $ 309
+                          - generic [ref=e1201]:
+                            - text: –
+                            - generic [ref=e1202]: $ 489
+                    - listitem
+                    - listitem
+                    - listitem
+              - listitem [ref=e1203]:
+                - link "Layton Upholstered Stool Toggle favorite item increase Quick View Layton Upholstered Stool Sale $ 329.99 – $ 679 $ 499 – $ 679" [ref=e1206] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-bar-counter-stool/
+                  - generic [ref=e1207]:
+                    - img "Layton Upholstered Stool" [ref=e1208]
+                    - button "Toggle favorite item" [ref=e1209]:
+                      - img "add to favorites" [ref=e1210]
+                    - generic [ref=e1211]:
+                      - img "increase" [ref=e1212]
+                      - text: Quick View
+                  - list [ref=e1214]:
+                    - listitem [ref=e1215]: Layton Upholstered Stool
+                    - listitem
+                    - listitem [ref=e1216]:
+                      - list [ref=e1217]:
+                        - listitem [ref=e1218]:
+                          - list [ref=e1219]:
+                            - listitem [ref=e1220]: Sale
+                            - listitem [ref=e1221]:
+                              - generic [ref=e1222]:
+                                - generic [ref=e1223]: $ 329.99
+                                - generic [ref=e1224]:
+                                  - text: –
+                                  - generic [ref=e1225]: $ 679
+                              - generic [ref=e1226]:
+                                - generic [ref=e1227]: $ 499
+                                - generic [ref=e1228]:
+                                  - text: –
+                                  - generic [ref=e1229]: $ 679
+                    - listitem
+                    - listitem
+              - listitem [ref=e1230]:
+                - link "Layton Upholstered Dining Chair Toggle favorite item increase Quick View Layton Upholstered Dining Chair $ 299 – $ 739" [ref=e1233] [cursor=pointer]:
+                  - /url: /products/layton-fully-upholstered-dining-chair/
+                  - generic [ref=e1234]:
+                    - img "Layton Upholstered Dining Chair" [ref=e1235]
+                    - button "Toggle favorite item" [ref=e1236]:
+                      - img "add to favorites" [ref=e1237]
+                    - generic [ref=e1238]:
+                      - img "increase" [ref=e1239]
+                      - text: Quick View
+                  - list [ref=e1241]:
+                    - listitem [ref=e1242]: Layton Upholstered Dining Chair
+                    - listitem
+                    - listitem [ref=e1243]:
+                      - list [ref=e1244]:
+                        - listitem [ref=e1245]:
+                          - generic [ref=e1246]: $ 299
+                          - generic [ref=e1247]:
+                            - text: –
+                            - generic [ref=e1248]: $ 739
+                    - listitem
+                    - listitem
+              - listitem [ref=e1249]:
+                - link "Layton Upholstered Metal Dining Chair Toggle favorite item increase Quick View Layton Upholstered Metal Dining Chair Sale $ 239 – $ 379" [ref=e1252] [cursor=pointer]:
+                  - /url: /products/layton-upholstered-metal-dining-chair/
+                  - generic [ref=e1253]:
+                    - img "Layton Upholstered Metal Dining Chair" [ref=e1254]
+                    - button "Toggle favorite item" [ref=e1255]:
+                      - img "add to favorites" [ref=e1256]
+                    - generic [ref=e1257]:
+                      - img "increase" [ref=e1258]
+                      - text: Quick View
+                  - list [ref=e1260]:
+                    - listitem [ref=e1261]: Layton Upholstered Metal Dining Chair
+                    - listitem
+                    - listitem [ref=e1262]:
+                      - list [ref=e1263]:
+                        - listitem [ref=e1264]:
+                          - text: Sale
+                          - generic [ref=e1265]: $ 239
+                          - generic [ref=e1266]:
+                            - text: –
+                            - generic [ref=e1267]: $ 379
+                    - listitem
+                    - listitem
+              - listitem [ref=e1268]:
+                - link "Layton Leather Swivel Stool Toggle favorite item Bestseller increase Quick View Layton Leather Swivel Stool Limited Time Offer $ 423 – $ 739 $ 529 – $ 739" [ref=e1271] [cursor=pointer]:
+                  - /url: /products/layton-leather-swivel-bar-counter-stool/
+                  - generic [ref=e1272]:
+                    - img "Layton Leather Swivel Stool" [ref=e1273]
+                    - button "Toggle favorite item" [ref=e1274]:
+                      - img "add to favorites" [ref=e1275]
+                    - list [ref=e1276]:
+                      - listitem [ref=e1277]:
+                        - generic [ref=e1279]: Bestseller
+                    - generic [ref=e1280]:
+                      - img "increase" [ref=e1281]
+                      - text: Quick View
+                  - list [ref=e1283]:
+                    - listitem
+                    - listitem [ref=e1284]: Layton Leather Swivel Stool
+                    - listitem
+                    - listitem
+                    - listitem [ref=e1285]:
+                      - list [ref=e1286]:
+                        - listitem [ref=e1287]:
+                          - list [ref=e1288]:
+                            - listitem [ref=e1289]: Limited Time Offer
+                            - listitem [ref=e1290]:
+                              - generic [ref=e1291]:
+                                - generic [ref=e1292]: $ 423
+                                - generic [ref=e1293]:
+                                  - text: –
+                                  - generic [ref=e1294]: $ 739
+                              - generic [ref=e1295]:
+                                - generic [ref=e1296]: $ 529
+                                - generic [ref=e1297]:
+                                  - text: –
+                                  - generic [ref=e1298]: $ 739
+                    - listitem
+                    - listitem
+                    - listitem
+            - button "next" [ref=e1299] [cursor=pointer]:
+              - img "chevron right" [ref=e1300]
+            - generic [ref=e1301]: Item 1 of 20
+        - generic [ref=e1305]:
+          - generic [ref=e1311]:
+            - heading "Similar Items" [level=2] [ref=e1314]
+            - generic [ref=e1318]:
+              - list [ref=e1319]:
+                - listitem [ref=e1320]:
+                  - link "Calistoga Upholstered Platform Bed Toggle favorite item Bestseller increase Quick View Calistoga Upholstered Platform Bed Limited Time Offer $ 629 – $ 2,099 $ 699 – $ 2,099" [ref=e1323] [cursor=pointer]:
+                    - /url: /products/calistoga-upholstered-bed/
+                    - generic [ref=e1324]:
+                      - img "Calistoga Upholstered Platform Bed" [ref=e1325]
+                      - button "Toggle favorite item" [ref=e1326]:
+                        - img "add to favorites" [ref=e1327]
+                      - list [ref=e1328]:
+                        - listitem [ref=e1329]:
+                          - generic [ref=e1331]: Bestseller
+                      - generic [ref=e1332]:
+                        - img "increase" [ref=e1333]
+                        - text: Quick View
+                    - list [ref=e1335]:
+                      - listitem
+                      - listitem [ref=e1336]: Calistoga Upholstered Platform Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1337]:
+                        - list [ref=e1338]:
+                          - listitem [ref=e1339]:
+                            - list [ref=e1340]:
+                              - listitem [ref=e1341]: Limited Time Offer
+                              - listitem [ref=e1342]:
+                                - generic [ref=e1343]:
+                                  - generic [ref=e1344]: $ 629
+                                  - generic [ref=e1345]:
+                                    - text: –
+                                    - generic [ref=e1346]: $ 2,099
+                                - generic [ref=e1347]:
+                                  - generic [ref=e1348]: $ 699
+                                  - generic [ref=e1349]:
+                                    - text: –
+                                    - generic [ref=e1350]: $ 2,099
+                      - listitem
+                      - listitem
+                      - listitem
+                  - link "Cayman Upholstered Bed Toggle favorite item Bestseller increase Quick View Cayman Upholstered Bed $ 799 – $ 1,799" [ref=e1353] [cursor=pointer]:
+                    - /url: /products/cayman-upholstered-wood-bed/
+                    - generic [ref=e1354]:
+                      - img "Cayman Upholstered Bed" [ref=e1355]
+                      - button "Toggle favorite item" [ref=e1356]:
+                        - img "add to favorites" [ref=e1357]
+                      - list [ref=e1358]:
+                        - listitem [ref=e1359]:
+                          - generic [ref=e1361]: Bestseller
+                      - generic [ref=e1362]:
+                        - img "increase" [ref=e1363]
+                        - text: Quick View
+                    - list [ref=e1365]:
+                      - listitem
+                      - listitem [ref=e1366]: Cayman Upholstered Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1367]:
+                        - list [ref=e1368]:
+                          - listitem [ref=e1369]:
+                            - generic [ref=e1370]: $ 799
+                            - generic [ref=e1371]:
+                              - text: –
+                              - generic [ref=e1372]: $ 1,799
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1373]:
+                  - link "Chris Loves Julia Modern Traditional Bed Toggle favorite item increase Quick View Chris Loves Julia Modern Traditional Bed $ 1,499 – $ 1,699" [ref=e1376] [cursor=pointer]:
+                    - /url: /products/chris-loves-julia-bed/
+                    - generic [ref=e1377]:
+                      - img "Chris Loves Julia Modern Traditional Bed" [ref=e1378]
+                      - button "Toggle favorite item" [ref=e1379]:
+                        - img "add to favorites" [ref=e1380]
+                      - generic [ref=e1381]:
+                        - img "increase" [ref=e1382]
+                        - text: Quick View
+                    - list [ref=e1384]:
+                      - listitem [ref=e1385]: Chris Loves Julia Modern Traditional Bed
+                      - listitem
+                      - listitem [ref=e1386]:
+                        - list [ref=e1387]:
+                          - listitem [ref=e1388]:
+                            - generic [ref=e1389]: $ 1,499
+                            - generic [ref=e1390]:
+                              - text: –
+                              - generic [ref=e1391]: $ 1,699
+                      - listitem
+                      - listitem
+                  - link "Kona Upholstered Bed Toggle favorite item Bestseller increase Quick View Kona Upholstered Bed Sale $ 799 – $ 1,899" [ref=e1394] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/products/kona-upholstered-bed/?subGroupId=kona-upholstered-bed-SPAF-finish-remainder
+                    - generic [ref=e1395]:
+                      - img "Kona Upholstered Bed" [ref=e1396]
+                      - button "Toggle favorite item" [ref=e1397]:
+                        - img "add to favorites" [ref=e1398]
+                      - list [ref=e1399]:
+                        - listitem [ref=e1400]:
+                          - generic [ref=e1402]: Bestseller
+                      - generic [ref=e1403]:
+                        - img "increase" [ref=e1404]
+                        - text: Quick View
+                    - list [ref=e1406]:
+                      - listitem
+                      - listitem [ref=e1407]: Kona Upholstered Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1408]:
+                        - list [ref=e1409]:
+                          - listitem [ref=e1410]:
+                            - text: Sale
+                            - generic [ref=e1411]: $ 799
+                            - generic [ref=e1412]:
+                              - text: –
+                              - generic [ref=e1413]: $ 1,899
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1414]:
+                  - link "Augusta Upholstered Platform Bed Toggle favorite item Bestseller increase Quick View Augusta Upholstered Platform Bed $ 1,399 – $ 2,199" [ref=e1417] [cursor=pointer]:
+                    - /url: /products/augusta-upholstered-bed/
+                    - generic [ref=e1418]:
+                      - img "Augusta Upholstered Platform Bed" [ref=e1419]
+                      - button "Toggle favorite item" [ref=e1420]:
+                        - img "add to favorites" [ref=e1421]
+                      - list [ref=e1422]:
+                        - listitem [ref=e1423]:
+                          - generic [ref=e1425]: Bestseller
+                      - generic [ref=e1426]:
+                        - img "increase" [ref=e1427]
+                        - text: Quick View
+                    - list [ref=e1429]:
+                      - listitem
+                      - listitem [ref=e1430]: Augusta Upholstered Platform Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1431]:
+                        - list [ref=e1432]:
+                          - listitem [ref=e1433]:
+                            - generic [ref=e1434]: $ 1,399
+                            - generic [ref=e1435]:
+                              - text: –
+                              - generic [ref=e1436]: $ 2,199
+                      - listitem
+                      - listitem
+                      - listitem
+                  - link "Scarlett Upholstered Bed Toggle favorite item Bestseller increase Quick View Scarlett Upholstered Bed $ 799 – $ 2,499" [ref=e1439] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/products/scarlett-upholstered-bed/?subGroupId=scarlett-upholstered-bed-SPAF-finish-remainder
+                    - generic [ref=e1440]:
+                      - img "Scarlett Upholstered Bed" [ref=e1441]
+                      - button "Toggle favorite item" [ref=e1442]:
+                        - img "add to favorites" [ref=e1443]
+                      - list [ref=e1444]:
+                        - listitem [ref=e1445]:
+                          - generic [ref=e1447]: Bestseller
+                      - generic [ref=e1448]:
+                        - img "increase" [ref=e1449]
+                        - text: Quick View
+                    - list [ref=e1451]:
+                      - listitem
+                      - listitem [ref=e1452]: Scarlett Upholstered Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1453]:
+                        - list [ref=e1454]:
+                          - listitem [ref=e1455]:
+                            - generic [ref=e1456]: $ 799
+                            - generic [ref=e1457]:
+                              - text: –
+                              - generic [ref=e1458]: $ 2,499
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1459]:
+                  - link "Cayman Platform Bed Toggle favorite item Bestseller increase Quick View Cayman Platform Bed $ 549 – $ 1,899" [ref=e1462] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/products/cayman-platform-bed-set/?subGroupId=cayman-platform-bed-set-SPAF-finish-remainder
+                    - generic [ref=e1463]:
+                      - img "Cayman Platform Bed" [ref=e1464]
+                      - button "Toggle favorite item" [ref=e1465]:
+                        - img "add to favorites" [ref=e1466]
+                      - list [ref=e1467]:
+                        - listitem [ref=e1468]:
+                          - generic [ref=e1470]: Bestseller
+                      - generic [ref=e1471]:
+                        - img "increase" [ref=e1472]
+                        - text: Quick View
+                    - list [ref=e1474]:
+                      - listitem
+                      - listitem [ref=e1475]: Cayman Platform Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1476]:
+                        - list [ref=e1477]:
+                          - listitem [ref=e1478]:
+                            - generic [ref=e1479]: $ 549
+                            - generic [ref=e1480]:
+                              - text: –
+                              - generic [ref=e1481]: $ 1,899
+                      - listitem
+                      - listitem
+                      - listitem
+                  - link "Linwood Platform Bed Toggle favorite item Bestseller increase Quick View Linwood Platform Bed Sale $ 679.99 – $ 2,069 $ 849 – $ 2,299" [ref=e1484] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/products/linwood-bed/?subGroupId=linwood-bed-SPAF-finish-remainder
+                    - generic [ref=e1485]:
+                      - img "Linwood Platform Bed" [ref=e1486]
+                      - button "Toggle favorite item" [ref=e1487]:
+                        - img "add to favorites" [ref=e1488]
+                      - list [ref=e1489]:
+                        - listitem [ref=e1490]:
+                          - generic [ref=e1492]: Bestseller
+                      - generic [ref=e1493]:
+                        - img "increase" [ref=e1494]
+                        - text: Quick View
+                    - list [ref=e1496]:
+                      - listitem
+                      - listitem [ref=e1497]: Linwood Platform Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1498]:
+                        - list [ref=e1499]:
+                          - listitem [ref=e1500]:
+                            - list [ref=e1501]:
+                              - listitem [ref=e1502]: Sale
+                              - listitem [ref=e1503]:
+                                - generic [ref=e1504]:
+                                  - generic [ref=e1505]: $ 679.99
+                                  - generic [ref=e1506]:
+                                    - text: –
+                                    - generic [ref=e1507]: $ 2,069
+                                - generic [ref=e1508]:
+                                  - generic [ref=e1509]: $ 849
+                                  - generic [ref=e1510]:
+                                    - text: –
+                                    - generic [ref=e1511]: $ 2,299
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1512]:
+                  - link "Farmhouse Platform Bed Toggle favorite item Bestseller increase Quick View Farmhouse Platform Bed Limited Time Offer $ 673 – $ 2,099 $ 749 – $ 2,099" [ref=e1515] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/products/farmhouse-bed/?subGroupId=farmhouse-bed-SPAF-finish-remainder
+                    - generic [ref=e1516]:
+                      - img "Farmhouse Platform Bed" [ref=e1517]
+                      - button "Toggle favorite item" [ref=e1518]:
+                        - img "add to favorites" [ref=e1519]
+                      - list [ref=e1520]:
+                        - listitem [ref=e1521]:
+                          - generic [ref=e1523]: Bestseller
+                      - generic [ref=e1524]:
+                        - img "increase" [ref=e1525]
+                        - text: Quick View
+                    - list [ref=e1527]:
+                      - listitem
+                      - listitem [ref=e1528]: Farmhouse Platform Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1529]:
+                        - list [ref=e1530]:
+                          - listitem [ref=e1531]:
+                            - list [ref=e1532]:
+                              - listitem [ref=e1533]: Limited Time Offer
+                              - listitem [ref=e1534]:
+                                - generic [ref=e1535]:
+                                  - generic [ref=e1536]: $ 673
+                                  - generic [ref=e1537]:
+                                    - text: –
+                                    - generic [ref=e1538]: $ 2,099
+                                - generic [ref=e1539]:
+                                  - generic [ref=e1540]: $ 749
+                                  - generic [ref=e1541]:
+                                    - text: –
+                                    - generic [ref=e1542]: $ 2,099
+                      - listitem
+                      - listitem
+                      - listitem
+                  - link "Townes Platform Bed Toggle favorite item Bestseller increase Quick View Townes Platform Bed $ 349 – $ 1,199" [ref=e1545] [cursor=pointer]:
+                    - /url: /products/townes-platform-bed-set/
+                    - generic [ref=e1546]:
+                      - img "Townes Platform Bed" [ref=e1547]
+                      - button "Toggle favorite item" [ref=e1548]:
+                        - img "add to favorites" [ref=e1549]
+                      - list [ref=e1550]:
+                        - listitem [ref=e1551]:
+                          - generic [ref=e1553]: Bestseller
+                      - generic [ref=e1554]:
+                        - img "increase" [ref=e1555]
+                        - text: Quick View
+                    - list [ref=e1557]:
+                      - listitem
+                      - listitem [ref=e1558]: Townes Platform Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1559]:
+                        - list [ref=e1560]:
+                          - listitem [ref=e1561]:
+                            - generic [ref=e1562]: $ 349
+                            - generic [ref=e1563]:
+                              - text: –
+                              - generic [ref=e1564]: $ 1,199
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1565]:
+                  - link "Reed Platform Bed Toggle favorite item Bestseller increase Quick View Reed Platform Bed $ 499 – $ 1,599" [ref=e1568] [cursor=pointer]:
+                    - /url: /products/reed-platform-bed/
+                    - generic [ref=e1569]:
+                      - img "Reed Platform Bed" [ref=e1570]
+                      - button "Toggle favorite item" [ref=e1571]:
+                        - img "add to favorites" [ref=e1572]
+                      - list [ref=e1573]:
+                        - listitem [ref=e1574]:
+                          - generic [ref=e1576]: Bestseller
+                      - generic [ref=e1577]:
+                        - img "increase" [ref=e1578]
+                        - text: Quick View
+                    - list [ref=e1580]:
+                      - listitem
+                      - listitem [ref=e1581]: Reed Platform Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1582]:
+                        - list [ref=e1583]:
+                          - listitem [ref=e1584]:
+                            - generic [ref=e1585]: $ 499
+                            - generic [ref=e1586]:
+                              - text: –
+                              - generic [ref=e1587]: $ 1,599
+                      - listitem
+                      - listitem
+                      - listitem
+                  - link "Sausalito Cane Bed Toggle favorite item Bestseller increase Quick View Sausalito Cane Bed Sale $ 849 – $ 2,468" [ref=e1590] [cursor=pointer]:
+                    - /url: /products/sausalito-white-wash-wood-bed/
+                    - generic [ref=e1591]:
+                      - img "Sausalito Cane Bed" [ref=e1592]
+                      - button "Toggle favorite item" [ref=e1593]:
+                        - img "add to favorites" [ref=e1594]
+                      - list [ref=e1595]:
+                        - listitem [ref=e1596]:
+                          - generic [ref=e1598]: Bestseller
+                      - generic [ref=e1599]:
+                        - img "increase" [ref=e1600]
+                        - text: Quick View
+                    - list [ref=e1602]:
+                      - listitem
+                      - listitem [ref=e1603]: Sausalito Cane Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1604]:
+                        - list [ref=e1605]:
+                          - listitem [ref=e1606]:
+                            - text: Sale
+                            - generic [ref=e1607]: $ 849
+                            - generic [ref=e1608]:
+                              - text: –
+                              - generic [ref=e1609]: $ 2,468
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1610]:
+                  - link "Marina Cane Bed Toggle favorite item Bestseller increase Quick View Marina Cane Bed $ 799 – $ 2,199" [ref=e1613] [cursor=pointer]:
+                    - /url: /products/marina-cane-bed/
+                    - generic [ref=e1614]:
+                      - img "Marina Cane Bed" [ref=e1615]
+                      - button "Toggle favorite item" [ref=e1616]:
+                        - img "add to favorites" [ref=e1617]
+                      - list [ref=e1618]:
+                        - listitem [ref=e1619]:
+                          - generic [ref=e1621]: Bestseller
+                      - generic [ref=e1622]:
+                        - img "increase" [ref=e1623]
+                        - text: Quick View
+                    - list [ref=e1625]:
+                      - listitem
+                      - listitem [ref=e1626]: Marina Cane Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1627]:
+                        - list [ref=e1628]:
+                          - listitem [ref=e1629]:
+                            - generic [ref=e1630]: $ 799
+                            - generic [ref=e1631]:
+                              - text: –
+                              - generic [ref=e1632]: $ 2,199
+                      - listitem
+                      - listitem
+                      - listitem
+                  - link "Vintners Upholstered Bed Toggle favorite item increase Quick View Vintners Upholstered Bed $ 799 – $ 2,299" [ref=e1635] [cursor=pointer]:
+                    - /url: /products/vintners-upholstered-bed/
+                    - generic [ref=e1636]:
+                      - img "Vintners Upholstered Bed" [ref=e1637]
+                      - button "Toggle favorite item" [ref=e1638]:
+                        - img "add to favorites" [ref=e1639]
+                      - generic [ref=e1640]:
+                        - img "increase" [ref=e1641]
+                        - text: Quick View
+                    - list [ref=e1643]:
+                      - listitem [ref=e1644]: Vintners Upholstered Bed
+                      - listitem
+                      - listitem [ref=e1645]:
+                        - list [ref=e1646]:
+                          - listitem [ref=e1647]:
+                            - generic [ref=e1648]: $ 799
+                            - generic [ref=e1649]:
+                              - text: –
+                              - generic [ref=e1650]: $ 2,299
+                      - listitem
+                      - listitem
+                - listitem [ref=e1651]:
+                  - link "Winslet Bed Toggle favorite item increase Quick View Winslet Bed $ 449 – $ 1,299" [ref=e1654] [cursor=pointer]:
+                    - /url: /products/winslet-bed/
+                    - generic [ref=e1655]:
+                      - img "Winslet Bed" [ref=e1656]
+                      - button "Toggle favorite item" [ref=e1657]:
+                        - img "add to favorites" [ref=e1658]
+                      - generic [ref=e1659]:
+                        - img "increase" [ref=e1660]
+                        - text: Quick View
+                    - list [ref=e1662]:
+                      - listitem [ref=e1663]: Winslet Bed
+                      - listitem
+                      - listitem [ref=e1664]:
+                        - list [ref=e1665]:
+                          - listitem [ref=e1666]:
+                            - generic [ref=e1667]: $ 449
+                            - generic [ref=e1668]:
+                              - text: –
+                              - generic [ref=e1669]: $ 1,299
+                      - listitem
+                      - listitem
+                  - link "Raleigh Curved Upholstered Headboard Toggle favorite item increase Quick View Raleigh Curved Upholstered Headboard Limited Time Offer $ 99 – $ 1,299 $ 199 – $ 1,399" [ref=e1672] [cursor=pointer]:
+                    - /url: /products/raleigh-camelback-headboard/
+                    - generic [ref=e1673]:
+                      - img "Raleigh Curved Upholstered Headboard" [ref=e1674]
+                      - button "Toggle favorite item" [ref=e1675]:
+                        - img "add to favorites" [ref=e1676]
+                      - generic [ref=e1677]:
+                        - img "increase" [ref=e1678]
+                        - text: Quick View
+                    - list [ref=e1680]:
+                      - listitem [ref=e1681]: Raleigh Curved Upholstered Headboard
+                      - listitem
+                      - listitem [ref=e1682]:
+                        - list [ref=e1683]:
+                          - listitem [ref=e1684]:
+                            - list [ref=e1685]:
+                              - listitem [ref=e1686]: Limited Time Offer
+                              - listitem [ref=e1687]:
+                                - generic [ref=e1688]:
+                                  - generic [ref=e1689]: $ 99
+                                  - generic [ref=e1690]:
+                                    - text: –
+                                    - generic [ref=e1691]: $ 1,299
+                                - generic [ref=e1692]:
+                                  - generic [ref=e1693]: $ 199
+                                  - generic [ref=e1694]:
+                                    - text: –
+                                    - generic [ref=e1695]: $ 1,399
+                      - listitem
+                      - listitem
+                - listitem [ref=e1696]:
+                  - link "Rylee Bed Toggle favorite item increase Quick View Rylee Bed $ 599 – $ 2,199" [ref=e1699] [cursor=pointer]:
+                    - /url: /products/rylee-bed/
+                    - generic [ref=e1700]:
+                      - img "Rylee Bed" [ref=e1701]
+                      - button "Toggle favorite item" [ref=e1702]:
+                        - img "add to favorites" [ref=e1703]
+                      - generic [ref=e1704]:
+                        - img "increase" [ref=e1705]
+                        - text: Quick View
+                    - list [ref=e1707]:
+                      - listitem [ref=e1708]: Rylee Bed
+                      - listitem
+                      - listitem [ref=e1709]:
+                        - list [ref=e1710]:
+                          - listitem [ref=e1711]:
+                            - generic [ref=e1712]: $ 599
+                            - generic [ref=e1713]:
+                              - text: –
+                              - generic [ref=e1714]: $ 2,199
+                      - listitem
+                      - listitem
+                  - link "Harper Non-Tufted Upholstered Bed Toggle favorite item Bestseller increase Quick View Harper Non-Tufted Upholstered Bed Limited Time Offer $ 1,599 – $ 2,799 $ 1,999 – $ 2,799" [ref=e1717] [cursor=pointer]:
+                    - /url: /products/harper-upholstered-shelter-bed-headboard/
+                    - generic [ref=e1718]:
+                      - img "Harper Non-Tufted Upholstered Bed" [ref=e1719]
+                      - button "Toggle favorite item" [ref=e1720]:
+                        - img "add to favorites" [ref=e1721]
+                      - list [ref=e1722]:
+                        - listitem [ref=e1723]:
+                          - generic [ref=e1725]: Bestseller
+                      - generic [ref=e1726]:
+                        - img "increase" [ref=e1727]
+                        - text: Quick View
+                    - list [ref=e1729]:
+                      - listitem
+                      - listitem [ref=e1730]: Harper Non-Tufted Upholstered Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1731]:
+                        - list [ref=e1732]:
+                          - listitem [ref=e1733]:
+                            - list [ref=e1734]:
+                              - listitem [ref=e1735]: Limited Time Offer
+                              - listitem [ref=e1736]:
+                                - generic [ref=e1737]:
+                                  - generic [ref=e1738]: $ 1,599
+                                  - generic [ref=e1739]:
+                                    - text: –
+                                    - generic [ref=e1740]: $ 2,799
+                                - generic [ref=e1741]:
+                                  - generic [ref=e1742]: $ 1,999
+                                  - generic [ref=e1743]:
+                                    - text: –
+                                    - generic [ref=e1744]: $ 2,799
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1745]:
+                  - link "Summerville Four Poster Bed Toggle favorite item Bestseller increase Quick View Summerville Four Poster Bed $ 799 – $ 2,199" [ref=e1748] [cursor=pointer]:
+                    - /url: /products/summerville-poster-bed/
+                    - generic [ref=e1749]:
+                      - img "Summerville Four Poster Bed" [ref=e1750]
+                      - button "Toggle favorite item" [ref=e1751]:
+                        - img "add to favorites" [ref=e1752]
+                      - list [ref=e1753]:
+                        - listitem [ref=e1754]:
+                          - generic [ref=e1756]: Bestseller
+                      - generic [ref=e1757]:
+                        - img "increase" [ref=e1758]
+                        - text: Quick View
+                    - list [ref=e1760]:
+                      - listitem
+                      - listitem [ref=e1761]: Summerville Four Poster Bed
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1762]:
+                        - list [ref=e1763]:
+                          - listitem [ref=e1764]:
+                            - generic [ref=e1765]: $ 799
+                            - generic [ref=e1766]:
+                              - text: –
+                              - generic [ref=e1767]: $ 2,199
+                      - listitem
+                      - listitem
+                      - listitem
+                  - link "Carmel Upholstered Platform Bed Toggle favorite item increase Quick View Carmel Upholstered Platform Bed Limited Time Offer $ 1,199 – $ 2,199 $ 1,299 – $ 2,199" [ref=e1770] [cursor=pointer]:
+                    - /url: /products/carmel-upholstered-platform-bed/
+                    - generic [ref=e1771]:
+                      - img "Carmel Upholstered Platform Bed" [ref=e1772]
+                      - button "Toggle favorite item" [ref=e1773]:
+                        - img "add to favorites" [ref=e1774]
+                      - generic [ref=e1775]:
+                        - img "increase" [ref=e1776]
+                        - text: Quick View
+                    - list [ref=e1778]:
+                      - listitem [ref=e1779]: Carmel Upholstered Platform Bed
+                      - listitem
+                      - listitem [ref=e1780]:
+                        - list [ref=e1781]:
+                          - listitem [ref=e1782]:
+                            - list [ref=e1783]:
+                              - listitem [ref=e1784]: Limited Time Offer
+                              - listitem [ref=e1785]:
+                                - generic [ref=e1786]:
+                                  - generic [ref=e1787]: $ 1,199
+                                  - generic [ref=e1788]:
+                                    - text: –
+                                    - generic [ref=e1789]: $ 2,199
+                                - generic [ref=e1790]:
+                                  - generic [ref=e1791]: $ 1,299
+                                  - generic [ref=e1792]:
+                                    - text: –
+                                    - generic [ref=e1793]: $ 2,199
+                      - listitem
+                      - listitem
+                - listitem [ref=e1794]:
+                  - link "Atwell Metal Bed Toggle favorite item increase Quick View Atwell Metal Bed $ 999 – $ 2,099" [ref=e1797] [cursor=pointer]:
+                    - /url: /products/atwell-metal-bed/
+                    - generic [ref=e1798]:
+                      - img "Atwell Metal Bed" [ref=e1799]
+                      - button "Toggle favorite item" [ref=e1800]:
+                        - img "add to favorites" [ref=e1801]
+                      - generic [ref=e1802]:
+                        - img "increase" [ref=e1803]
+                        - text: Quick View
+                    - list [ref=e1805]:
+                      - listitem [ref=e1806]: Atwell Metal Bed
+                      - listitem
+                      - listitem [ref=e1807]:
+                        - list [ref=e1808]:
+                          - listitem [ref=e1809]:
+                            - generic [ref=e1810]: $ 999
+                            - generic [ref=e1811]:
+                              - text: –
+                              - generic [ref=e1812]: $ 2,099
+                      - listitem
+                      - listitem
+                  - link "Modern Farmhouse Platform Bed Toggle favorite item increase Quick View Modern Farmhouse Platform Bed Limited Time Offer $ 583 – $ 1,888 $ 649 – $ 2,099" [ref=e1815] [cursor=pointer]:
+                    - /url: https://www.potterybarn.com/products/modern-farmhouse-platform-bed/?subGroupId=modern-farmhouse-platform-bed-SPAF-finish-remainder
+                    - generic [ref=e1816]:
+                      - img "Modern Farmhouse Platform Bed" [ref=e1817]
+                      - button "Toggle favorite item" [ref=e1818]:
+                        - img "add to favorites" [ref=e1819]
+                      - generic [ref=e1820]:
+                        - img "increase" [ref=e1821]
+                        - text: Quick View
+                    - list [ref=e1823]:
+                      - listitem [ref=e1824]: Modern Farmhouse Platform Bed
+                      - listitem
+                      - listitem [ref=e1825]:
+                        - list [ref=e1826]:
+                          - listitem [ref=e1827]:
+                            - list [ref=e1828]:
+                              - listitem [ref=e1829]: Limited Time Offer
+                              - listitem [ref=e1830]:
+                                - generic [ref=e1831]:
+                                  - generic [ref=e1832]: $ 583
+                                  - generic [ref=e1833]:
+                                    - text: –
+                                    - generic [ref=e1834]: $ 1,888
+                                - generic [ref=e1835]:
+                                  - generic [ref=e1836]: $ 649
+                                  - generic [ref=e1837]:
+                                    - text: –
+                                    - generic [ref=e1838]: $ 2,099
+                      - listitem
+                      - listitem
+                - listitem [ref=e1839]:
+                  - link "Raleigh Curved Upholstered Bed Toggle favorite item increase Quick View Raleigh Curved Upholstered Bed Limited Time Offer $ 1,039 – $ 2,099 $ 1,299 – $ 2,199" [ref=e1842] [cursor=pointer]:
+                    - /url: /products/raleigh-nailhead-bed-headboard/
+                    - generic [ref=e1843]:
+                      - img "Raleigh Curved Upholstered Bed" [ref=e1844]
+                      - button "Toggle favorite item" [ref=e1845]:
+                        - img "add to favorites" [ref=e1846]
+                      - generic [ref=e1847]:
+                        - img "increase" [ref=e1848]
+                        - text: Quick View
+                    - list [ref=e1850]:
+                      - listitem [ref=e1851]: Raleigh Curved Upholstered Bed
+                      - listitem
+                      - listitem [ref=e1852]:
+                        - list [ref=e1853]:
+                          - listitem [ref=e1854]:
+                            - list [ref=e1855]:
+                              - listitem [ref=e1856]: Limited Time Offer
+                              - listitem [ref=e1857]:
+                                - generic [ref=e1858]:
+                                  - generic [ref=e1859]: $ 1,039
+                                  - generic [ref=e1860]:
+                                    - text: –
+                                    - generic [ref=e1861]: $ 2,099
+                                - generic [ref=e1862]:
+                                  - generic [ref=e1863]: $ 1,299
+                                  - generic [ref=e1864]:
+                                    - text: –
+                                    - generic [ref=e1865]: $ 2,199
+                      - listitem
+                      - listitem
+                  - link "Catalina Cane Bed Toggle favorite item increase Quick View Catalina Cane Bed Sale $ 519.99 – $ 1,679.99 $ 649 – $ 2,099" [ref=e1868] [cursor=pointer]:
+                    - /url: /products/catalina-cane-bed/
+                    - generic [ref=e1869]:
+                      - img "Catalina Cane Bed" [ref=e1870]
+                      - button "Toggle favorite item" [ref=e1871]:
+                        - img "add to favorites" [ref=e1872]
+                      - generic [ref=e1873]:
+                        - img "increase" [ref=e1874]
+                        - text: Quick View
+                    - list [ref=e1876]:
+                      - listitem [ref=e1877]: Catalina Cane Bed
+                      - listitem
+                      - listitem [ref=e1878]:
+                        - list [ref=e1879]:
+                          - listitem [ref=e1880]:
+                            - list [ref=e1881]:
+                              - listitem [ref=e1882]: Sale
+                              - listitem [ref=e1883]:
+                                - generic [ref=e1884]:
+                                  - generic [ref=e1885]: $ 519.99
+                                  - generic [ref=e1886]:
+                                    - text: –
+                                    - generic [ref=e1887]: $ 1,679.99
+                                - generic [ref=e1888]:
+                                  - generic [ref=e1889]: $ 649
+                                  - generic [ref=e1890]:
+                                    - text: –
+                                    - generic [ref=e1891]: $ 2,099
+                      - listitem
+                      - listitem
+              - button "next" [ref=e1892] [cursor=pointer]:
+                - img "chevron right" [ref=e1893]
+              - generic [ref=e1894]: Item 1 of 12
+          - generic [ref=e1900]:
+            - heading "Frequently Paired With" [level=2] [ref=e1903]
+            - generic [ref=e1907]:
+              - list [ref=e1908]:
+                - listitem [ref=e1909]:
+                  - link "Townes Nightstand (25\") Toggle favorite item Bestseller increase Quick View Townes Nightstand (25\") $ 349 – $ 698" [ref=e1912] [cursor=pointer]:
+                    - /url: /products/townes-nightstand/
+                    - generic [ref=e1913]:
+                      - img "Townes Nightstand (25\")" [ref=e1914]
+                      - button "Toggle favorite item" [ref=e1915]:
+                        - img "add to favorites" [ref=e1916]
+                      - list [ref=e1917]:
+                        - listitem [ref=e1918]:
+                          - generic [ref=e1920]: Bestseller
+                      - generic [ref=e1921]:
+                        - img "increase" [ref=e1922]
+                        - text: Quick View
+                    - list [ref=e1924]:
+                      - listitem
+                      - listitem [ref=e1925]: Townes Nightstand (25")
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1926]:
+                        - list [ref=e1927]:
+                          - listitem [ref=e1928]:
+                            - generic [ref=e1929]: $ 349
+                            - generic [ref=e1930]:
+                              - text: –
+                              - generic [ref=e1931]: $ 698
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1932]:
+                  - link "Westin Heavenly® Bed Mattress (13.25\"h) Toggle favorite item Bestseller increase Quick View Westin Heavenly® Bed Mattress (13.25\"h) $ 139 – $ 2,845" [ref=e1935] [cursor=pointer]:
+                    - /url: /products/westin-heavenly-bed-mp/
+                    - generic [ref=e1936]:
+                      - img "Westin Heavenly® Bed Mattress (13.25\"h)" [ref=e1937]
+                      - button "Toggle favorite item" [ref=e1938]:
+                        - img "add to favorites" [ref=e1939]
+                      - list [ref=e1940]:
+                        - listitem [ref=e1941]:
+                          - generic [ref=e1943]: Bestseller
+                      - generic [ref=e1944]:
+                        - img "increase" [ref=e1945]
+                        - text: Quick View
+                    - list [ref=e1947]:
+                      - listitem
+                      - listitem [ref=e1948]: Westin Heavenly® Bed Mattress (13.25"h)
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1949]:
+                        - list [ref=e1950]:
+                          - listitem [ref=e1951]:
+                            - generic [ref=e1952]: $ 139
+                            - generic [ref=e1953]:
+                              - text: –
+                              - generic [ref=e1954]: $ 2,845
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1955]:
+                  - link "Cayman 9-Drawer Dresser (62\") Toggle favorite item Bestseller increase Quick View Cayman 9-Drawer Dresser (62\") $ 1,899" [ref=e1958] [cursor=pointer]:
+                    - /url: /products/cayman-9-drawer-dresser/
+                    - generic [ref=e1959]:
+                      - img "Cayman 9-Drawer Dresser (62\")" [ref=e1960]
+                      - button "Toggle favorite item" [ref=e1961]:
+                        - img "add to favorites" [ref=e1962]
+                      - list [ref=e1963]:
+                        - listitem [ref=e1964]:
+                          - generic [ref=e1966]: Bestseller
+                      - generic [ref=e1967]:
+                        - img "increase" [ref=e1968]
+                        - text: Quick View
+                    - list [ref=e1970]:
+                      - listitem
+                      - listitem [ref=e1971]: Cayman 9-Drawer Dresser (62")
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1972]:
+                        - list [ref=e1973]:
+                          - listitem [ref=e1974]:
+                            - generic [ref=e1975]: $ 1,899
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1976]:
+                  - link "Cayman Charging Nightstand (16\") Toggle favorite item Bestseller increase Quick View Cayman Charging Nightstand (16\") $ 499 – $ 998" [ref=e1979] [cursor=pointer]:
+                    - /url: /products/cayman-mini-nightstand/
+                    - generic [ref=e1980]:
+                      - img "Cayman Charging Nightstand (16\")" [ref=e1981]
+                      - button "Toggle favorite item" [ref=e1982]:
+                        - img "add to favorites" [ref=e1983]
+                      - list [ref=e1984]:
+                        - listitem [ref=e1985]:
+                          - generic [ref=e1987]: Bestseller
+                      - generic [ref=e1988]:
+                        - img "increase" [ref=e1989]
+                        - text: Quick View
+                    - list [ref=e1991]:
+                      - listitem
+                      - listitem [ref=e1992]: Cayman Charging Nightstand (16")
+                      - listitem
+                      - listitem
+                      - listitem [ref=e1993]:
+                        - list [ref=e1994]:
+                          - listitem [ref=e1995]:
+                            - generic [ref=e1996]: $ 499
+                            - generic [ref=e1997]:
+                              - text: –
+                              - generic [ref=e1998]: $ 998
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e1999]:
+                  - link "Cayman Wide Nightstand (33\") Toggle favorite item Bestseller increase Quick View Cayman Wide Nightstand (33\") $ 649" [ref=e2002] [cursor=pointer]:
+                    - /url: /products/cayman-wide-nightstand/
+                    - generic [ref=e2003]:
+                      - img "Cayman Wide Nightstand (33\")" [ref=e2004]
+                      - button "Toggle favorite item" [ref=e2005]:
+                        - img "add to favorites" [ref=e2006]
+                      - list [ref=e2007]:
+                        - listitem [ref=e2008]:
+                          - generic [ref=e2010]: Bestseller
+                      - generic [ref=e2011]:
+                        - img "increase" [ref=e2012]
+                        - text: Quick View
+                    - list [ref=e2014]:
+                      - listitem
+                      - listitem [ref=e2015]: Cayman Wide Nightstand (33")
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2016]:
+                        - list [ref=e2017]:
+                          - listitem [ref=e2018]:
+                            - generic [ref=e2019]: $ 649
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e2020]:
+                  - link "Hydrocool® Moisture Wicking Down Alternative Pillow Toggle favorite item Bestseller increase Quick View Hydrocool® Moisture Wicking Down Alternative Pillow $ 79 – $ 119 Free Shipping" [ref=e2023] [cursor=pointer]:
+                    - /url: /products/hydrocool-pillow-insert/
+                    - generic [ref=e2024]:
+                      - img "Hydrocool® Moisture Wicking Down Alternative Pillow" [ref=e2025]
+                      - button "Toggle favorite item" [ref=e2026]:
+                        - img "add to favorites" [ref=e2027]
+                      - list [ref=e2028]:
+                        - listitem [ref=e2029]:
+                          - generic [ref=e2031]: Bestseller
+                      - generic [ref=e2032]:
+                        - img "increase" [ref=e2033]
+                        - text: Quick View
+                    - list [ref=e2035]:
+                      - listitem
+                      - listitem [ref=e2036]: Hydrocool® Moisture Wicking Down Alternative Pillow
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2037]:
+                        - list [ref=e2038]:
+                          - listitem [ref=e2039]:
+                            - generic [ref=e2040]: $ 79
+                            - generic [ref=e2041]:
+                              - text: –
+                              - generic [ref=e2042]: $ 119
+                      - listitem [ref=e2043]:
+                        - list [ref=e2044]:
+                          - listitem [ref=e2045]:
+                            - generic [ref=e2046]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2047]:
+                  - link "Waterproof & Stain Repellant Down Alternative Mattress Pad Toggle favorite item Bestseller increase Quick View Waterproof & Stain Repellant Down Alternative Mattress Pad $ 79 – $ 109 Free Shipping" [ref=e2050] [cursor=pointer]:
+                    - /url: /products/waterproof-mattress-pad/
+                    - generic [ref=e2051]:
+                      - img "Waterproof & Stain Repellant Down Alternative Mattress Pad" [ref=e2052]
+                      - button "Toggle favorite item" [ref=e2053]:
+                        - img "add to favorites" [ref=e2054]
+                      - list [ref=e2055]:
+                        - listitem [ref=e2056]:
+                          - generic [ref=e2058]: Bestseller
+                      - generic [ref=e2059]:
+                        - img "increase" [ref=e2060]
+                        - text: Quick View
+                    - list [ref=e2062]:
+                      - listitem
+                      - listitem [ref=e2063]: Waterproof & Stain Repellant Down Alternative Mattress Pad
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2064]:
+                        - list [ref=e2065]:
+                          - listitem [ref=e2066]:
+                            - generic [ref=e2067]: $ 79
+                            - generic [ref=e2068]:
+                              - text: –
+                              - generic [ref=e2069]: $ 109
+                      - listitem [ref=e2070]:
+                        - list [ref=e2071]:
+                          - listitem [ref=e2072]:
+                            - generic [ref=e2073]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2074]:
+                  - link "Belgian Flax Linen Duvet Cover Toggle favorite item Bestseller increase Quick View Belgian Flax Linen Duvet Cover Clearance $ 77.99 – $ 297 $ 130 – $ 329 Free Shipping" [ref=e2077] [cursor=pointer]:
+                    - /url: /products/belgian-flax-linen-duvet-cover-white/
+                    - generic [ref=e2078]:
+                      - img "Belgian Flax Linen Duvet Cover" [ref=e2079]
+                      - button "Toggle favorite item" [ref=e2080]:
+                        - img "add to favorites" [ref=e2081]
+                      - list [ref=e2082]:
+                        - listitem [ref=e2083]:
+                          - generic [ref=e2085]: Bestseller
+                      - generic [ref=e2086]:
+                        - img "increase" [ref=e2087]
+                        - text: Quick View
+                    - list [ref=e2089]:
+                      - listitem
+                      - listitem [ref=e2090]: Belgian Flax Linen Duvet Cover
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2091]:
+                        - list [ref=e2092]:
+                          - listitem [ref=e2093]:
+                            - list [ref=e2094]:
+                              - listitem [ref=e2095]: Clearance
+                              - listitem [ref=e2096]:
+                                - generic [ref=e2097]:
+                                  - generic [ref=e2098]: $ 77.99
+                                  - generic [ref=e2099]:
+                                    - text: –
+                                    - generic [ref=e2100]: $ 297
+                                - generic [ref=e2101]:
+                                  - generic [ref=e2102]: $ 130
+                                  - generic [ref=e2103]:
+                                    - text: –
+                                    - generic [ref=e2104]: $ 329
+                      - listitem [ref=e2105]:
+                        - list [ref=e2106]:
+                          - listitem [ref=e2107]:
+                            - generic [ref=e2108]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2109]:
+                  - link "Hydrocool® Moisture Wicking Down Alternative Duvet Insert Toggle favorite item Bestseller increase Quick View Hydrocool® Moisture Wicking Down Alternative Duvet Insert $ 199 – $ 339 Free Shipping" [ref=e2112] [cursor=pointer]:
+                    - /url: /products/hydro-cool-comforter/
+                    - generic [ref=e2113]:
+                      - img "Hydrocool® Moisture Wicking Down Alternative Duvet Insert" [ref=e2114]
+                      - button "Toggle favorite item" [ref=e2115]:
+                        - img "add to favorites" [ref=e2116]
+                      - list [ref=e2117]:
+                        - listitem [ref=e2118]:
+                          - generic [ref=e2120]: Bestseller
+                      - generic [ref=e2121]:
+                        - img "increase" [ref=e2122]
+                        - text: Quick View
+                    - list [ref=e2124]:
+                      - listitem
+                      - listitem [ref=e2125]: Hydrocool® Moisture Wicking Down Alternative Duvet Insert
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2126]:
+                        - list [ref=e2127]:
+                          - listitem [ref=e2128]:
+                            - generic [ref=e2129]: $ 199
+                            - generic [ref=e2130]:
+                              - text: –
+                              - generic [ref=e2131]: $ 339
+                      - listitem [ref=e2132]:
+                        - list [ref=e2133]:
+                          - listitem [ref=e2134]:
+                            - generic [ref=e2135]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2136]:
+                  - link "400-Thread-Count Organic Percale Sheet Set Toggle favorite item Bestseller increase Quick View 400-Thread-Count Organic Percale Sheet Set Limited Time Offer $ 119 – $ 169 $ 129 – $ 179 Free Shipping" [ref=e2139] [cursor=pointer]:
+                    - /url: /products/pb-classic-thread-count-organic-sheet-set/
+                    - generic [ref=e2140]:
+                      - img "400-Thread-Count Organic Percale Sheet Set" [ref=e2141]
+                      - button "Toggle favorite item" [ref=e2142]:
+                        - img "add to favorites" [ref=e2143]
+                      - list [ref=e2144]:
+                        - listitem [ref=e2145]:
+                          - generic [ref=e2147]: Bestseller
+                      - generic [ref=e2148]:
+                        - img "increase" [ref=e2149]
+                        - text: Quick View
+                    - list [ref=e2151]:
+                      - listitem
+                      - listitem [ref=e2152]: 400-Thread-Count Organic Percale Sheet Set
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2153]:
+                        - list [ref=e2154]:
+                          - listitem [ref=e2155]:
+                            - list [ref=e2156]:
+                              - listitem [ref=e2157]: Limited Time Offer
+                              - listitem [ref=e2158]:
+                                - generic [ref=e2159]:
+                                  - generic [ref=e2160]: $ 119
+                                  - generic [ref=e2161]:
+                                    - text: –
+                                    - generic [ref=e2162]: $ 169
+                                - generic [ref=e2163]:
+                                  - generic [ref=e2164]: $ 129
+                                  - generic [ref=e2165]:
+                                    - text: –
+                                    - generic [ref=e2166]: $ 179
+                      - listitem [ref=e2167]:
+                        - list [ref=e2168]:
+                          - listitem [ref=e2169]:
+                            - generic [ref=e2170]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2171]:
+                  - link "Cloud Duvet Cover Toggle favorite item Bestseller increase Quick View Cloud Duvet Cover Limited Time Offer $ 55 – $ 259 $ 59 – $ 279 Free Shipping" [ref=e2174] [cursor=pointer]:
+                    - /url: /products/cloud-linen-duvet-cover-white/
+                    - generic [ref=e2175]:
+                      - img "Cloud Duvet Cover" [ref=e2176]
+                      - button "Toggle favorite item" [ref=e2177]:
+                        - img "add to favorites" [ref=e2178]
+                      - list [ref=e2179]:
+                        - listitem [ref=e2180]:
+                          - generic [ref=e2182]: Bestseller
+                      - generic [ref=e2183]:
+                        - img "increase" [ref=e2184]
+                        - text: Quick View
+                    - list [ref=e2186]:
+                      - listitem
+                      - listitem [ref=e2187]: Cloud Duvet Cover
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2188]:
+                        - list [ref=e2189]:
+                          - listitem [ref=e2190]:
+                            - list [ref=e2191]:
+                              - listitem [ref=e2192]: Limited Time Offer
+                              - listitem [ref=e2193]:
+                                - generic [ref=e2194]:
+                                  - generic [ref=e2195]: $ 55
+                                  - generic [ref=e2196]:
+                                    - text: –
+                                    - generic [ref=e2197]: $ 259
+                                - generic [ref=e2198]:
+                                  - generic [ref=e2199]: $ 59
+                                  - generic [ref=e2200]:
+                                    - text: –
+                                    - generic [ref=e2201]: $ 279
+                      - listitem [ref=e2202]:
+                        - list [ref=e2203]:
+                          - listitem [ref=e2204]:
+                            - generic [ref=e2205]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2206]:
+                  - link "Perfect Puff Pillow Euro Insert Toggle favorite item increase Quick View Perfect Puff Pillow Euro Insert $ 49.50 – $ 59.50 Free Shipping" [ref=e2209] [cursor=pointer]:
+                    - /url: /products/euro-pillow-inserts/
+                    - generic [ref=e2210]:
+                      - img "Perfect Puff Pillow Euro Insert" [ref=e2211]
+                      - button "Toggle favorite item" [ref=e2212]:
+                        - img "add to favorites" [ref=e2213]
+                      - generic [ref=e2214]:
+                        - img "increase" [ref=e2215]
+                        - text: Quick View
+                    - list [ref=e2217]:
+                      - listitem
+                      - listitem [ref=e2218]: Perfect Puff Pillow Euro Insert
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2219]:
+                        - list [ref=e2220]:
+                          - listitem [ref=e2221]:
+                            - generic [ref=e2222]: $ 49.50
+                            - generic [ref=e2223]:
+                              - text: –
+                              - generic [ref=e2224]: $ 59.50
+                      - listitem [ref=e2225]:
+                        - list [ref=e2226]:
+                          - listitem [ref=e2227]:
+                            - generic [ref=e2228]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2229]:
+                  - link "Sausalito 8-Drawer Dresser (76\") Toggle favorite item increase Quick View Sausalito 8-Drawer Dresser (76\") $ 2,599" [ref=e2232] [cursor=pointer]:
+                    - /url: /products/sausalito-dresser/
+                    - generic [ref=e2233]:
+                      - img "Sausalito 8-Drawer Dresser (76\")" [ref=e2234]
+                      - button "Toggle favorite item" [ref=e2235]:
+                        - img "add to favorites" [ref=e2236]
+                      - generic [ref=e2237]:
+                        - img "increase" [ref=e2238]
+                        - text: Quick View
+                    - list [ref=e2240]:
+                      - listitem [ref=e2241]: Sausalito 8-Drawer Dresser (76")
+                      - listitem
+                      - listitem [ref=e2242]:
+                        - list [ref=e2243]:
+                          - listitem [ref=e2244]:
+                            - generic [ref=e2245]: $ 2,599
+                      - listitem
+                      - listitem
+                - listitem [ref=e2246]:
+                  - link "Cozy Cloud Handcrafted Quilt Toggle favorite item Bestseller increase Quick View Cozy Cloud Handcrafted Quilt Limited Time Offer $ 38.97 – $ 299 $ 79.50 – $ 329 Free Shipping" [ref=e2249] [cursor=pointer]:
+                    - /url: /products/cozy-cloud-quilt/
+                    - generic [ref=e2250]:
+                      - img "Cozy Cloud Handcrafted Quilt" [ref=e2251]
+                      - button "Toggle favorite item" [ref=e2252]:
+                        - img "add to favorites" [ref=e2253]
+                      - list [ref=e2254]:
+                        - listitem [ref=e2255]:
+                          - generic [ref=e2257]: Bestseller
+                      - generic [ref=e2258]:
+                        - img "increase" [ref=e2259]
+                        - text: Quick View
+                    - list [ref=e2261]:
+                      - listitem
+                      - listitem [ref=e2262]: Cozy Cloud Handcrafted Quilt
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2263]:
+                        - list [ref=e2264]:
+                          - listitem [ref=e2265]:
+                            - list [ref=e2266]:
+                              - listitem [ref=e2267]: Limited Time Offer
+                              - listitem [ref=e2268]:
+                                - generic [ref=e2269]:
+                                  - generic [ref=e2270]: $ 38.97
+                                  - generic [ref=e2271]:
+                                    - text: –
+                                    - generic [ref=e2272]: $ 299
+                                - generic [ref=e2273]:
+                                  - generic [ref=e2274]: $ 79.50
+                                  - generic [ref=e2275]:
+                                    - text: –
+                                    - generic [ref=e2276]: $ 329
+                      - listitem [ref=e2277]:
+                        - list [ref=e2278]:
+                          - listitem [ref=e2279]:
+                            - generic [ref=e2280]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2281]:
+                  - link "Linwood Nightstand (28\") Toggle favorite item Bestseller increase Quick View Linwood Nightstand (28\") Sale $ 679.99 – $ 1,528 $ 849 – $ 1,698" [ref=e2284] [cursor=pointer]:
+                    - /url: /products/linwood-nightstand/
+                    - generic [ref=e2285]:
+                      - img "Linwood Nightstand (28\")" [ref=e2286]
+                      - button "Toggle favorite item" [ref=e2287]:
+                        - img "add to favorites" [ref=e2288]
+                      - list [ref=e2289]:
+                        - listitem [ref=e2290]:
+                          - generic [ref=e2292]: Bestseller
+                      - generic [ref=e2293]:
+                        - img "increase" [ref=e2294]
+                        - text: Quick View
+                    - list [ref=e2296]:
+                      - listitem
+                      - listitem [ref=e2297]: Linwood Nightstand (28")
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2298]:
+                        - list [ref=e2299]:
+                          - listitem [ref=e2300]:
+                            - list [ref=e2301]:
+                              - listitem [ref=e2302]: Sale
+                              - listitem [ref=e2303]:
+                                - generic [ref=e2304]:
+                                  - generic [ref=e2305]: $ 679.99
+                                  - generic [ref=e2306]:
+                                    - text: –
+                                    - generic [ref=e2307]: $ 1,528
+                                - generic [ref=e2308]:
+                                  - generic [ref=e2309]: $ 849
+                                  - generic [ref=e2310]:
+                                    - text: –
+                                    - generic [ref=e2311]: $ 1,698
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e2312]:
+                  - link "Belgian Flax Linen Hemstitch Sheet Set Toggle favorite item Bestseller increase Quick View Belgian Flax Linen Hemstitch Sheet Set Sale $ 230.99 – $ 329 $ 289 – $ 339 Free Shipping" [ref=e2315] [cursor=pointer]:
+                    - /url: /products/belgian-linen-sheet-set/
+                    - generic [ref=e2316]:
+                      - img "Belgian Flax Linen Hemstitch Sheet Set" [ref=e2317]
+                      - button "Toggle favorite item" [ref=e2318]:
+                        - img "add to favorites" [ref=e2319]
+                      - list [ref=e2320]:
+                        - listitem [ref=e2321]:
+                          - generic [ref=e2323]: Bestseller
+                      - generic [ref=e2324]:
+                        - img "increase" [ref=e2325]
+                        - text: Quick View
+                    - list [ref=e2327]:
+                      - listitem
+                      - listitem [ref=e2328]: Belgian Flax Linen Hemstitch Sheet Set
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2329]:
+                        - list [ref=e2330]:
+                          - listitem [ref=e2331]:
+                            - list [ref=e2332]:
+                              - listitem [ref=e2333]: Sale
+                              - listitem [ref=e2334]:
+                                - generic [ref=e2335]:
+                                  - generic [ref=e2336]: $ 230.99
+                                  - generic [ref=e2337]:
+                                    - text: –
+                                    - generic [ref=e2338]: $ 329
+                                - generic [ref=e2339]:
+                                  - generic [ref=e2340]: $ 289
+                                  - generic [ref=e2341]:
+                                    - text: –
+                                    - generic [ref=e2342]: $ 339
+                      - listitem [ref=e2343]:
+                        - list [ref=e2344]:
+                          - listitem [ref=e2345]:
+                            - generic [ref=e2346]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2347]:
+                  - link "Cayman 5-Drawer Tall Dresser (24\") Toggle favorite item increase Quick View Cayman 5-Drawer Tall Dresser (24\") $ 1,299" [ref=e2350] [cursor=pointer]:
+                    - /url: /products/cayman-5-drawer-tall-dresser/
+                    - generic [ref=e2351]:
+                      - img "Cayman 5-Drawer Tall Dresser (24\")" [ref=e2352]
+                      - button "Toggle favorite item" [ref=e2353]:
+                        - img "add to favorites" [ref=e2354]
+                      - generic [ref=e2355]:
+                        - img "increase" [ref=e2356]
+                        - text: Quick View
+                    - list [ref=e2358]:
+                      - listitem [ref=e2359]: Cayman 5-Drawer Tall Dresser (24")
+                      - listitem
+                      - listitem [ref=e2360]:
+                        - list [ref=e2361]:
+                          - listitem [ref=e2362]:
+                            - generic [ref=e2363]: $ 1,299
+                      - listitem
+                      - listitem
+                - listitem [ref=e2364]:
+                  - link "Calistoga Nightstand (28\") Toggle favorite item Bestseller increase Quick View Calistoga Nightstand (28\") Limited Time Offer $ 629 – $ 699 $ 699" [ref=e2367] [cursor=pointer]:
+                    - /url: /products/calistoga-nightstand/
+                    - generic [ref=e2368]:
+                      - img "Calistoga Nightstand (28\")" [ref=e2369]
+                      - button "Toggle favorite item" [ref=e2370]:
+                        - img "add to favorites" [ref=e2371]
+                      - list [ref=e2372]:
+                        - listitem [ref=e2373]:
+                          - generic [ref=e2375]: Bestseller
+                      - generic [ref=e2376]:
+                        - img "increase" [ref=e2377]
+                        - text: Quick View
+                    - list [ref=e2379]:
+                      - listitem
+                      - listitem [ref=e2380]: Calistoga Nightstand (28")
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2381]:
+                        - list [ref=e2382]:
+                          - listitem [ref=e2383]:
+                            - list [ref=e2384]:
+                              - listitem [ref=e2385]: Limited Time Offer
+                              - listitem [ref=e2386]:
+                                - generic [ref=e2387]:
+                                  - generic [ref=e2388]: $ 629
+                                  - generic [ref=e2389]:
+                                    - text: –
+                                    - generic [ref=e2390]: $ 699
+                                - generic [ref=e2392]: $ 699
+                      - listitem
+                      - listitem
+                      - listitem
+                - listitem [ref=e2393]:
+                  - link "Belgian Flax Linen Classic Sheet Set Toggle favorite item Bestseller increase Quick View Belgian Flax Linen Classic Sheet Set Sale $ 230.99 – $ 329 $ 289 – $ 339 Free Shipping" [ref=e2396] [cursor=pointer]:
+                    - /url: /products/classic-belgian-linen-sheet-set/
+                    - generic [ref=e2397]:
+                      - img "Belgian Flax Linen Classic Sheet Set" [ref=e2398]
+                      - button "Toggle favorite item" [ref=e2399]:
+                        - img "add to favorites" [ref=e2400]
+                      - list [ref=e2401]:
+                        - listitem [ref=e2402]:
+                          - generic [ref=e2404]: Bestseller
+                      - generic [ref=e2405]:
+                        - img "increase" [ref=e2406]
+                        - text: Quick View
+                    - list [ref=e2408]:
+                      - listitem
+                      - listitem [ref=e2409]: Belgian Flax Linen Classic Sheet Set
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2410]:
+                        - list [ref=e2411]:
+                          - listitem [ref=e2412]:
+                            - list [ref=e2413]:
+                              - listitem [ref=e2414]: Sale
+                              - listitem [ref=e2415]:
+                                - generic [ref=e2416]:
+                                  - generic [ref=e2417]: $ 230.99
+                                  - generic [ref=e2418]:
+                                    - text: –
+                                    - generic [ref=e2419]: $ 329
+                                - generic [ref=e2420]:
+                                  - generic [ref=e2421]: $ 289
+                                  - generic [ref=e2422]:
+                                    - text: –
+                                    - generic [ref=e2423]: $ 339
+                      - listitem [ref=e2424]:
+                        - list [ref=e2425]:
+                          - listitem [ref=e2426]:
+                            - generic [ref=e2427]: Free Shipping
+                      - listitem
+                      - listitem
+                - listitem [ref=e2428]:
+                  - link "Dream Brushed Cotton Sateen Comforter Toggle favorite item Bestseller increase Quick View Dream Brushed Cotton Sateen Comforter Clearance $ 43.97 – $ 330 $ 110 – $ 330 Free Shipping" [ref=e2431] [cursor=pointer]:
+                    - /url: /products/dream-brushed-cotton-comforter-shams-white/
+                    - generic [ref=e2432]:
+                      - img "Dream Brushed Cotton Sateen Comforter" [ref=e2433]
+                      - button "Toggle favorite item" [ref=e2434]:
+                        - img "add to favorites" [ref=e2435]
+                      - list [ref=e2436]:
+                        - listitem [ref=e2437]:
+                          - generic [ref=e2439]: Bestseller
+                      - generic [ref=e2440]:
+                        - img "increase" [ref=e2441]
+                        - text: Quick View
+                    - list [ref=e2443]:
+                      - listitem
+                      - listitem [ref=e2444]: Dream Brushed Cotton Sateen Comforter
+                      - listitem
+                      - listitem
+                      - listitem [ref=e2445]:
+                        - list [ref=e2446]:
+                          - listitem [ref=e2447]:
+                            - list [ref=e2448]:
+                              - listitem [ref=e2449]: Clearance
+                              - listitem [ref=e2450]:
+                                - generic [ref=e2451]:
+                                  - generic [ref=e2452]: $ 43.97
+                                  - generic [ref=e2453]:
+                                    - text: –
+                                    - generic [ref=e2454]: $ 330
+                                - generic [ref=e2455]:
+                                  - generic [ref=e2456]: $ 110
+                                  - generic [ref=e2457]:
+                                    - text: –
+                                    - generic [ref=e2458]: $ 330
+                      - listitem [ref=e2459]:
+                        - list [ref=e2460]:
+                          - listitem [ref=e2461]:
+                            - generic [ref=e2462]: Free Shipping
+                      - listitem
+                      - listitem
+              - button "next" [ref=e2463] [cursor=pointer]:
+                - img "chevron right" [ref=e2464]
+              - generic [ref=e2465]: Item 1 of 20
+      - region "Related content" [ref=e2466]:
+        - generic [ref=e2468]:
+          - generic [ref=e2469]: Keep Shopping
+          - generic [ref=e2470]:
+            - generic [ref=e2471]: "Searches:"
+            - generic [ref=e2472]:
+              - link "Queen Upholstered Headboards" [ref=e2474] [cursor=pointer]:
+                - /url: /shopping/queen-upholstered-headboard/
+              - link "Linen Headboard Beds" [ref=e2476] [cursor=pointer]:
+                - /url: /shopping/linen-headboard-bed/
+              - link "Bed Frames Clearance" [ref=e2478] [cursor=pointer]:
+                - /url: /shopping/bed-frames-clearance/
+              - link "Black Furniture" [ref=e2480] [cursor=pointer]:
+                - /url: /shopping/black-furniture/
+              - link "Acacia Wood Furniture" [ref=e2482] [cursor=pointer]:
+                - /url: /shopping/acacia-wood-furniture/
+              - link "Beautiful Furniture" [ref=e2484] [cursor=pointer]:
+                - /url: /shopping/beautiful-fully-assembled-furniture/
+          - generic [ref=e2485]:
+            - generic [ref=e2486]: "Products:"
+            - generic [ref=e2487]:
+              - link "Kona Upholstered Bed" [ref=e2489] [cursor=pointer]:
+                - /url: /products/kona-upholstered-bed/
+              - link "Cayman Platform Bed" [ref=e2491] [cursor=pointer]:
+                - /url: /products/cayman-platform-bed-set/
+              - link "Cayman Upholstered Bed" [ref=e2493] [cursor=pointer]:
+                - /url: /products/cayman-upholstered-wood-bed/
+              - link "Lyell Platform Bed" [ref=e2495] [cursor=pointer]:
+                - /url: /products/lyell-platform-bed/
+              - link "Scarlett Upholstered Bed" [ref=e2497] [cursor=pointer]:
+                - /url: /products/scarlett-upholstered-bed/
+              - link "Marina Cane Bed" [ref=e2499] [cursor=pointer]:
+                - /url: /products/marina-cane-bed/
+          - generic [ref=e2500]:
+            - generic [ref=e2501]: "Categories:"
+            - generic [ref=e2502]:
+              - link "Headboard Beds & Headboards" [ref=e2504] [cursor=pointer]:
+                - /url: /shop/furniture/headboard+beds-headboards/type-m-type-ff0010-1/
+              - link "Headboard Beds & Headboards" [ref=e2506] [cursor=pointer]:
+                - /url: /shop/furniture/headboard+beds-headboards/type-m-type-ff0010-1/
+              - link "Headboard Beds & Headboards" [ref=e2508] [cursor=pointer]:
+                - /url: /shop/furniture/headboard+beds-headboards/type-m-type-ff0010-1/
+              - link "Bed Farmhouse" [ref=e2510] [cursor=pointer]:
+                - /url: /shop/furniture/bedroom-collections/bed+farmhouse-bedroom-collection/producttype-m-product-type-ff000a1119fe20-1/
+              - link "Metal All Bedroom Furniture" [ref=e2512] [cursor=pointer]:
+                - /url: /shop/furniture/metal+all-bedroom-furniture/material-m-material-ff0010-1/
+              - link "California King Beds & Headboards" [ref=e2514] [cursor=pointer]:
+                - /url: /shop/furniture/california-king+beds-headboards/beddingsize-m-size-ff000b161dfe20-1/
+      - generic:
+        - region "Favorite recommendations"
+        - region "Print and email options"
+  - contentinfo [ref=e2515]:
+    - generic [ref=e2516]:
+      - list [ref=e2517]:
+        - listitem [ref=e2518]:
+          - heading "Customer Service ›" [level=3] [ref=e2519]:
+            - link "Customer Service ›" [ref=e2520] [cursor=pointer]:
+              - /url: /customer-service/?cm_type=fnav
+        - listitem [ref=e2521]:
+          - link "Contact Us" [ref=e2522] [cursor=pointer]:
+            - /url: /customer-service/email-us/
+        - listitem [ref=e2523]:
+          - link "Track Your Order" [ref=e2524] [cursor=pointer]:
+            - /url: /customer-service/order-shipment-tracking/?cm_type=fnav
+        - listitem [ref=e2525]:
+          - link "Returns & Exchanges" [ref=e2526] [cursor=pointer]:
+            - /url: /customer-service/return/?cm_type=fnav
+        - listitem [ref=e2527]:
+          - link "Shipping Information" [ref=e2528] [cursor=pointer]:
+            - /url: /customer-service/shipping-info.html?cm_type=fnav&custSvsId=shippingInfo
+        - listitem [ref=e2529]:
+          - link "International Orders" [ref=e2530] [cursor=pointer]:
+            - /url: /customer-service/international-orders.html?cm_type=fnav&custSvsId=faqInt
+        - listitem [ref=e2531]:
+          - link "Help Topics" [ref=e2532] [cursor=pointer]:
+            - /url: /customer-service/faq/?cm_type=fnav
+        - listitem [ref=e2533]:
+          - link "Give Us Feedback" [ref=e2536] [cursor=pointer]:
+            - /url: javascript:O_LC('');
+      - list [ref=e2537]:
+        - listitem [ref=e2538]:
+          - heading "Pottery Barn Credit Card ›" [level=3] [ref=e2539]:
+            - link "Pottery Barn Credit Card ›" [ref=e2540] [cursor=pointer]:
+              - /url: /ccvalueprop/?fromPageType=GlobalFooter&userAction=LearnMore&cm_type=fnav&cm_sp=footerlinks-_-desktop-_-account_creditcard
+        - listitem [ref=e2541]:
+          - link "Apply Now" [ref=e2542] [cursor=pointer]:
+            - /url: /ccvalueprop/?fromPageType=GlobalFooter&userAction=learnmore
+        - listitem [ref=e2543]:
+          - link "Pay Bill Online" [ref=e2544] [cursor=pointer]:
+            - /url: https://verified.capitalone.com/auth/signin?Product=ENTERPRISE-ease-qa.clouddqtext#/welcome
+        - listitem [ref=e2545]:
+          - heading "Resources" [level=3] [ref=e2546]
+        - listitem [ref=e2547]:
+          - link "Gift Cards" [ref=e2548] [cursor=pointer]:
+            - /url: /pages/gift-cards.html?cm_type=fnav
+        - listitem [ref=e2549]:
+          - link "Wedding & Gift Registry" [ref=e2550] [cursor=pointer]:
+            - /url: /registry/?cm_type=fnav
+        - listitem [ref=e2551]:
+          - link "Email Preferences" [ref=e2552] [cursor=pointer]:
+            - /url: /customer-service/email-preferences/?cm_type=fnav&custSvsId=emailPreferences
+        - listitem [ref=e2553]:
+          - link "View Online Catalog" [ref=e2554] [cursor=pointer]:
+            - /url: /pages/pottery-barn-catalog.html?cm_type=fnav
+        - listitem [ref=e2555]:
+          - link "Request a Catalog" [ref=e2556] [cursor=pointer]:
+            - /url: /customer-service/catalog-request/?cm_type=fnav&custSvsId=catalogRequest
+        - listitem [ref=e2557]:
+          - link "Catalog Address Change" [ref=e2558] [cursor=pointer]:
+            - /url: /customer-service/address-change/?cm_type=fnav&custSvsId=addressChange
+        - listitem [ref=e2559]:
+          - link "Do Not Sell Or Share My Personal Information" [ref=e2560] [cursor=pointer]:
+            - /url: /about-us/privacy-policy.html#do-not-sell
+      - list [ref=e2561]:
+        - listitem [ref=e2562]:
+          - heading "Design Services ›" [level=3] [ref=e2563]:
+            - link "Design Services ›" [ref=e2564] [cursor=pointer]:
+              - /url: /design-services/?cm_type=fnav
+        - listitem [ref=e2565]:
+          - link "Free Interior Design" [ref=e2566] [cursor=pointer]:
+            - /url: /design-services/?cm_type=fnav
+        - listitem [ref=e2567]:
+          - link "Room Planner" [ref=e2568] [cursor=pointer]:
+            - /url: /tips-and-ideas/room-planner-tool/?cm_type=fnav
+        - listitem [ref=e2569]:
+          - heading "Business to Business ›" [level=3] [ref=e2570]:
+            - link "Business to Business ›" [ref=e2571] [cursor=pointer]:
+              - /url: /pages/business-to-business/?cm_type=fnav
+        - listitem [ref=e2572]:
+          - link "Overview" [ref=e2573] [cursor=pointer]:
+            - /url: /pages/business-to-business/?cm_type=fnav
+        - listitem [ref=e2574]:
+          - link "Trade" [ref=e2575] [cursor=pointer]:
+            - /url: /pages/business-to-business/?cm_type=fnav
+        - listitem [ref=e2576]:
+          - link "Contract" [ref=e2577] [cursor=pointer]:
+            - /url: /pages/business-to-business/?cm_type=fnav
+        - listitem [ref=e2578]:
+          - link "Corporate Gifting" [ref=e2579] [cursor=pointer]:
+            - /url: /pages/business-to-business/?cm_type=fnav
+      - list [ref=e2580]:
+        - listitem [ref=e2581]:
+          - heading "About Us" [level=3] [ref=e2582]
+        - listitem [ref=e2583]:
+          - link "Our Story" [ref=e2584] [cursor=pointer]:
+            - /url: /pages/about-us/?cm_type=fnav
+        - listitem [ref=e2585]:
+          - link "Careers" [ref=e2586] [cursor=pointer]:
+            - /url: /customer-service/employment.html?cm_type=fnav&custSvsId=employment&cm_type=fnav
+        - listitem [ref=e2587]:
+          - link "Press" [ref=e2588] [cursor=pointer]:
+            - /url: /customer-service/press.html?cm_type=fnav
+        - listitem [ref=e2589]:
+          - link "Influencers" [ref=e2590] [cursor=pointer]:
+            - /url: https://potterybarn-connect.creatoriq.com/connect/?cm_type=fnav
+        - listitem [ref=e2591]:
+          - link "Find a Store" [ref=e2592] [cursor=pointer]:
+            - /url: /stores/?cm_type=fnav
+        - listitem [ref=e2593]:
+          - heading "Sustainability ›" [level=3] [ref=e2594]:
+            - link "Sustainability ›" [ref=e2595] [cursor=pointer]:
+              - /url: /shop/new/sustainability-shop/?cm_type=fnav
+        - listitem [ref=e2596]:
+          - link "Good by Design" [ref=e2597] [cursor=pointer]:
+            - /url: /pages/our-commitments/?cm_type=fnav
+        - listitem [ref=e2598]:
+          - link "Partners for Progress" [ref=e2599] [cursor=pointer]:
+            - /url: /pages/partners-for-progress/?cm_type=fnav
+        - listitem [ref=e2600]:
+          - heading "Pottery Barn App" [level=3] [ref=e2601]
+        - listitem [ref=e2602]:
+          - link "Download the Pottery Barn app on the App Store" [ref=e2603] [cursor=pointer]:
+            - /url: https://apps.apple.com/app/apple-store/id1218056134?pt=346764&ct=Evergreen_SiteFooter&mt=8
+            - img [ref=e2604]
+      - generic [ref=e2605]:
+        - generic [ref=e2606]:
+          - heading [level=3]
+          - paragraph [ref=e2607]: Sign up for sale, new arrivals & more.
+          - form "Sign up for sale, new arrivals & more." [ref=e2608]:
+            - generic [ref=e2609]: Sign up for sale, new arrivals & more.
+            - generic [ref=e2611]:
+              - generic [ref=e2612]:
+                - textbox "Sign up for sale, new arrivals & more." [ref=e2613]:
+                  - /placeholder: Enter Your Email
+                - generic:
+                  - text: Enter your email address*
+                  - generic: (required)
+              - generic [ref=e2614]:
+                - textbox "Mobile Number" [ref=e2615]:
+                  - /placeholder: Enter Your Email
+                - generic:
+                  - text: Enter your mobile number (Optional)
+                  - generic: (required)
+              - paragraph [ref=e2617]:
+                - text: Enter your mobile number to receive marketing text messages. You understand that consent is not required to make a purchase. Message and data rates may apply. Message frequency varies. Wireless carriers are not liable for delayed or undelivered messages. Text HELP for help and STOP to cancel. For questions, please
+                - link "contact us" [ref=e2618] [cursor=pointer]:
+                  - /url: /customer-service/email-us/
+                - text: .
+                - link "Terms" [ref=e2619] [cursor=pointer]:
+                  - /url: /about-us/terms.html
+                - text: .
+              - button "Sign Up Now" [ref=e2621] [cursor=pointer]
+        - generic [ref=e2622]:
+          - paragraph [ref=e2623]:
+            - text: California residents, please see the
+            - link "Financial Incentive Terms" [ref=e2624] [cursor=pointer]:
+              - /url: /about-us/privacy-policy.html#financial-incentives
+            - text: for terms.
+          - paragraph
+        - list [ref=e2626]:
+          - listitem [ref=e2627]:
+            - link "Instagram" [ref=e2628] [cursor=pointer]:
+              - /url: https://www.instagram.com/potterybarn?cm_sp=GlobalLinks-_-Footer-_-Instagram
+              - img "Instagram" [ref=e2629]
+          - listitem [ref=e2633]:
+            - link "Facebook" [ref=e2634] [cursor=pointer]:
+              - /url: https://www.facebook.com/potterybarn?cm_sp=GlobalLinks-_-Footer-_-Facebook
+              - img "Facebook" [ref=e2635]
+          - listitem [ref=e2637]:
+            - link "Pinterest" [ref=e2638] [cursor=pointer]:
+              - /url: https://pinterest.com/potterybarn/?cm_sp=GlobalLinks-_-Footer-_-Pinterest
+              - img "Pinterest" [ref=e2639]
+          - listitem [ref=e2641]:
+            - link "YouTube" [ref=e2642] [cursor=pointer]:
+              - /url: https://www.youtube.com/potterybarn?cm_sp=GlobalLinks-_-Footer-_-Youtube
+              - img "YouTube" [ref=e2643]
+          - listitem [ref=e2650]:
+            - link:
+              - /url: https://apps.apple.com/app/apple-store/id1218056134?pt=346764&ct=Evergreen_SiteFooter&mt=8
+        - paragraph [ref=e2653]:
+          - text: "*Some exclusions apply. Click"
+          - link "here" [ref=e2654] [cursor=pointer]:
+            - /url: /customer-service/promo-fine-print.html?cm_type=fnav
+          - text: for details
+    - list [ref=e2656]:
+      - listitem [ref=e2657]:
+        - link "© 2026 Williams-Sonoma, Inc. All Rights Reserved" [ref=e2658] [cursor=pointer]:
+          - /url: https://www.williams-sonomainc.com
+          - text: © 2026 Williams-Sonoma, Inc. All Rights Reserved
+        - text: "|"
+      - listitem [ref=e2660]:
+        - link "Terms & Conditions" [ref=e2661] [cursor=pointer]:
+          - /url: /about-us/terms.html?cm_type=fnav
+          - text: Terms & Conditions
+        - text: "|"
+      - listitem [ref=e2663]:
+        - link "Accessibility" [ref=e2664] [cursor=pointer]:
+          - /url: /about-us/accessibility.html?cm_type=fnav
+          - text: Accessibility
+        - text: "|"
+      - listitem [ref=e2666]:
+        - link "Privacy Policy" [ref=e2667] [cursor=pointer]:
+          - /url: /about-us/privacy-policy.html?cm_type=fnav
+          - text: Privacy Policy
+        - text: "|"
+      - listitem [ref=e2669]:
+        - link "Legal Statement" [ref=e2670] [cursor=pointer]:
+          - /url: /about-us/legal-statement.html?cm_type=fnav
+          - text: Legal Statement
+  - dialog [ref=e2672]:
+    - button "close" [ref=e2673] [cursor=pointer]:
+      - img "close" [ref=e2674]
+    - generic [ref=e2676]:
+      - generic [ref=e2677]: Share this Item
+      - generic [ref=e2680]:
+        - generic [ref=e2681]: Recipient's Email
+        - generic [ref=e2682]:
+          - generic: Your Recipient's Email
+          - textbox "Your Recipient's Email" [ref=e2683]
+        - generic [ref=e2684]: Full Name
+        - generic [ref=e2685]:
+          - generic: Enter Your Name
+          - textbox "Enter Your Name" [ref=e2686]
+        - generic [ref=e2687]: Receive A Copy Of This Message.
+        - generic [ref=e2688]:
+          - generic: Your Email(Optional)
+          - textbox "Your Email(Optional)" [ref=e2689]
+        - generic [ref=e2690]:
+          - checkbox [ref=e2691]
+          - text: I Want To Receive Promotional Email.
+        - generic [ref=e2692]: Optional Message
+        - generic [ref=e2693]:
+          - generic: "Share notes here:"
+          - textbox "Share notes here:" [ref=e2694]
+        - iframe [ref=e2699]:
+          - generic [ref=f5e2]:
+            - generic [ref=f5e3]:
+              - checkbox "I'm not a robot" [ref=f5e7]
+              - generic [ref=f5e11]: I'm not a robot
+              - generic [ref=f5e13]:
+                - text: reCAPTCHA is changing its terms of service.
+                - link "Take action." [ref=f5e14] [cursor=pointer]:
+                  - /url: https://google.com/recaptcha/admin/migrate
+            - generic [ref=f5e15]:
+              - generic [ref=f5e18]: reCAPTCHA
+              - generic [ref=f5e19]:
+                - link "Privacy" [ref=f5e20] [cursor=pointer]:
+                  - /url: https://www.google.com/intl/en/policies/privacy/
+                - text: "-"
+                - link "Terms" [ref=f5e21] [cursor=pointer]:
+                  - /url: https://www.google.com/intl/en/policies/terms/
+        - button "Send" [ref=e2700] [cursor=pointer]
+        - paragraph [ref=e2701]:
+          - paragraph [ref=e2702]:
+            - text: "California residents: can see"
+            - link "Financial Incentive Terms" [ref=e2703] [cursor=pointer]:
+              - /url: /customer-service/legal-statement.html#financial-incentives
+            - text: for terms and can request
+            - link "Do Not Sell My Info" [ref=e2704] [cursor=pointer]:
+              - /url: /customer-service/legal-statement.html#do-not-sell
+            - text: . Please visit our
+            - link "privacy policy" [ref=e2705] [cursor=pointer]:
+              - /url: /customer-service/legal-statement.html#privacy
+            - text: to learn how we use your information.
+  - button "Hello, have a question? Let’s chat." [ref=e2706] [cursor=pointer]

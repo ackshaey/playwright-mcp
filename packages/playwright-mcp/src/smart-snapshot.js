@@ -227,6 +227,9 @@ function isJunkContainer(node) {
   // Footer landmarks
   if (node.role === 'contentinfo') return true;
 
+  // Site header/banner — usually nav chrome, not page content
+  if (node.role === 'banner') return true;
+
   // Named junk regions
   if ((node.role === 'region' || node.role === 'complementary' || node.role === 'navigation')
       && JUNK_LANDMARK_NAMES.has(nameLower)) {
@@ -267,7 +270,21 @@ function pruneTree(nodes) {
     const hasText = !!node.inlineText;
     const hasChildren = prunedChildren.length > 0;
 
-    if (hasRef || isInteractive) {
+    if (isInteractive) {
+      // Always keep interactive elements
+      node.children = prunedChildren;
+      result.push(node);
+    } else if (hasRef && isPrunable) {
+      // Generic/paragraph/group with a ref — keep only if it has meaningful content
+      if (hasName || hasText) {
+        node.children = prunedChildren;
+        result.push(node);
+      } else {
+        // Ref'd container with no meaningful name — lift children
+        result.push(...prunedChildren);
+      }
+    } else if (hasRef) {
+      // Non-prunable, non-interactive element with a ref — keep it
       node.children = prunedChildren;
       result.push(node);
     } else if (isLandmark || isSemantic) {
@@ -304,6 +321,9 @@ function flattenToLines(nodes, depth) {
   const indent = '  '.repeat(Math.min(depth, 2));
 
   for (const node of nodes) {
+    // Skip pseudo-property lines that leaked through parsing (e.g., "/url", "text")
+    if (node.role && (node.role.startsWith('/') || node.role === 'text')) continue;
+
     const parts = [];
 
     if (node.ref) {
