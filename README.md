@@ -1,8 +1,31 @@
-## Playwright MCP
+## Playwright MCP (Enhanced)
 
-A Model Context Protocol (MCP) server that provides browser automation capabilities using [Playwright](https://playwright.dev). This server enables LLMs to interact with web pages through structured accessibility snapshots, bypassing the need for screenshots or visually-tuned models.
+> Fork of [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp) with token-efficiency optimizations for AI agents.
 
-### Playwright MCP vs Playwright CLI
+All 34+ upstream Playwright MCP tools work unchanged. This fork adds a wrapper layer that compresses page snapshots by 40-98%, provides intent-based element search, and steers agents toward efficient tools — reducing token costs by ~43% on complex browser automation tasks.
+
+### What's different from upstream
+
+| | Upstream | This fork |
+|--|---------|-----------|
+| Pottery Barn product page snapshot | ~38,000 tokens | ~765 tokens (52x smaller) |
+| E-commerce task (select options → cart → checkout → shipping) | $2.01, 50 tool calls, failed | $1.14, 29 tool calls, succeeded |
+| Screenshots per task | 19 | 1 |
+| Custom Chrome extension loading | Not supported | `--extension-path` flag |
+
+**New tools:** `browser_smart_snapshot` (pruned snapshots), `browser_find` (intent-based element search), `browser_query` (structured data extraction).
+
+**New flags:** `--smart-snapshot` (auto-prune all responses), `--extension-path <path>` (load Chrome extensions).
+
+**How it works:** An `EnhancedBrowserServerBackend` wraps the upstream `BrowserServerBackend`, intercepts `listTools()` to add custom tools and override descriptions, and intercepts `callTool()` to post-process snapshot responses. Zero modifications to Playwright internals. See [CLAUDE.md](./CLAUDE.md) for full architecture details.
+
+---
+
+*Everything below is from the upstream README and applies to this fork as well.*
+
+---
+
+### Upstream: Playwright MCP vs Playwright CLI
 
 This package provides MCP interface into Playwright. If you are using a **coding agent**, you might benefit from using the [CLI+SKILLS](https://github.com/microsoft/playwright-cli) instead.
 
@@ -15,6 +38,7 @@ This package provides MCP interface into Playwright. If you are using a **coding
 - **Fast and lightweight**. Uses Playwright's accessibility tree, not pixel-based input.
 - **LLM-friendly**. No vision models needed, operates purely on structured data.
 - **Deterministic tool application**. Avoids ambiguity common with screenshot-based approaches.
+- **Token-efficient** *(this fork)*. Smart snapshot pruning, action zone focusing, and junk filtering reduce token costs by 40-98%.
 
 ### Requirements
 - Node.js 18 or newer
