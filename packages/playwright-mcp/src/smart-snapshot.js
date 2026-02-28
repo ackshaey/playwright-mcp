@@ -422,28 +422,95 @@ function flattenToLines(nodes, depth) {
 }
 
 /**
- * Main entry point: parse, prune, flatten, cap.
+ * Focus on the primary action zone of a page.
+ *
+ * On e-commerce product pages, the useful content is between the product title
+ * and the primary CTA (Add to Cart / Buy Now / Checkout). Everything before
+ * (image galleries, breadcrumbs) and after (cross-sells, recommendations,
+ * credit card promos, product details accordions) is noise.
+ *
+ * For non-product pages, returns lines unchanged.
+ */
+function focusActionZone(lines) {
+  // Find the primary heading (product title) — usually the first h1
+  let titleIdx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (/heading\s+"[^"]+"\s+\[level=1\]/.test(lines[i])) {
+      titleIdx = i;
+      break;
+    }
+  }
+
+  // Find the primary CTA (Add to Cart, Buy Now, Checkout, Submit, Place Order)
+  let ctaIdx = -1;
+  const ctaPatterns = [
+    /button\s+"[^"]*add\s*to\s*cart/i,
+    /button\s+"[^"]*buy\s*now/i,
+    /button\s+"[^"]*checkout/i,
+    /button\s+"[^"]*place\s*order/i,
+    /button\s+"[^"]*submit\s*order/i,
+    /button\s+"[^"]*purchase/i,
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    if (ctaPatterns.some(p => p.test(lines[i]))) {
+      ctaIdx = i;
+      break;
+    }
+  }
+
+  // If we can't find both markers, return as-is (not a product page)
+  if (titleIdx === -1 || ctaIdx === -1) return lines;
+  if (ctaIdx <= titleIdx) return lines;
+
+  // Keep: a small context window before the title, everything through CTA + a few lines after
+  const contextBefore = 3;
+  const contextAfter = 5;
+  const start = Math.max(0, titleIdx - contextBefore);
+  const end = Math.min(lines.length, ctaIdx + contextAfter + 1);
+
+  const focused = lines.slice(start, end);
+
+  // Add hints about what was trimmed
+  if (start > 0) {
+    focused.unshift(`(${start} elements above product title omitted — use browser_find to locate)`);
+  }
+  if (end < lines.length) {
+    focused.push(`(${lines.length - end} elements below primary action omitted — use browser_find to locate)`);
+  }
+
+  return focused;
+}
+
+/**
+ * Main entry point: parse, prune, flatten, focus, cap.
  * Takes raw YAML snapshot text, returns compact ref-based representation.
  *
  * @param {string} yamlText - Raw AXTree YAML from Playwright
  * @param {object} [options]
  * @param {number} [options.maxLines=80] - Max output lines before truncation
+ * @param {boolean} [options.focusMode=true] - Whether to focus on the action zone
  * @returns {string} Compact snapshot text
  */
 function smartSnapshot(yamlText, options) {
   if (!yamlText || !yamlText.trim()) return '';
 
   const maxLines = (options && options.maxLines) || MAX_OUTPUT_LINES;
+  const focusMode = (options && options.focusMode !== undefined) ? options.focusMode : true;
 
   const nodes = parseSnapshot(yamlText);
   const pruned = pruneTree(nodes);
-  const lines = flattenToLines(pruned);
+  let lines = flattenToLines(pruned);
+
+  // Focus on primary action zone if the page is large enough to warrant it
+  if (focusMode && lines.length > maxLines) {
+    lines = focusActionZone(lines);
+  }
 
   if (lines.length <= maxLines) {
     return lines.join('\n');
   }
 
-  // Truncate and add hint
+  // Still too long after focusing — truncate
   const truncated = lines.slice(0, maxLines);
   truncated.push('');
   truncated.push(`... (${lines.length - maxLines} more elements truncated)`);
