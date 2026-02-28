@@ -331,16 +331,25 @@ test.describe('smartSnapshot (end-to-end)', () => {
     expect(result).toContain('[ref=e4] heading "Welcome"');
   });
 
-  test('drops all images (agent cannot interact with them)', () => {
+  test('drops decorative images but keeps meaningful ones', () => {
     const yaml = [
       '- img "icon" [ref=e1]',
       '- img "logo" [ref=e2]',
-      '- img "Product Photo Large" [ref=e3]',
-      '- button "Buy" [ref=e4]',
+      '- img "" [ref=e3]',
+      '- img "https://cdn.example.com/img.jpg" [ref=e4]',
+      '- img "Performance Boucle Ivory Swatch" [ref=e5]',
+      '- img "Layton Bed Product Photo" [ref=e6]',
+      '- button "Buy" [ref=e7]',
     ].join('\n');
     const result = smartSnapshot(yaml);
-    expect(result).not.toContain('img');
-    expect(result).toContain('[ref=e4] button "Buy"');
+    // Decorative/junk images dropped
+    expect(result).not.toContain('"icon"');
+    expect(result).not.toContain('"logo"');
+    expect(result).not.toContain('cdn.example.com');
+    // Meaningful images kept
+    expect(result).toContain('img "Performance Boucle Ivory Swatch"');
+    expect(result).toContain('img "Layton Bed Product Photo"');
+    expect(result).toContain('[ref=e7] button "Buy"');
   });
 
   test('truncates at max lines with hint', () => {

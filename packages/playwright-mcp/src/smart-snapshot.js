@@ -193,9 +193,21 @@ function isJunkNode(node) {
   // contentinfo role = footer in ARIA — drop it entirely
   if (node.role === 'contentinfo') return true;
 
-  // Images — drop all unless they're inside a button/link (handled by parent)
-  // Agent can't interact with images directly; they just waste tokens
-  if (node.role === 'img') return true;
+  // Decorative/useless images — drop these but keep meaningful ones
+  if (node.role === 'img') {
+    if (!node.name) return true;
+    const imgName = nameLower;
+    // Generic decorative names
+    if (/^(icon|logo|decoration|decorative|spacer|divider|arrow|bullet|dot|pixel|blank)$/i.test(imgName)) return true;
+    // URLs as alt text (lazy/broken alt)
+    if (imgName.startsWith('http') || imgName.startsWith('data:') || imgName.startsWith('//')) return true;
+    // Single character or very short meaningless alt
+    if (imgName.length <= 2) return true;
+    // Duplicate of common UI chrome (checkmarks, arrows, icons for buttons)
+    if (/^(checkmark|check mark|close|x|menu|hamburger|caret|chevron|dropdown|expand|collapse|search|magnify)$/i.test(imgName)) return true;
+    // Keep everything else — product photos, swatches, meaningful content images
+    return false;
+  }
 
   // Links with junk destinations
   if (node.role === 'link') {
