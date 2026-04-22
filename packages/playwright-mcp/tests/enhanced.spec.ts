@@ -258,3 +258,105 @@ test('--smart-snapshot flag auto-prunes navigate response', async ({ startClient
   expect(text).toContain('heading "Hello World"');
   expect(text).toContain('button "Submit"');
 });
+
+test('browser_smart_snapshot with rootRef returns only that subtree', async ({ client, server }) => {
+  server.setContent('/', `
+    <title>Scoped</title>
+    <header>
+      <a href="/home">Home</a>
+      <a href="/about">About</a>
+    </header>
+    <main>
+      <fieldset id="shipping">
+        <legend>Shipping method</legend>
+        <label><input type="radio" name="ship" value="standard"> Standard</label>
+        <label><input type="radio" name="ship" value="express"> Express</label>
+      </fieldset>
+      <fieldset id="payment">
+        <legend>Payment</legend>
+        <label>Card <input type="text"></label>
+      </fieldset>
+    </main>
+  `, 'text/html');
+
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  // First get a ref to the shipping fieldset via browser_find
+  const find = await client.callTool({
+    name: 'browser_find',
+    arguments: { intent: 'shipping method' },
+  });
+  const findText = find.content[0].text;
+  const refMatch = findText.match(/ref=(e\d+)/);
+  expect(refMatch).not.toBeNull();
+  const shippingRef = refMatch[1];
+
+  // Now scope the snapshot to that ref
+  const scoped = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { rootRef: shippingRef },
+  });
+  const scopedText = scoped.content[0].text;
+
+  // Header reflects the scope
+  expect(scopedText).toContain(`scoped to ref=${shippingRef}`);
+  // Subtree content is present
+  expect(scopedText).toContain('Standard');
+  expect(scopedText).toContain('Express');
+  // Sibling subtree dropped
+  expect(scopedText).not.toContain('Card');
+  expect(scopedText).not.toContain('Home');
+  expect(scopedText).not.toContain('About');
+});
+
+test('browser_smart_snapshot with unknown rootRef returns a notice', async ({ client, server }) => {
+  server.setContent('/', '<title>T</title><button>Go</button>', 'text/html');
+
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  const result = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { rootRef: 'e999999' },
+  });
+  const text = result.content[0].text;
+  expect(text).toContain('not found');
+  expect(text).toContain('e999999');
+  expect(text).not.toContain('Go');
+});
+
+test('browser_smart_snapshot maxLines override prevents truncation on a long page', async ({ client, server }) => {
+  // Generate a page with enough interactive elements to exceed the default 80-line cap.
+  const buttons: string[] = [];
+  for (let i = 1; i <= 150; i++) buttons.push(`<button>Button ${i}</button>`);
+  server.setContent('/', `
+    <title>Long</title>
+    <main>${buttons.join('\n')}</main>
+  `, 'text/html');
+
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  // Default run: truncates.
+  const defaultResult = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: {},
+  });
+  expect(defaultResult.content[0].text).toContain('truncated');
+
+  // Raised maxLines: no truncation.
+  const largerResult = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { maxLines: 500 },
+  });
+  const largerText = largerResult.content[0].text;
+  expect(largerText).not.toContain('truncated');
+  expect(largerText).toContain('Button 150');
+});

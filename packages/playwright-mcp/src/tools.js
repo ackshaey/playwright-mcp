@@ -20,10 +20,27 @@ const smartSnapshotTool = {
     '    [ref=e3] link "About"',
     '  [ref=e4] textbox "Email"',
     '  [ref=e5] button "Submit"',
+    '',
+    'Scoping a dense page:',
+    '  If the page is big (long dropdowns, many form fields) and truncates, either:',
+    '    1. Call browser_find to get a ref to a specific container, then pass it as rootRef:',
+    '         browser_smart_snapshot({ rootRef: "e205" })',
+    '       returns only that subtree — cheap, targeted, and never truncates normal-sized sections.',
+    '    2. Or raise maxLines for the whole page: browser_smart_snapshot({ maxLines: 300 }).',
+    '  Prefer rootRef over a larger maxLines whenever you know which section you need.',
   ].join('\n'),
   inputSchema: {
     type: 'object',
-    properties: {},
+    properties: {
+      rootRef: {
+        type: 'string',
+        description: 'Optional ref (e.g. "e5" or "f1e3") to scope the snapshot to a single subtree. Use this with a ref previously returned by browser_find or an earlier snapshot. When set, only that element and its descendants are returned, and the action-zone focus heuristic is disabled. If the ref is not found (stale snapshot), returns a short notice.',
+      },
+      maxLines: {
+        type: 'number',
+        description: 'Optional override for the maximum number of output lines before truncation. Default: 80. Clamped to [1, 2000]. Raise this when you need to see a long-but-bounded region (e.g. a checkout form) without truncation. Prefer rootRef for targeted reads.',
+      },
+    },
   },
   annotations: {
     readOnlyHint: true,

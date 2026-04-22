@@ -73,6 +73,28 @@ const JUNK_ROLES = new Set([
 // Max output lines — if the snapshot exceeds this, truncate and add a hint
 const MAX_OUTPUT_LINES = 80;
 
+// Upper bound on maxLines regardless of caller request — guardrail so a bad
+// caller can't fill the whole context window. Chosen as ~25x the default.
+const MAX_OUTPUT_LINES_CEILING = 2000;
+
+/**
+ * Depth-first search for a node with the given ref in a parsed AXTree.
+ *
+ * @param {Array} nodes - Parsed tree from parseSnapshot()
+ * @param {string} ref - Target ref to find (e.g. "e5", "f1e3")
+ * @returns {object|null} The matching node (with its children), or null if not found
+ */
+function findNodeByRef(nodes, ref) {
+  for (const node of nodes) {
+    if (node.ref === ref) return node;
+    if (node.children && node.children.length > 0) {
+      const found = findNodeByRef(node.children, ref);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 /**
  * Parse a single line content (after "- " prefix and indentation) into a node object.
  */
@@ -499,17 +521,43 @@ function focusActionZone(lines) {
  *
  * @param {string} yamlText - Raw AXTree YAML from Playwright
  * @param {object} [options]
- * @param {number} [options.maxLines=80] - Max output lines before truncation
+ * @param {number} [options.maxLines=80] - Max output lines before truncation.
+ *   Clamped to [1, MAX_OUTPUT_LINES_CEILING] (2000). Passing 0, negative, NaN,
+ *   or any non-finite value falls back to the default.
  * @param {boolean} [options.focusMode=true] - Whether to focus on the action zone
+ *   when the flattened output exceeds maxLines. Automatically disabled when a
+ *   rootRef is provided (the caller has already scoped the subtree).
+ * @param {string} [options.rootRef] - Optional ref (e.g. "e5", "f1e3") to scope
+ *   the snapshot to a single subtree. When set, only the node with this ref and
+ *   its descendants are parsed, pruned, and flattened. If the ref is not found
+ *   in the input, returns a one-line notice instead of the full page.
  * @returns {string} Compact snapshot text
  */
 function smartSnapshot(yamlText, options) {
   if (!yamlText || !yamlText.trim()) return '';
 
-  const maxLines = (options && options.maxLines) || MAX_OUTPUT_LINES;
-  const focusMode = (options && options.focusMode !== undefined) ? options.focusMode : true;
+  const opts = options || {};
+  const rawMax = opts.maxLines;
+  const maxLines = (typeof rawMax === 'number' && Number.isFinite(rawMax) && rawMax > 0)
+    ? Math.min(Math.floor(rawMax), MAX_OUTPUT_LINES_CEILING)
+    : MAX_OUTPUT_LINES;
+  const rootRef = (typeof opts.rootRef === 'string' && opts.rootRef.trim()) ? opts.rootRef.trim() : null;
+  // Focus mode is a full-page heuristic (h1 → CTA). It makes no sense once we've
+  // already narrowed to a subtree, so auto-disable when rootRef is set.
+  const focusMode = rootRef
+    ? false
+    : (opts.focusMode !== undefined ? opts.focusMode : true);
 
-  const nodes = parseSnapshot(yamlText);
+  let nodes = parseSnapshot(yamlText);
+
+  if (rootRef) {
+    const match = findNodeByRef(nodes, rootRef);
+    if (!match) {
+      return `(ref "${rootRef}" not found in current snapshot — it may be stale; call browser_smart_snapshot without a root, or browser_find, to get a fresh ref)`;
+    }
+    nodes = [match];
+  }
+
   const pruned = pruneTree(nodes);
   let lines = flattenToLines(pruned);
 
@@ -526,7 +574,7 @@ function smartSnapshot(yamlText, options) {
   const truncated = lines.slice(0, maxLines);
   truncated.push('');
   truncated.push(`... (${lines.length - maxLines} more elements truncated)`);
-  truncated.push('TIP: Use browser_find({ intent: "..." }) to locate specific elements.');
+  truncated.push('TIP: Use browser_find({ intent: "..." }) to locate specific elements, or pass { rootRef: "eN" } to scope the snapshot.');
   return truncated.join('\n');
 }
 
@@ -536,6 +584,7 @@ module.exports = {
   pruneTree,
   flattenToLines,
   smartSnapshot,
+  findNodeByRef,
   isJunkNode,
   isJunkContainer,
   INTERACTIVE_ROLES,
@@ -543,4 +592,5 @@ module.exports = {
   SEMANTIC_ROLES,
   PRUNABLE_ROLES,
   MAX_OUTPUT_LINES,
+  MAX_OUTPUT_LINES_CEILING,
 };

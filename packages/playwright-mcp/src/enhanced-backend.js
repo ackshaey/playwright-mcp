@@ -97,7 +97,7 @@ class EnhancedBrowserServerBackend {
     try {
       switch (name) {
         case 'browser_smart_snapshot':
-          return await this._handleSmartSnapshot();
+          return await this._handleSmartSnapshot(args);
         case 'browser_query':
           return await this._handleQuery(args);
         case 'browser_find':
@@ -116,7 +116,7 @@ class EnhancedBrowserServerBackend {
     }
   }
 
-  async _handleSmartSnapshot() {
+  async _handleSmartSnapshot(args) {
     // Call the original browser_snapshot to get the full AXTree
     const result = await this._backend.callTool('browser_snapshot', {});
     if (result.isError) return result;
@@ -124,12 +124,23 @@ class EnhancedBrowserServerBackend {
     const yaml = this._extractSnapshot(result);
     if (!yaml) return result; // No snapshot found, return as-is
 
-    const compact = smartSnapshot(yaml);
+    const options = {};
+    if (args && typeof args.rootRef === 'string' && args.rootRef.trim()) {
+      options.rootRef = args.rootRef.trim();
+    }
+    if (args && typeof args.maxLines === 'number') {
+      options.maxLines = args.maxLines;
+    }
+
+    const compact = smartSnapshot(yaml, options);
+    const header = options.rootRef
+      ? `### Smart Snapshot (scoped to ref=${options.rootRef})`
+      : '### Smart Snapshot';
 
     return {
       content: [{
         type: 'text',
-        text: `### Smart Snapshot\n${compact}`,
+        text: `${header}\n${compact}`,
       }],
     };
   }

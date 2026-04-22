@@ -11,6 +11,8 @@ const {
   pruneTree,
   flattenToLines,
   smartSnapshot,
+  findNodeByRef,
+  MAX_OUTPUT_LINES_CEILING,
 } = require('../src/smart-snapshot');
 
 test.describe('parseLine', () => {
@@ -379,5 +381,167 @@ test.describe('smartSnapshot (end-to-end)', () => {
     expect(result).not.toContain('Newsletter');
     expect(result).not.toContain('Subscribe');
     expect(result).toContain('[ref=e3] button "Add to Cart"');
+  });
+});
+
+test.describe('findNodeByRef', () => {
+  test('finds a top-level node by ref', () => {
+    const nodes = parseSnapshot([
+      '- button "Submit" [ref=e1]',
+      '- textbox "Email" [ref=e2]',
+    ].join('\n'));
+    const found = findNodeByRef(nodes, 'e2');
+    expect(found).not.toBeNull();
+    expect(found.role).toBe('textbox');
+    expect(found.name).toBe('Email');
+  });
+
+  test('finds a deeply nested node by ref', () => {
+    const nodes = parseSnapshot([
+      '- main:',
+      '  - navigation:',
+      '    - list:',
+      '      - listitem:',
+      '        - link "Deep" [ref=e10]',
+    ].join('\n'));
+    const found = findNodeByRef(nodes, 'e10');
+    expect(found).not.toBeNull();
+    expect(found.role).toBe('link');
+    expect(found.name).toBe('Deep');
+  });
+
+  test('returns null when ref is missing', () => {
+    const nodes = parseSnapshot('- button "Submit" [ref=e1]');
+    expect(findNodeByRef(nodes, 'e999')).toBeNull();
+  });
+
+  test('handles iframe refs like f1e3', () => {
+    const nodes = parseSnapshot('- button "Inner" [ref=f1e3]');
+    const found = findNodeByRef(nodes, 'f1e3');
+    expect(found).not.toBeNull();
+    expect(found.ref).toBe('f1e3');
+  });
+});
+
+test.describe('smartSnapshot rootRef scoping', () => {
+  test('returns only the target subtree when rootRef is set', () => {
+    const yaml = [
+      '- banner:',
+      '  - link "Logo" [ref=e1]',
+      '  - navigation:',
+      '    - link "Home" [ref=e2]',
+      '- main:',
+      '  - fieldset "Shipping method" [ref=e10]:',
+      '    - radio "Standard" [ref=e11]',
+      '    - radio "Express" [ref=e12]',
+      '  - fieldset "Payment" [ref=e20]:',
+      '    - textbox "Card number" [ref=e21]',
+    ].join('\n');
+    const result = smartSnapshot(yaml, { rootRef: 'e10' });
+    // Subtree kept
+    expect(result).toContain('e11');
+    expect(result).toContain('Standard');
+    expect(result).toContain('e12');
+    expect(result).toContain('Express');
+    // Sibling subtrees dropped
+    expect(result).not.toContain('Card number');
+    expect(result).not.toContain('Home');
+    expect(result).not.toContain('Logo');
+  });
+
+  test('returns a notice when rootRef does not match any node', () => {
+    const yaml = '- button "Submit" [ref=e1]';
+    const result = smartSnapshot(yaml, { rootRef: 'e999' });
+    expect(result).toContain('not found');
+    expect(result).toContain('e999');
+    expect(result).not.toContain('Submit');
+  });
+
+  test('treats whitespace-only rootRef as unscoped', () => {
+    const yaml = [
+      '- button "A" [ref=e1]',
+      '- button "B" [ref=e2]',
+    ].join('\n');
+    const result = smartSnapshot(yaml, { rootRef: '   ' });
+    expect(result).toContain('"A"');
+    expect(result).toContain('"B"');
+  });
+
+  test('disables action-zone focus when rootRef is set', () => {
+    // Build a page that has a product title + CTA (action-zone trigger).
+    // Without rootRef, focus mode would slice around the CTA and insert an
+    // "omitted" hint. With rootRef, we should get the raw scoped subtree and
+    // no omitted-elements notice even when the output is short.
+    const lines = ['- main:'];
+    for (let i = 1; i <= 20; i++) {
+      lines.push(`  - link "Extra ${i}" [ref=e${100 + i}]`);
+    }
+    lines.push('  - heading "Product Title" [level=1] [ref=e1]');
+    for (let i = 1; i <= 20; i++) {
+      lines.push(`  - generic "Detail ${i}" [ref=e${200 + i}]`);
+    }
+    lines.push('  - button "Add to Cart" [ref=e2]');
+    lines.push('  - fieldset "Other" [ref=e3]:');
+    lines.push('    - textbox "Unrelated" [ref=e4]');
+    const yaml = lines.join('\n');
+    // With rootRef, we should get just the fieldset subtree (no omitted hints).
+    const scoped = smartSnapshot(yaml, { rootRef: 'e3', maxLines: 100 });
+    expect(scoped).not.toContain('omitted');
+    expect(scoped).toContain('Unrelated');
+    expect(scoped).not.toContain('Product Title');
+  });
+});
+
+test.describe('smartSnapshot maxLines guardrails', () => {
+  function buildLongYaml(n: number): string {
+    const lines: string[] = [];
+    for (let i = 1; i <= n; i++) {
+      lines.push(`- button "Button ${i}" [ref=e${i}]`);
+    }
+    return lines.join('\n');
+  }
+
+  test('honors a raised maxLines to avoid truncation', () => {
+    const yaml = buildLongYaml(150);
+    const truncatedResult = smartSnapshot(yaml, { maxLines: 50 });
+    expect(truncatedResult).toContain('truncated');
+    const fullResult = smartSnapshot(yaml, { maxLines: 200 });
+    expect(fullResult).not.toContain('truncated');
+    expect(fullResult).toContain('Button 150');
+  });
+
+  test('clamps absurdly large maxLines to the ceiling', () => {
+    // Build a snapshot larger than the ceiling
+    const yaml = buildLongYaml(MAX_OUTPUT_LINES_CEILING + 500);
+    const result = smartSnapshot(yaml, { maxLines: 1_000_000 });
+    const outputLines = result.split('\n');
+    // Expect the truncation hint to still show — caller's huge request is clamped.
+    expect(result).toContain('truncated');
+    // Output capped near the ceiling + a few trailing hint lines.
+    expect(outputLines.length).toBeLessThanOrEqual(MAX_OUTPUT_LINES_CEILING + 5);
+  });
+
+  test('falls back to default when maxLines is zero, negative, NaN, or non-number', () => {
+    const yaml = buildLongYaml(200);
+    for (const bad of [0, -5, NaN, Infinity, -Infinity, 'lots' as unknown as number, null as unknown as number]) {
+      const result = smartSnapshot(yaml, { maxLines: bad });
+      // All of these should fall back to the 80-line default → truncation must fire.
+      expect(result).toContain('truncated');
+    }
+  });
+
+  test('floors fractional maxLines', () => {
+    const yaml = buildLongYaml(30);
+    const result = smartSnapshot(yaml, { maxLines: 15.9 });
+    const outputLines = result.split('\n');
+    // 15 content lines + blank + truncated hint + tip = 18
+    expect(outputLines.length).toBeLessThanOrEqual(18);
+    expect(result).toContain('truncated');
+  });
+
+  test('truncation hint mentions rootRef escape hatch', () => {
+    const yaml = buildLongYaml(100);
+    const result = smartSnapshot(yaml, { maxLines: 20 });
+    expect(result).toContain('rootRef');
   });
 });
