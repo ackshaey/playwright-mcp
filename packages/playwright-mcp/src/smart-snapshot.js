@@ -73,6 +73,41 @@ const JUNK_ROLES = new Set([
 // Max output lines — if the snapshot exceeds this, truncate and add a hint
 const MAX_OUTPUT_LINES = 80;
 
+// Upper bound on maxLines regardless of caller request — guardrail so a bad
+// caller can't fill the whole context window. Chosen as ~25x the default.
+const MAX_OUTPUT_LINES_CEILING = 2000;
+
+/**
+ * Depth-first (left-first) search for a node with the given ref in a parsed AXTree.
+ * Iterative to avoid stack overflow on pathologically-nested pages.
+ *
+ * @param {Array} nodes - Parsed tree from parseSnapshot()
+ * @param {string} ref - Target ref to find (e.g. "e5", "f1e3")
+ * @returns {object|null} The first matching node in DFS left-first order, or null
+ */
+function findNodeByRef(nodes, ref) {
+  const stack = [];
+  // Push in reverse so stack.pop() returns the leftmost sibling first,
+  // preserving the intuitive "first match in document order" semantics.
+  for (let i = nodes.length - 1; i >= 0; i--) stack.push(nodes[i]);
+  while (stack.length > 0) {
+    const node = stack.pop();
+    if (node.ref === ref) return node;
+    if (node.children && node.children.length > 0) {
+      for (let i = node.children.length - 1; i >= 0; i--) stack.push(node.children[i]);
+    }
+  }
+  return null;
+}
+
+/**
+ * Valid shape of a ref emitted by Playwright's AXTree.
+ * Examples: e5, e123, f1e3, f1e2e5. Anything else (newlines, parens, spaces) is
+ * rejected by the backend before it reaches smart-snapshot, which protects the
+ * response header from injection and helps callers catch typos early.
+ */
+const REF_PATTERN = /^[ef]\d+(e\d+)*$/i;
+
 /**
  * Parse a single line content (after "- " prefix and indentation) into a node object.
  */
@@ -499,18 +534,66 @@ function focusActionZone(lines) {
  *
  * @param {string} yamlText - Raw AXTree YAML from Playwright
  * @param {object} [options]
- * @param {number} [options.maxLines=80] - Max output lines before truncation
+ * @param {number} [options.maxLines=80] - Max output lines before truncation.
+ *   The effective value is `min(max(1, floor(maxLines)), MAX_OUTPUT_LINES_CEILING)`.
+ *   Zero, negative, NaN, Infinity, or any non-number value falls back to the default.
  * @param {boolean} [options.focusMode=true] - Whether to focus on the action zone
- * @returns {string} Compact snapshot text
+ *   when the flattened output exceeds maxLines. Automatically disabled when a
+ *   rootRef is provided (the caller has already scoped the subtree).
+ * @param {string} [options.rootRef] - Optional ref (e.g. "e5", "f1e3") to scope
+ *   the snapshot to a single subtree. Full YAML is still parsed; the filter runs
+ *   post-parse, narrowing to the matched node and its descendants. The matched
+ *   node itself is always kept (even if it would otherwise be pruned as a junk
+ *   container — the caller explicitly asked for this subtree), but its descendants
+ *   are pruned normally. If the ref is not found, returns a one-line notice.
+ *   The caller (e.g. enhanced-backend) is responsible for validating the format
+ *   and rejecting invalid strings before they reach this function.
+ * @returns {string|{text: string, notFound?: boolean, clamped?: boolean}}
+ *   When called without options.asStructured, returns a plain string (legacy
+ *   interface). When options.asStructured is true, returns a structured object
+ *   so the MCP backend can map notFound → isError and expose clamp notices.
  */
 function smartSnapshot(yamlText, options) {
-  if (!yamlText || !yamlText.trim()) return '';
+  const opts = options || {};
+  const structured = opts.asStructured === true;
 
-  const maxLines = (options && options.maxLines) || MAX_OUTPUT_LINES;
-  const focusMode = (options && options.focusMode !== undefined) ? options.focusMode : true;
+  const emit = (payload) => structured ? payload : payload.text;
+
+  if (!yamlText || !yamlText.trim()) return emit({ text: '' });
+
+  const rawMax = opts.maxLines;
+  const rawMaxIsValid = typeof rawMax === 'number' && Number.isFinite(rawMax) && rawMax > 0;
+  const maxLines = rawMaxIsValid
+    ? Math.min(Math.max(1, Math.floor(rawMax)), MAX_OUTPUT_LINES_CEILING)
+    : MAX_OUTPUT_LINES;
+  const clamped = rawMaxIsValid && rawMax > MAX_OUTPUT_LINES_CEILING;
+  const rootRef = (typeof opts.rootRef === 'string' && opts.rootRef.trim()) ? opts.rootRef.trim() : null;
+  // Focus mode is a full-page heuristic (h1 → CTA). It makes no sense once we've
+  // already narrowed to a subtree, so auto-disable when rootRef is set.
+  const focusMode = rootRef
+    ? false
+    : (opts.focusMode !== undefined ? opts.focusMode : true);
 
   const nodes = parseSnapshot(yamlText);
-  const pruned = pruneTree(nodes);
+
+  let pruned;
+  if (rootRef) {
+    const match = findNodeByRef(nodes, rootRef);
+    if (!match) {
+      return emit({
+        text: `(ref "${rootRef}" not found in current snapshot — it may be stale; call browser_smart_snapshot without rootRef, or browser_find, to get a fresh ref)`,
+        notFound: true,
+      });
+    }
+    // Keep the matched root even if it's a junk container (caller asked for it
+    // explicitly). Prune descendants normally so ads/footers/cross-sells inside
+    // the subtree are still stripped.
+    const prunedChildren = pruneTree(match.children || []);
+    pruned = [{ ...match, children: prunedChildren }];
+  } else {
+    pruned = pruneTree(nodes);
+  }
+
   let lines = flattenToLines(pruned);
 
   // Focus on primary action zone if the page is large enough to warrant it
@@ -519,15 +602,19 @@ function smartSnapshot(yamlText, options) {
   }
 
   if (lines.length <= maxLines) {
-    return lines.join('\n');
+    return emit({ text: lines.join('\n'), clamped });
   }
 
   // Still too long after focusing — truncate
   const truncated = lines.slice(0, maxLines);
   truncated.push('');
-  truncated.push(`... (${lines.length - maxLines} more elements truncated)`);
-  truncated.push('TIP: Use browser_find({ intent: "..." }) to locate specific elements.');
-  return truncated.join('\n');
+  if (clamped) {
+    truncated.push(`... (${lines.length - maxLines} more elements truncated; maxLines clamped from ${rawMax} to ${MAX_OUTPUT_LINES_CEILING})`);
+  } else {
+    truncated.push(`... (${lines.length - maxLines} more elements truncated)`);
+  }
+  truncated.push('TIP: Use browser_find({ intent: "..." }) to locate specific elements, or pass { rootRef: "eN" } to scope the snapshot.');
+  return emit({ text: truncated.join('\n'), clamped });
 }
 
 module.exports = {
@@ -536,6 +623,7 @@ module.exports = {
   pruneTree,
   flattenToLines,
   smartSnapshot,
+  findNodeByRef,
   isJunkNode,
   isJunkContainer,
   INTERACTIVE_ROLES,
@@ -543,4 +631,6 @@ module.exports = {
   SEMANTIC_ROLES,
   PRUNABLE_ROLES,
   MAX_OUTPUT_LINES,
+  MAX_OUTPUT_LINES_CEILING,
+  REF_PATTERN,
 };

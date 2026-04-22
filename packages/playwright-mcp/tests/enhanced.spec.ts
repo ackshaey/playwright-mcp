@@ -258,3 +258,166 @@ test('--smart-snapshot flag auto-prunes navigate response', async ({ startClient
   expect(text).toContain('heading "Hello World"');
   expect(text).toContain('button "Submit"');
 });
+
+test('browser_smart_snapshot with rootRef returns only that subtree', async ({ client, server }) => {
+  server.setContent('/', `
+    <title>Scoped</title>
+    <header>
+      <a href="/home">Home</a>
+      <a href="/about">About</a>
+    </header>
+    <main>
+      <fieldset id="shipping">
+        <legend>Shipping method</legend>
+        <label><input type="radio" name="ship" value="standard"> Standard</label>
+        <label><input type="radio" name="ship" value="express"> Express</label>
+      </fieldset>
+      <fieldset id="payment">
+        <legend>Payment</legend>
+        <label>Card <input type="text"></label>
+      </fieldset>
+    </main>
+  `, 'text/html');
+
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  // First get a ref to the shipping fieldset via browser_find
+  const find = await client.callTool({
+    name: 'browser_find',
+    arguments: { intent: 'shipping method' },
+  });
+  const findText = find.content[0].text;
+  const refMatch = findText.match(/ref=(e\d+)/);
+  expect(refMatch).not.toBeNull();
+  const shippingRef = refMatch[1];
+
+  // Now scope the snapshot to that ref
+  const scoped = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { rootRef: shippingRef },
+  });
+  const scopedText = scoped.content[0].text;
+
+  // Header reflects the scope
+  expect(scopedText).toContain(`scoped to ref=${shippingRef}`);
+  // Subtree content is present
+  expect(scopedText).toContain('Standard');
+  expect(scopedText).toContain('Express');
+  // Sibling subtree dropped
+  expect(scopedText).not.toContain('Card');
+  expect(scopedText).not.toContain('Home');
+  expect(scopedText).not.toContain('About');
+});
+
+test('browser_smart_snapshot with unknown rootRef returns isError with distinct header', async ({ client, server }) => {
+  server.setContent('/', '<title>T</title><button>Go</button>', 'text/html');
+
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  const result = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { rootRef: 'e999999' },
+  });
+  // Regression: previously returned a normal snapshot with a parenthetical notice
+  // under the regular "### Smart Snapshot" header — easy for an agent to miss.
+  // Now: isError is set, header signals the failure explicitly, no misleading "scoped to" claim.
+  expect(result.isError).toBe(true);
+  const text = result.content[0].text;
+  expect(text).toContain('ref not found');
+  expect(text).toContain('e999999');
+  expect(text).not.toContain('Go');
+  // The "scoped to" header MUST NOT appear when the scope was invalid.
+  expect(text).not.toMatch(/scoped to ref=/);
+});
+
+test('browser_smart_snapshot rejects malformed rootRef without running a snapshot', async ({ client, server }) => {
+  // Regression: rootRef was previously echoed verbatim into the response header,
+  // which allowed newline/markdown injection like "e5)\n\n### Fake Section".
+  // The backend now validates against a strict ref pattern before round-tripping
+  // to the browser.
+  server.setContent('/', '<title>T</title><button>Go</button>', 'text/html');
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  for (const bad of ['e5)\n### Fake', 'foo bar', '../etc/passwd', 'e5 and more', '']) {
+    const result = await client.callTool({
+      name: 'browser_smart_snapshot',
+      arguments: { rootRef: bad },
+    });
+    // Empty string is treated as "not provided" (returns a successful full snapshot),
+    // every other bad value must error.
+    if (bad === '') {
+      expect(result.isError).toBeFalsy();
+      expect(result.content[0].text).toContain('Smart Snapshot');
+    } else {
+      expect(result.isError).toBe(true);
+      expect(result.content[0].text).toContain('Invalid rootRef');
+      // The real guarantee is that a rejected input cannot be mistaken for a
+      // successful scoped snapshot: no "Smart Snapshot" section header and no
+      // "scoped to ref=" claim should appear in the response.
+      expect(result.content[0].text).not.toMatch(/^### Smart Snapshot(?: \(scoped to ref=)?/m);
+      expect(result.content[0].text).not.toMatch(/scoped to ref=/);
+    }
+  }
+});
+
+test('browser_smart_snapshot rejects non-string rootRef and non-number maxLines', async ({ client, server }) => {
+  server.setContent('/', '<title>T</title><button>Go</button>', 'text/html');
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  const badRootRef = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { rootRef: 42 as unknown as string },
+  });
+  expect(badRootRef.isError).toBe(true);
+  expect(badRootRef.content[0].text).toContain('rootRef must be a string');
+
+  const badMaxLines = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { maxLines: 'lots' as unknown as number },
+  });
+  expect(badMaxLines.isError).toBe(true);
+  expect(badMaxLines.content[0].text).toContain('maxLines must be a number');
+});
+
+test('browser_smart_snapshot maxLines override prevents truncation on a long page', async ({ client, server }) => {
+  // Generate a page with enough interactive elements to exceed the default 80-line cap.
+  const buttons: string[] = [];
+  for (let i = 1; i <= 150; i++) buttons.push(`<button>Button ${i}</button>`);
+  server.setContent('/', `
+    <title>Long</title>
+    <main>${buttons.join('\n')}</main>
+  `, 'text/html');
+
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  // Default run: truncates.
+  const defaultResult = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: {},
+  });
+  expect(defaultResult.content[0].text).toContain('truncated');
+
+  // Raised maxLines: no truncation.
+  const largerResult = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { maxLines: 500 },
+  });
+  const largerText = largerResult.content[0].text;
+  expect(largerText).not.toContain('truncated');
+  expect(largerText).toContain('Button 150');
+});
