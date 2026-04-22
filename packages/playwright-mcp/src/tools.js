@@ -24,10 +24,11 @@ const smartSnapshotTool = {
     'Scoping a dense page:',
     '  If the page is big (long dropdowns, many form fields) and truncates, either:',
     '    1. Call browser_find to get a ref to a specific container, then pass it as rootRef:',
-    '         browser_smart_snapshot({ rootRef: "e205" })',
+    '         browser_smart_snapshot({ rootRef: "e5" })',
     '       returns only that subtree — cheap, targeted, and never truncates normal-sized sections.',
     '    2. Or raise maxLines for the whole page: browser_smart_snapshot({ maxLines: 300 }).',
     '  Prefer rootRef over a larger maxLines whenever you know which section you need.',
+    '  A stale or invalid rootRef returns an error response; fetch a fresh ref with browser_find.',
   ].join('\n'),
   inputSchema: {
     type: 'object',

@@ -1,6 +1,6 @@
 'use strict';
 
-const { smartSnapshot, parseSnapshot } = require('./smart-snapshot');
+const { smartSnapshot, parseSnapshot, REF_PATTERN } = require('./smart-snapshot');
 const { resolveQuery, flattenNodes } = require('./query-resolver');
 const { CUSTOM_TOOLS, CUSTOM_TOOL_NAMES } = require('./tools');
 
@@ -117,22 +117,59 @@ class EnhancedBrowserServerBackend {
   }
 
   async _handleSmartSnapshot(args) {
-    // Call the original browser_snapshot to get the full AXTree
+    const options = { asStructured: true };
+
+    // Validate rootRef at the boundary: reject anything that doesn't look like a
+    // Playwright-issued ref. This prevents prose/newlines from being injected
+    // into the response header and catches typos early.
+    if (args && args.rootRef !== undefined && args.rootRef !== null) {
+      if (typeof args.rootRef !== 'string') {
+        return {
+          content: [{ type: 'text', text: `### Error\nrootRef must be a string (received ${typeof args.rootRef})` }],
+          isError: true,
+        };
+      }
+      const trimmed = args.rootRef.trim();
+      if (trimmed && !REF_PATTERN.test(trimmed)) {
+        return {
+          content: [{ type: 'text', text: `### Error\nInvalid rootRef "${trimmed}" — expected a Playwright ref like "e5" or "f1e3"` }],
+          isError: true,
+        };
+      }
+      if (trimmed) options.rootRef = trimmed;
+    }
+    if (args && args.maxLines !== undefined && args.maxLines !== null) {
+      if (typeof args.maxLines !== 'number') {
+        return {
+          content: [{ type: 'text', text: `### Error\nmaxLines must be a number (received ${typeof args.maxLines})` }],
+          isError: true,
+        };
+      }
+      options.maxLines = args.maxLines;
+    }
+
+    // Call the original browser_snapshot to get the full AXTree. Done AFTER
+    // arg validation so bad args fail fast without a browser round-trip.
     const result = await this._backend.callTool('browser_snapshot', {});
     if (result.isError) return result;
 
     const yaml = this._extractSnapshot(result);
     if (!yaml) return result; // No snapshot found, return as-is
 
-    const options = {};
-    if (args && typeof args.rootRef === 'string' && args.rootRef.trim()) {
-      options.rootRef = args.rootRef.trim();
-    }
-    if (args && typeof args.maxLines === 'number') {
-      options.maxLines = args.maxLines;
+    const structured = smartSnapshot(yaml, options);
+
+    if (structured.notFound) {
+      return {
+        content: [{
+          type: 'text',
+          text: `### Smart Snapshot — ref not found\n${structured.text}`,
+        }],
+        isError: true,
+      };
     }
 
-    const compact = smartSnapshot(yaml, options);
+    // options.rootRef is already validated against REF_PATTERN above, so it's
+    // safe to interpolate into the header without further escaping.
     const header = options.rootRef
       ? `### Smart Snapshot (scoped to ref=${options.rootRef})`
       : '### Smart Snapshot';
@@ -140,7 +177,7 @@ class EnhancedBrowserServerBackend {
     return {
       content: [{
         type: 'text',
-        text: `${header}\n${compact}`,
+        text: `${header}\n${structured.text}`,
       }],
     };
   }

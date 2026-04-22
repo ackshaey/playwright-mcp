@@ -312,7 +312,7 @@ test('browser_smart_snapshot with rootRef returns only that subtree', async ({ c
   expect(scopedText).not.toContain('About');
 });
 
-test('browser_smart_snapshot with unknown rootRef returns a notice', async ({ client, server }) => {
+test('browser_smart_snapshot with unknown rootRef returns isError with distinct header', async ({ client, server }) => {
   server.setContent('/', '<title>T</title><button>Go</button>', 'text/html');
 
   await client.callTool({
@@ -324,10 +324,71 @@ test('browser_smart_snapshot with unknown rootRef returns a notice', async ({ cl
     name: 'browser_smart_snapshot',
     arguments: { rootRef: 'e999999' },
   });
+  // Regression: previously returned a normal snapshot with a parenthetical notice
+  // under the regular "### Smart Snapshot" header — easy for an agent to miss.
+  // Now: isError is set, header signals the failure explicitly, no misleading "scoped to" claim.
+  expect(result.isError).toBe(true);
   const text = result.content[0].text;
-  expect(text).toContain('not found');
+  expect(text).toContain('ref not found');
   expect(text).toContain('e999999');
   expect(text).not.toContain('Go');
+  // The "scoped to" header MUST NOT appear when the scope was invalid.
+  expect(text).not.toMatch(/scoped to ref=/);
+});
+
+test('browser_smart_snapshot rejects malformed rootRef without running a snapshot', async ({ client, server }) => {
+  // Regression: rootRef was previously echoed verbatim into the response header,
+  // which allowed newline/markdown injection like "e5)\n\n### Fake Section".
+  // The backend now validates against a strict ref pattern before round-tripping
+  // to the browser.
+  server.setContent('/', '<title>T</title><button>Go</button>', 'text/html');
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  for (const bad of ['e5)\n### Fake', 'foo bar', '../etc/passwd', 'e5 and more', '']) {
+    const result = await client.callTool({
+      name: 'browser_smart_snapshot',
+      arguments: { rootRef: bad },
+    });
+    // Empty string is treated as "not provided" (returns a successful full snapshot),
+    // every other bad value must error.
+    if (bad === '') {
+      expect(result.isError).toBeFalsy();
+      expect(result.content[0].text).toContain('Smart Snapshot');
+    } else {
+      expect(result.isError).toBe(true);
+      expect(result.content[0].text).toContain('Invalid rootRef');
+      // The real guarantee is that a rejected input cannot be mistaken for a
+      // successful scoped snapshot: no "Smart Snapshot" section header and no
+      // "scoped to ref=" claim should appear in the response.
+      expect(result.content[0].text).not.toMatch(/^### Smart Snapshot(?: \(scoped to ref=)?/m);
+      expect(result.content[0].text).not.toMatch(/scoped to ref=/);
+    }
+  }
+});
+
+test('browser_smart_snapshot rejects non-string rootRef and non-number maxLines', async ({ client, server }) => {
+  server.setContent('/', '<title>T</title><button>Go</button>', 'text/html');
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.PREFIX },
+  });
+
+  const badRootRef = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { rootRef: 42 as unknown as string },
+  });
+  expect(badRootRef.isError).toBe(true);
+  expect(badRootRef.content[0].text).toContain('rootRef must be a string');
+
+  const badMaxLines = await client.callTool({
+    name: 'browser_smart_snapshot',
+    arguments: { maxLines: 'lots' as unknown as number },
+  });
+  expect(badMaxLines.isError).toBe(true);
+  expect(badMaxLines.content[0].text).toContain('maxLines must be a number');
 });
 
 test('browser_smart_snapshot maxLines override prevents truncation on a long page', async ({ client, server }) => {

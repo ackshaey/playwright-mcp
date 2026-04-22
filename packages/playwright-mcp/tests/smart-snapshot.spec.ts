@@ -468,27 +468,83 @@ test.describe('smartSnapshot rootRef scoping', () => {
   });
 
   test('disables action-zone focus when rootRef is set', () => {
-    // Build a page that has a product title + CTA (action-zone trigger).
-    // Without rootRef, focus mode would slice around the CTA and insert an
-    // "omitted" hint. With rootRef, we should get the raw scoped subtree and
-    // no omitted-elements notice even when the output is short.
+    // Build a page large enough to trigger action-zone focus: has an h1 and a
+    // matching CTA ("Add to Cart"), plus enough lines to exceed the line cap so
+    // focus mode would fire. With rootRef, the subtree returned should NOT show
+    // the action-zone "omitted" hint because focus is auto-disabled.
     const lines = ['- main:'];
-    for (let i = 1; i <= 20; i++) {
-      lines.push(`  - link "Extra ${i}" [ref=e${100 + i}]`);
+    for (let i = 1; i <= 60; i++) {
+      lines.push(`  - link "Pre ${i}" [ref=e${100 + i}]`);
     }
     lines.push('  - heading "Product Title" [level=1] [ref=e1]');
-    for (let i = 1; i <= 20; i++) {
-      lines.push(`  - generic "Detail ${i}" [ref=e${200 + i}]`);
+    for (let i = 1; i <= 40; i++) {
+      lines.push(`  - button "Detail ${i}" [ref=e${200 + i}]`);
     }
     lines.push('  - button "Add to Cart" [ref=e2]');
-    lines.push('  - fieldset "Other" [ref=e3]:');
-    lines.push('    - textbox "Unrelated" [ref=e4]');
+    for (let i = 1; i <= 40; i++) {
+      lines.push(`  - link "Post ${i}" [ref=e${300 + i}]`);
+    }
+    lines.push('  - list "Elsewhere" [ref=e3]:');
+    lines.push('    - listitem:');
+    lines.push('      - button "Unrelated" [ref=e4]');
     const yaml = lines.join('\n');
-    // With rootRef, we should get just the fieldset subtree (no omitted hints).
+
+    // Sanity: without rootRef, action-zone focus fires and emits "omitted" hints.
+    const unscoped = smartSnapshot(yaml, { maxLines: 50 });
+    expect(unscoped).toContain('omitted');
+
+    // With rootRef, no focus mode, no "omitted" hints, and only the subtree content.
     const scoped = smartSnapshot(yaml, { rootRef: 'e3', maxLines: 100 });
     expect(scoped).not.toContain('omitted');
     expect(scoped).toContain('Unrelated');
     expect(scoped).not.toContain('Product Title');
+    expect(scoped).not.toContain('Add to Cart');
+  });
+
+  test('keeps the matched root even when it is a junk container (regression)', () => {
+    // Regression for review ship-blocker: if rootRef matches a node that
+    // pruneTree would normally drop as a junk container (contentinfo, banner,
+    // cookie dialog, noise heading), the caller asked for it explicitly and
+    // should still receive it. Only descendants get junk-filtered.
+    const yaml = [
+      '- main:',
+      '  - button "Primary" [ref=e1]',
+      '- contentinfo [ref=e50]:',
+      '  - link "Privacy Policy" [ref=e51]',
+      '  - button "Unsubscribe" [ref=e52]',
+    ].join('\n');
+    const result = smartSnapshot(yaml, { rootRef: 'e50' });
+    // Root kept (caller's explicit request honored)
+    expect(result).toContain('e50');
+    // Not empty — the ship-blocker was returning ""
+    expect(result.length).toBeGreaterThan(0);
+    expect(result).not.toBe('');
+  });
+
+  test('junk filtering still applies to descendants of a scoped root', () => {
+    // The complement of the regression above: when the matched root is a real
+    // container (main/section), junk *inside* it should still be dropped.
+    const yaml = [
+      '- main [ref=e10]:',
+      '  - button "Primary" [ref=e11]',
+      '  - dialog "Cookie Consent" [ref=e12]:',
+      '    - button "Accept All Cookies" [ref=e13]',
+    ].join('\n');
+    const result = smartSnapshot(yaml, { rootRef: 'e10' });
+    expect(result).toContain('Primary');
+    expect(result).not.toContain('Cookie Consent');
+    expect(result).not.toContain('Accept All Cookies');
+  });
+
+  test('honors small maxLines even when scoped by rootRef', () => {
+    // Regression: the rootRef path should not silently bypass maxLines.
+    const lines = ['- group [ref=e1]:'];
+    for (let i = 1; i <= 30; i++) {
+      lines.push(`  - button "Option ${i}" [ref=e${i + 10}]`);
+    }
+    const yaml = lines.join('\n');
+    const result = smartSnapshot(yaml, { rootRef: 'e1', maxLines: 5 });
+    expect(result).toContain('truncated');
   });
 });
 
@@ -510,15 +566,16 @@ test.describe('smartSnapshot maxLines guardrails', () => {
     expect(fullResult).toContain('Button 150');
   });
 
-  test('clamps absurdly large maxLines to the ceiling', () => {
+  test('clamps absurdly large maxLines to the ceiling and surfaces the clamp', () => {
     // Build a snapshot larger than the ceiling
     const yaml = buildLongYaml(MAX_OUTPUT_LINES_CEILING + 500);
     const result = smartSnapshot(yaml, { maxLines: 1_000_000 });
     const outputLines = result.split('\n');
-    // Expect the truncation hint to still show — caller's huge request is clamped.
     expect(result).toContain('truncated');
-    // Output capped near the ceiling + a few trailing hint lines.
     expect(outputLines.length).toBeLessThanOrEqual(MAX_OUTPUT_LINES_CEILING + 5);
+    // Regression: callers were silently capped at 2000. The truncation hint
+    // must now disclose the clamp so the caller knows the request was adjusted.
+    expect(result).toContain('clamped from 1000000');
   });
 
   test('falls back to default when maxLines is zero, negative, NaN, or non-number', () => {
@@ -530,7 +587,19 @@ test.describe('smartSnapshot maxLines guardrails', () => {
     }
   });
 
-  test('floors fractional maxLines', () => {
+  test('fractional-positive maxLines floors to at least 1 (regression)', () => {
+    // Regression: previously `maxLines: 0.9` floored to 0 and produced a
+    // zero-content-line snapshot. Floor(maxLines) must be raised to at least 1
+    // so no caller can end up with an effectively empty cap.
+    const yaml = buildLongYaml(5);
+    for (const tiny of [0.1, 0.5, 0.9999]) {
+      const result = smartSnapshot(yaml, { maxLines: tiny });
+      // Must produce at least one content line, not an empty cap.
+      expect(result).toContain('Button 1');
+    }
+  });
+
+  test('floors fractional maxLines >= 1', () => {
     const yaml = buildLongYaml(30);
     const result = smartSnapshot(yaml, { maxLines: 15.9 });
     const outputLines = result.split('\n');
@@ -543,5 +612,26 @@ test.describe('smartSnapshot maxLines guardrails', () => {
     const yaml = buildLongYaml(100);
     const result = smartSnapshot(yaml, { maxLines: 20 });
     expect(result).toContain('rootRef');
+  });
+
+  test('structured mode returns an object with notFound flag for stale refs', () => {
+    // The structured interface is used by the MCP backend to turn stale refs
+    // into isError responses. Locking in the contract so future refactors
+    // cannot silently drop the flag.
+    const yaml = '- button "Go" [ref=e1]';
+    const result = smartSnapshot(yaml, { rootRef: 'e999', asStructured: true }) as {
+      text: string; notFound?: boolean;
+    };
+    expect(typeof result).toBe('object');
+    expect(result.notFound).toBe(true);
+    expect(result.text).toContain('not found');
+  });
+
+  test('structured mode returns a clamped flag when maxLines exceeds the ceiling', () => {
+    const yaml = buildLongYaml(MAX_OUTPUT_LINES_CEILING + 100);
+    const result = smartSnapshot(yaml, { maxLines: 50_000, asStructured: true }) as {
+      text: string; clamped?: boolean;
+    };
+    expect(result.clamped).toBe(true);
   });
 });
