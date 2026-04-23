@@ -3,6 +3,7 @@
 const { smartSnapshot, parseSnapshot, REF_PATTERN } = require('./smart-snapshot');
 const { resolveQuery, flattenNodes } = require('./query-resolver');
 const { CUSTOM_TOOLS, CUSTOM_TOOL_NAMES } = require('./tools');
+const { solveChallenge, isStealthEnabled } = require('./stealth');
 
 // Description overrides for upstream tools — steer the agent toward efficient tools
 const TOOL_DESCRIPTION_OVERRIDES = {
@@ -52,6 +53,7 @@ class EnhancedBrowserServerBackend {
   constructor(originalBackend, options = {}) {
     this._backend = originalBackend;
     this._smartSnapshotMode = options.smartSnapshotMode || false;
+    this._stealthResult = options.stealthResult || null;
   }
 
   async initialize(clientInfo) {
@@ -70,7 +72,14 @@ class EnhancedBrowserServerBackend {
       return tool;
     });
 
-    return [...enhancedTools, ...CUSTOM_TOOLS];
+    // Hide browser_solve_challenge when stealth isn't on — without trusted
+    // mouse events the solver can't work, so the tool is actively misleading.
+    const stealthOn = this._stealthResult && isStealthEnabled(this._stealthResult.level);
+    const customTools = stealthOn
+      ? CUSTOM_TOOLS
+      : CUSTOM_TOOLS.filter(t => t.name !== 'browser_solve_challenge');
+
+    return [...enhancedTools, ...customTools];
   }
 
   async callTool(name, rawArguments, progress) {
@@ -102,6 +111,8 @@ class EnhancedBrowserServerBackend {
           return await this._handleQuery(args);
         case 'browser_find':
           return await this._handleFind(args);
+        case 'browser_solve_challenge':
+          return await this._handleSolveChallenge(args);
         default:
           return {
             content: [{ type: 'text', text: `### Error\nUnknown custom tool: ${name}` }],
@@ -114,6 +125,87 @@ class EnhancedBrowserServerBackend {
         isError: true,
       };
     }
+  }
+
+  async _handleSolveChallenge(args) {
+    if (!this._stealthResult || !isStealthEnabled(this._stealthResult.level)) {
+      return {
+        content: [{
+          type: 'text',
+          text: '### browser_solve_challenge unavailable\nStealth is not enabled on this server. Restart with --stealth <light|medium|full> to use this tool.',
+        }],
+        isError: true,
+      };
+    }
+
+    const page = this._resolveCurrentPage();
+    if (!page) {
+      return {
+        content: [{ type: 'text', text: '### Error\nNo active page. Call browser_navigate first.' }],
+        isError: true,
+      };
+    }
+
+    // Validate args: maxAttempts must be a positive integer if provided;
+    // timeoutMs must be positive if provided. Undefined means "use default".
+    const raw = args || {};
+    if (raw.maxAttempts !== undefined && (!Number.isFinite(raw.maxAttempts) || raw.maxAttempts < 1)) {
+      return {
+        content: [{ type: 'text', text: '### Error\nmaxAttempts must be a positive number.' }],
+        isError: true,
+      };
+    }
+    if (raw.timeoutMs !== undefined && (!Number.isFinite(raw.timeoutMs) || raw.timeoutMs < 1)) {
+      return {
+        content: [{ type: 'text', text: '### Error\ntimeoutMs must be a positive number (milliseconds).' }],
+        isError: true,
+      };
+    }
+
+    const maxAttempts = raw.maxAttempts;
+    const timeoutMs = raw.timeoutMs;
+
+    const result = await solveChallenge(page, {
+      maxAttempts,
+      // One knob → both interactive and non-interactive polls. They serve
+      // the same purpose (how long to wait before giving up); exposing two
+      // separate timeouts in the tool schema is just user confusion.
+      interactiveTimeoutMs: timeoutMs,
+      nonInteractiveTimeoutMs: timeoutMs,
+    });
+
+    return {
+      content: [{
+        type: 'text',
+        text: `### browser_solve_challenge\n\`\`\`json\n${JSON.stringify(result, null, 2)}\n\`\`\``,
+      }],
+      isError: !result.solved,
+    };
+  }
+
+  /**
+   * Find the active Playwright Page for tool handlers that need direct page
+   * access (notably browser_solve_challenge, which drives page.mouse.click).
+   *
+   * Preferred path: the stealth-factory stashes the live browserContext on
+   * this._stealthResult.browserContext, and we take the last-created page
+   * as "current" — Playwright MCP is one-tab-at-a-time in practice and the
+   * most recently opened tab is the active one.
+   *
+   * Fallback: upstream's private _context.currentTab(). Pinned to the
+   * browserServerBackend.js / context.js shape in
+   * node_modules/playwright/lib/mcp/browser; if upstream renames these
+   * fields this falls through to null and the tool returns a clean error.
+   */
+  _resolveCurrentPage() {
+    const browserContext = this._stealthResult?.browserContext;
+    if (browserContext) {
+      const pages = browserContext.pages();
+      if (pages.length > 0) return pages[pages.length - 1];
+    }
+    const context = this._backend?._context;
+    const tab = typeof context?.currentTab === 'function' ? context.currentTab() : null;
+    return tab?.page || null;
   }
 
   async _handleSmartSnapshot(args) {

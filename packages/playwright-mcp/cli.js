@@ -28,6 +28,8 @@ const { BrowserServerBackend } = require(nodePath.join(playwrightDir, 'lib/mcp/b
 const { setupExitWatchdog } = require(nodePath.join(playwrightDir, 'lib/mcp/browser/watchdog'));
 
 const { EnhancedBrowserServerBackend } = require('./src/enhanced-backend');
+const { applyStealthToLaunchConfig } = require('./src/stealth');
+const { wrapFactoryWithStealth } = require('./src/stealth-factory');
 
 let ExtensionContextFactory;
 try {
@@ -45,6 +47,9 @@ decorateMCPCommand(p, packageJSON.version);
 // Add our custom options
 p.option('--smart-snapshot', 'automatically prune all snapshots for token efficiency (~5x reduction)');
 p.option('--extension-path <path>', 'path to a Chrome extension directory to load');
+p.option('--stealth <level>', 'enable bot-detection evasion: off | light | medium | full (default: off)');
+p.option('--stealth-chrome-version <version>', 'Chrome version used to derive stealth persona UA (e.g. "144.0.7559.133")');
+p.option('--stealth-user-agent <ua>', 'explicit UA string for the stealth persona (overrides --stealth-chrome-version)');
 
 // Override the action handler — Commander replaces the previous one
 p.action(async (options) => {
@@ -72,6 +77,14 @@ p.action(async (options) => {
     );
   }
 
+  // --- Stealth: mutate launch config, persona flows into the context wrapper ---
+  const stealthLevel = options.stealth || 'off';
+  const stealthResult = applyStealthToLaunchConfig(config, {
+    level: stealthLevel,
+    userAgent: options.stealthUserAgent,
+    chromeVersion: options.stealthChromeVersion,
+  });
+
   const smartSnapshotMode = !!options.smartSnapshot;
 
   // --- Handle extension mode (--extension flag) ---
@@ -86,8 +99,8 @@ p.action(async (options) => {
       nameInConfig: 'playwright-extension',
       version: packageJSON.version,
       create: () => new EnhancedBrowserServerBackend(
-        new BrowserServerBackend(config, extensionContextFactory),
-        { smartSnapshotMode }
+        new BrowserServerBackend(config, wrapFactoryWithStealth(extensionContextFactory, stealthResult, config)),
+        { smartSnapshotMode, stealthResult }
       ),
     };
     await mcpServer.start(serverBackendFactory, config.server);
@@ -101,8 +114,8 @@ p.action(async (options) => {
     nameInConfig: 'playwright',
     version: packageJSON.version,
     create: () => new EnhancedBrowserServerBackend(
-      new BrowserServerBackend(config, browserContextFactory),
-      { smartSnapshotMode }
+      new BrowserServerBackend(config, wrapFactoryWithStealth(browserContextFactory, stealthResult, config)),
+      { smartSnapshotMode, stealthResult }
     ),
   };
   await mcpServer.start(factory, config.server);

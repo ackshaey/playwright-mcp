@@ -5,17 +5,20 @@ This is where the enhancement layer lives. All our code is in `src/` and the mod
 ## File Map
 
 ```
-cli.js              — Modified CLI entry point. Adds --smart-snapshot, --extension-path flags.
+cli.js              — Modified CLI entry point. Adds --smart-snapshot, --extension-path,
+                      --stealth, --stealth-chrome-version, --stealth-user-agent flags.
                       Overrides the action handler to wrap BrowserServerBackend in our enhanced backend.
 
 index.js            — Modified library entry point. Exports enhanced createConnection() that
-                      accepts smartSnapshot and extensionPath config options.
+                      accepts smartSnapshot, extensionPath, stealth, stealthUserAgent,
+                      stealthChromeVersion config options.
 
 src/
   enhanced-backend.js  — EnhancedBrowserServerBackend class. The wrapper that sits between the
                          MCP server and Playwright's BrowserServerBackend. Intercepts listTools()
                          to add custom tools + override descriptions, intercepts callTool() to
-                         handle custom tools and post-process snapshots.
+                         handle custom tools and post-process snapshots. Hides
+                         browser_solve_challenge from listTools() when stealth is off.
 
   smart-snapshot.js    — The core optimization. Parses AXTree YAML, filters junk containers
                          (footers, banners, cookie consent, cross-sells), filters junk nodes
@@ -27,12 +30,41 @@ src/
                          Parses { field, field[] { child } } syntax and matches against AXTree.
 
   tools.js             — MCP tool definitions for browser_smart_snapshot, browser_find,
-                         browser_query. Includes RECOMMENDED/WARNING language in descriptions
-                         to steer agent behavior.
+                         browser_query, browser_solve_challenge. Includes RECOMMENDED/WARNING
+                         language in descriptions to steer agent behavior.
+
+  stealth-factory.js   — Wraps an upstream browser-context factory so each new context gets
+                         the stealth init script and per-page CDP emulation installed before
+                         anything else touches it. No-op when stealth is off.
+
+  stealth/
+    stealth.js           — 600-line init script (ported verbatim from PinchTab).
+                           Patches navigator (webdriver, plugins, platform, languages),
+                           userAgentData client hints, permissions, battery, touch-points,
+                           chrome.runtime, iframe isolation, WebGL spoofing. Reads 4 globals:
+                           __pinchtab_{seed,stealth_level,headless,profile}.
+    popup-guard.js       — Guards window.open and window.opener to prevent opener leakage.
+    persona.js           — Builds a coherent BrowserPersona from a target UA / Chrome version
+                           (ua.go port).
+    launch-args.js       — Chromium launch flags: --disable-automation,
+                           --disable-blink-features=AutomationControlled, --user-agent,
+                           --lang. Plus IGNORE_DEFAULT_ARGS (--enable-automation,
+                           --disable-extensions). (launch.go port)
+    bootstrap.js         — Composes the 4-global header + stealth.js + popup-guard.js into
+                           one addInitScript-ready string.
+    cdp-emulation.js     — Per-page CDP overrides (emulation.go port): setAutomationOverride,
+                           setLocaleOverride, setUserAgentOverride with client-hints metadata.
+    cloudflare-solver.js — Detects Cloudflare Turnstile challenges (non-interactive, managed,
+                           interactive) and clicks the widget checkbox via page.mouse.click
+                           (trusted MouseEvent). (cloudflare.go port)
+    index.js             — Public entry: applyStealthToLaunchConfig, attachStealthToContext,
+                           validateLevel, isStealthEnabled, solveChallenge.
 
 tests/
   smart-snapshot.spec.ts  — Unit tests for the pruning pipeline (31 tests, no browser needed)
   enhanced.spec.ts        — Integration tests for the full enhanced backend (17 tests, needs browser)
+  stealth.spec.ts         — Unit/integration tests for stealth (persona, launch args, bootstrap,
+                            CF detection, tool visibility; 20 tests)
   capture-snapshot.js     — Utility: capture a real page's AXTree and save as a fixture
   benchmark-pruning.js    — Utility: benchmark pruning on saved fixtures (zero tokens)
   fixtures/               — Saved AXTree snapshots for offline benchmarking
