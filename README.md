@@ -12,10 +12,11 @@ All 34+ upstream Playwright MCP tools work unchanged. This fork adds a wrapper l
 | E-commerce task (select options → cart → checkout → shipping) | $2.01, 50 tool calls, failed | $1.14, 29 tool calls, succeeded |
 | Screenshots per task | 19 | 1 |
 | Custom Chrome extension loading | Not supported | `--extension-path` flag |
+| Bot-detection evasion | Not supported | `--stealth <level>` flag (light/medium/full) |
 
-**New tools:** `browser_smart_snapshot` (pruned snapshots), `browser_find` (intent-based element search), `browser_query` (structured data extraction).
+**New tools:** `browser_smart_snapshot` (pruned snapshots), `browser_find` (intent-based element search), `browser_query` (structured data extraction), `browser_solve_challenge` (Cloudflare Turnstile solver; stealth-on only).
 
-**New flags:** `--smart-snapshot` (auto-prune all responses), `--extension-path <path>` (load Chrome extensions).
+**New flags:** `--smart-snapshot` (auto-prune all responses), `--extension-path <path>` (load Chrome extensions), `--stealth <level>` + `--stealth-chrome-version` + `--stealth-user-agent` (bot-detection evasion via launch-arg patches, CDP emulation overrides, and a 600-line init-script patching navigator, plugins, client hints, permissions, WebGL, etc.).
 
 **How it works:** An `EnhancedBrowserServerBackend` wraps the upstream `BrowserServerBackend`, intercepts `listTools()` to add custom tools and override descriptions, and intercepts `callTool()` to post-process snapshot responses. Zero modifications to Playwright internals. See [CLAUDE.md](./CLAUDE.md) for full architecture details.
 

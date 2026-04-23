@@ -116,13 +116,50 @@ const findTool = {
   },
 };
 
-const CUSTOM_TOOLS = [smartSnapshotTool, queryTool, findTool];
+const solveChallengeTool = {
+  name: 'browser_solve_challenge',
+  description: [
+    'Detect and attempt to solve a Cloudflare Turnstile challenge on the current page.',
+    'No-op when no challenge is detected (returns solved: true, challengeType: "none").',
+    '',
+    'Only available when the server was started with --stealth (level != off). Without',
+    'stealth the underlying click will not carry a trusted mouse signal and Cloudflare',
+    'will reject it.',
+    '',
+    'Handles non-interactive challenges by waiting for auto-resolution, and',
+    'managed/interactive challenges by clicking the Turnstile checkbox with up to',
+    '3 attempts. Returns a structured result describing the outcome:',
+    '  { solved: boolean, challengeType: string, attempts: number, finalTitle: string, reason?: string }',
+    '',
+    'If solved is false, escalate to a human or a paid solver (2Captcha, CapSolver).',
+  ].join('\n'),
+  inputSchema: {
+    type: 'object',
+    properties: {
+      maxAttempts: {
+        type: 'number',
+        description: 'Max click attempts for interactive challenges. Default: 3.',
+      },
+      timeoutMs: {
+        type: 'number',
+        description: 'Per-attempt resolution poll timeout in ms. Default: 15000.',
+      },
+    },
+  },
+  annotations: {
+    readOnlyHint: false,
+    destructiveHint: false,
+  },
+};
+
+const CUSTOM_TOOLS = [smartSnapshotTool, queryTool, findTool, solveChallengeTool];
 const CUSTOM_TOOL_NAMES = new Set(CUSTOM_TOOLS.map(t => t.name));
 
 module.exports = {
   smartSnapshotTool,
   queryTool,
   findTool,
+  solveChallengeTool,
   CUSTOM_TOOLS,
   CUSTOM_TOOL_NAMES,
 };

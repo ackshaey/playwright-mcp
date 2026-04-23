@@ -23,6 +23,8 @@ const { resolveConfig } = require(nodePath.join(playwrightDir, 'lib/mcp/browser/
 const { contextFactory } = require(nodePath.join(playwrightDir, 'lib/mcp/browser/browserContextFactory'));
 const mcpServer = require(nodePath.join(playwrightDir, 'lib/mcp/sdk/server'));
 const { EnhancedBrowserServerBackend } = require('./src/enhanced-backend');
+const { applyStealthToLaunchConfig } = require('./src/stealth');
+const { wrapFactoryWithStealth } = require('./src/stealth-factory');
 
 const packageJSON = require('./package.json');
 
@@ -32,6 +34,9 @@ const packageJSON = require('./package.json');
  * Accepts all standard Playwright MCP config options, plus:
  * - smartSnapshot: boolean — automatically prune all snapshots for token efficiency
  * - extensionPath: string — path to a Chrome extension directory to load
+ * - stealth: 'off'|'light'|'medium'|'full' — bot-detection evasion level (default off)
+ * - stealthUserAgent: string — explicit UA for the stealth persona
+ * - stealthChromeVersion: string — Chrome version for deriving the stealth persona
  *
  * @param {object} userConfig - Configuration options
  * @param {function} [contextGetter] - Optional custom BrowserContext getter
@@ -41,11 +46,19 @@ async function createConnection(userConfig = {}, contextGetter) {
   // Extract our custom config fields
   const smartSnapshotMode = !!userConfig.smartSnapshot;
   const extensionPath = userConfig.extensionPath;
+  const stealthOptions = {
+    level: userConfig.stealth || 'off',
+    userAgent: userConfig.stealthUserAgent,
+    chromeVersion: userConfig.stealthChromeVersion,
+  };
 
   // Clean config: remove our custom fields before passing to upstream
   const cleanConfig = { ...userConfig };
   delete cleanConfig.smartSnapshot;
   delete cleanConfig.extensionPath;
+  delete cleanConfig.stealth;
+  delete cleanConfig.stealthUserAgent;
+  delete cleanConfig.stealthChromeVersion;
 
   // Inject extension path into launch args
   if (extensionPath) {
@@ -61,6 +74,9 @@ async function createConnection(userConfig = {}, contextGetter) {
 
   const config = await resolveConfig(cleanConfig);
 
+  // Apply stealth launch args (no-op when level is 'off').
+  const stealthResult = applyStealthToLaunchConfig(config, stealthOptions);
+
   let factory;
   if (contextGetter) {
     factory = new SimpleBrowserContextFactory(contextGetter);
@@ -68,8 +84,13 @@ async function createConnection(userConfig = {}, contextGetter) {
     factory = contextFactory(config);
   }
 
+  factory = wrapFactoryWithStealth(factory, stealthResult, config);
+
   const originalBackend = new BrowserServerBackend(config, factory);
-  const enhancedBackend = new EnhancedBrowserServerBackend(originalBackend, { smartSnapshotMode });
+  const enhancedBackend = new EnhancedBrowserServerBackend(originalBackend, {
+    smartSnapshotMode,
+    stealthResult,
+  });
 
   return mcpServer.createServer('Playwright', packageJSON.version, enhancedBackend, false);
 }
