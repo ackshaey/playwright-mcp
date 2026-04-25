@@ -120,8 +120,12 @@ class EnhancedBrowserServerBackend {
           };
       }
     } catch (error) {
+      // Preserve the stack when present — `String(err)` drops it and makes
+      // diagnosing thrown errors from inside tool handlers (e.g. detached-frame
+      // failures from cloudflare-solver) much harder than necessary.
+      const detail = error?.stack || String(error);
       return {
-        content: [{ type: 'text', text: `### Error\n${String(error)}` }],
+        content: [{ type: 'text', text: `### Error\n${detail}` }],
         isError: true,
       };
     }
@@ -146,24 +150,21 @@ class EnhancedBrowserServerBackend {
       };
     }
 
-    // Validate args: maxAttempts must be a positive integer if provided;
-    // timeoutMs must be positive if provided. Undefined means "use default".
-    const raw = args || {};
-    if (raw.maxAttempts !== undefined && (!Number.isFinite(raw.maxAttempts) || raw.maxAttempts < 1)) {
+    // Validate args: maxAttempts must be a positive integer; timeoutMs must
+    // be a positive integer (milliseconds). Undefined means "use default".
+    const { maxAttempts, timeoutMs } = args || {};
+    if (maxAttempts !== undefined && (!Number.isInteger(maxAttempts) || maxAttempts < 1)) {
       return {
-        content: [{ type: 'text', text: '### Error\nmaxAttempts must be a positive number.' }],
+        content: [{ type: 'text', text: '### Error\nmaxAttempts must be a positive integer.' }],
         isError: true,
       };
     }
-    if (raw.timeoutMs !== undefined && (!Number.isFinite(raw.timeoutMs) || raw.timeoutMs < 1)) {
+    if (timeoutMs !== undefined && (!Number.isInteger(timeoutMs) || timeoutMs < 1)) {
       return {
-        content: [{ type: 'text', text: '### Error\ntimeoutMs must be a positive number (milliseconds).' }],
+        content: [{ type: 'text', text: '### Error\ntimeoutMs must be a positive integer (milliseconds).' }],
         isError: true,
       };
     }
-
-    const maxAttempts = raw.maxAttempts;
-    const timeoutMs = raw.timeoutMs;
 
     const result = await solveChallenge(page, {
       maxAttempts,
@@ -203,8 +204,16 @@ class EnhancedBrowserServerBackend {
       const pages = browserContext.pages();
       if (pages.length > 0) return pages[pages.length - 1];
     }
+    // Fallback: only fires when the stealth-factory hasn't seen a context yet
+    // (race on first tool call) or when stealth is somehow off but the handler
+    // still ran. Log once so a silent upstream rename of `_context`/`currentTab`
+    // is diagnosable instead of just returning null.
     const context = this._backend?._context;
     const tab = typeof context?.currentTab === 'function' ? context.currentTab() : null;
+    if (!this._loggedFallback && (!context || !tab)) {
+      this._loggedFallback = true;
+      console.error('[playwright-mcp stealth] _resolveCurrentPage fell back to upstream _context (private API). browserContext was unavailable on stealthResult.');
+    }
     return tab?.page || null;
   }
 

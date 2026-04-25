@@ -64,14 +64,18 @@ async function applyPageEmulation(page, persona) {
 
 /**
  * Register a listener that applies emulation to every page created in the
- * context (including popups and new tabs). Returns an unregister function.
- * Runs even when persona is null, because the automation-override strip is
- * persona-independent.
+ * context (including popups and new tabs). Also hooks service workers — for
+ * those, we can't drive CDP directly (Playwright's newCDPSession only accepts
+ * Page|Frame), but we can run a best-effort `worker.evaluate` that patches the
+ * worker's own navigator. Returns an unregister function.
+ *
+ * Runs even when persona is null, because the page-level automation-override
+ * strip is persona-independent.
  */
 function attachContextEmulation(browserContext, persona) {
   if (!browserContext) return () => {};
 
-  const handler = async (page) => {
+  const pageHandler = async (page) => {
     try {
       await applyPageEmulation(page, persona);
     } catch (_) {
@@ -80,13 +84,59 @@ function attachContextEmulation(browserContext, persona) {
     }
   };
 
-  // Emulate existing pages, then hook future ones.
-  for (const page of browserContext.pages()) {
-    void handler(page);
-  }
-  browserContext.on('page', handler);
+  const workerHandler = async (worker) => {
+    if (!persona?.userAgent) return; // Nothing to patch without a persona.
+    try {
+      await applyWorkerEmulation(worker, persona);
+    } catch (_) { /* best-effort — worker may already be running */ }
+  };
 
-  return () => browserContext.off('page', handler);
+  // Emulate existing pages and workers, then hook future ones.
+  for (const page of browserContext.pages()) {
+    void pageHandler(page);
+  }
+  for (const worker of typeof browserContext.serviceWorkers === 'function' ? browserContext.serviceWorkers() : []) {
+    void workerHandler(worker);
+  }
+  browserContext.on('page', pageHandler);
+  browserContext.on('serviceworker', workerHandler);
+
+  return () => {
+    browserContext.off('page', pageHandler);
+    browserContext.off('serviceworker', workerHandler);
+  };
+}
+
+/**
+ * Best-effort fingerprint patches inside a service worker.
+ *
+ * Caveat: this runs AFTER the worker has started, so any synchronous
+ * fingerprinting at worker init has already executed against the real
+ * navigator. The protocol-layer overrides (Emulation.setUserAgentOverride
+ * via the page's CDP session) cover the worker's outgoing HTTP UA header
+ * regardless — so this only matters for code that reads navigator.userAgent
+ * inside the worker's JS realm.
+ */
+async function applyWorkerEmulation(worker, persona) {
+  if (!worker || typeof worker.evaluate !== 'function') return;
+  await worker.evaluate(({ userAgent, language, languages, navigatorPlatform }) => {
+    const proto = Object.getPrototypeOf(self.navigator) || self.WorkerNavigator?.prototype;
+    if (!proto) return;
+    const define = (name, value) => {
+      try {
+        Object.defineProperty(proto, name, { get: () => value, configurable: true });
+      } catch (_) { /* ignore — some props are non-configurable in workers */ }
+    };
+    if (userAgent) define('userAgent', userAgent);
+    if (language) define('language', language);
+    if (Array.isArray(languages)) define('languages', Object.freeze(languages.slice()));
+    if (navigatorPlatform) define('platform', navigatorPlatform);
+  }, {
+    userAgent: persona.userAgent,
+    language: persona.language,
+    languages: persona.languages,
+    navigatorPlatform: persona.navigatorPlatform,
+  });
 }
 
 function toCDPUserAgentMetadata(data) {
@@ -105,4 +155,4 @@ function toCDPUserAgentMetadata(data) {
 
 function noop() {}
 
-module.exports = { applyPageEmulation, attachContextEmulation };
+module.exports = { applyPageEmulation, applyWorkerEmulation, attachContextEmulation };

@@ -19,8 +19,7 @@ function wrapFactoryWithStealth(factory, stealthResult, config) {
   if (!isStealthEnabled(stealthResult.level)) return factory;
 
   const headless = !!config?.browser?.launchOptions?.headless;
-  const persona = stealthResult.persona;
-  const level = stealthResult.level;
+  const { persona, level } = stealthResult;
 
   const original = factory.createContext.bind(factory);
 

@@ -13,13 +13,20 @@
  * COVERAGE: The resulting script runs at document_start on every page in the
  * context, including all iframes (per Playwright's addInitScript semantics).
  * It does NOT run in Web Workers, Service Workers, or Shared Workers — those
- * run in separate JS realms that addInitScript does not touch. For UA-level
- * signals inside workers (e.g. navigator.userAgent as seen from a worker),
- * we rely on the CDP-level `Emulation.setUserAgentOverride` override in
- * cdp-emulation.js, which applies at the protocol layer and so covers worker
- * contexts transparently. Pure-JS patches in stealth.js (plugin arrays,
- * permission API, etc.) do NOT reach worker realms — callers scraping sites
- * that sniff from workers should be aware of this gap.
+ * run in separate JS realms that addInitScript does not touch.
+ *
+ * The worker realm gap is partially closed by cdp-emulation.js:
+ *   - Outgoing HTTP UA in workers is fixed by the page's CDP
+ *     Emulation.setUserAgentOverride (applies at the protocol layer).
+ *   - Service worker `navigator.userAgent`, `language`, `languages`, and
+ *     `platform` are post-hoc patched via `worker.evaluate` after the
+ *     `serviceworker` event fires — best-effort, since the worker's first
+ *     synchronous fingerprinting has already run against the real navigator
+ *     by the time we patch.
+ *   - Heavier JS-only patches in stealth.js (plugin arrays, permission API,
+ *     battery, WebGL spoofing, etc.) still do NOT reach worker realms.
+ *     Callers scraping sites that sniff via plugin/permission surfaces from
+ *     a worker should be aware of this residual gap.
  */
 
 const fs = require('fs');
@@ -31,14 +38,13 @@ const POPUP_GUARD_PATH = path.join(__dirname, 'popup-guard.js');
 let cachedStealthBody;
 let cachedPopupGuard;
 
-function loadAsset(filePath, cacheRef) {
-  if (cacheRef.value !== undefined) return cacheRef.value;
-  cacheRef.value = fs.readFileSync(filePath, 'utf8');
-  return cacheRef.value;
+function loadStealthBody() {
+  return cachedStealthBody ??= fs.readFileSync(STEALTH_SCRIPT_PATH, 'utf8');
 }
 
-const stealthBodyCache = { value: undefined };
-const popupGuardCache = { value: undefined };
+function loadPopupGuard() {
+  return cachedPopupGuard ??= fs.readFileSync(POPUP_GUARD_PATH, 'utf8');
+}
 
 /**
  * @param {object} options
@@ -53,16 +59,13 @@ function buildBootstrap({ level, headless, persona, seed } = {}) {
   const actualLevel = normalizeLevel(level);
   const profileJson = personaToProfileJson(persona);
 
-  const stealthBody = loadAsset(STEALTH_SCRIPT_PATH, stealthBodyCache);
-  const popupGuard = loadAsset(POPUP_GUARD_PATH, popupGuardCache);
-
   const header =
     `var __pinchtab_seed = ${actualSeed};\n` +
     `var __pinchtab_stealth_level = ${JSON.stringify(actualLevel)};\n` +
-    `var __pinchtab_headless = ${headless ? 'true' : 'false'};\n` +
+    `var __pinchtab_headless = ${JSON.stringify(!!headless)};\n` +
     `var __pinchtab_profile = ${profileJson};\n`;
 
-  return `${header}\n${stealthBody}\n${popupGuard}`;
+  return `${header}\n${loadStealthBody()}\n${loadPopupGuard()}`;
 }
 
 function normalizeLevel(level) {
