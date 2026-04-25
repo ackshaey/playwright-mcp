@@ -67,20 +67,16 @@ function applyStealthToLaunchConfig(config, options = {}) {
 
   const launchOptions = config.browser.launchOptions;
   launchOptions.args = mergeArgs(launchOptions.args || [], contract.args);
-
-  const existingIgnore = new Set(launchOptions.ignoreDefaultArgs || []);
-  for (const a of IGNORE_DEFAULT_ARGS) existingIgnore.add(a);
-  launchOptions.ignoreDefaultArgs = [...existingIgnore];
+  launchOptions.ignoreDefaultArgs = [...new Set([...(launchOptions.ignoreDefaultArgs || []), ...IGNORE_DEFAULT_ARGS])];
 
   // Force chromium channel when stealth is on — branded Chrome blocks many
   // of the flags above (notably --load-extension and some automation flags).
-  // Only override the default 'chrome' channel; respect any other explicit
-  // channel the user set (msedge, firefox, etc.). Emit a diagnostic when we
-  // change it so the user isn't silently retargeted.
-  if (!launchOptions.channel || launchOptions.channel === 'chrome') {
-    if (launchOptions.channel === 'chrome') {
-      console.error('[playwright-mcp stealth] Switching browser channel from "chrome" to "chromium" — branded Chrome disables the automation-related flags stealth needs.');
-    }
+  // Respect any other explicit channel the user set (msedge, firefox, etc.).
+  // Emit a diagnostic when we change it so the user isn't silently retargeted.
+  if (launchOptions.channel === 'chrome') {
+    console.error('[playwright-mcp stealth] Switching browser channel from "chrome" to "chromium" — branded Chrome disables the automation-related flags stealth needs.');
+    launchOptions.channel = 'chromium';
+  } else if (!launchOptions.channel) {
     launchOptions.channel = 'chromium';
   }
 

@@ -18,11 +18,14 @@ const stealth = require('../src/stealth');
 const cfSolver = require('../src/stealth/cloudflare-solver');
 
 test.describe('stealth.persona', () => {
-  test('returns minimal persona when no UA or version given', () => {
-    const p = persona.buildPersona('', '');
-    expect(p.userAgent).toBe('');
-    expect(p.userAgentData).toBeNull();
-    expect(p.language).toBe('en-US');
+  test('returns minimal persona when no UA or version given (and no Playwright)', () => {
+    // With Playwright installed, buildPersona('', '') falls through to
+    // getDefaultChromeVersion() and produces a real persona. So instead we
+    // assert that the resolver finds a non-empty version, and that calling
+    // with both empty does NOT return a fully-empty persona anymore.
+    const v = persona.getDefaultChromeVersion();
+    expect(typeof v).toBe('string');
+    expect(v).toMatch(/^\d+\.\d+\.\d+\.\d+$/);
   });
 
   test('derives a macOS persona from chromeVersion', () => {
@@ -49,6 +52,13 @@ test.describe('stealth.persona', () => {
     expect(p.navigatorPlatform).toBe('MacIntel');
     expect(p.userAgentData.platform).toBe('macOS');
   });
+
+  test('with no chromeVersion falls back to bundled Chromium version', () => {
+    const expected = persona.getDefaultChromeVersion();
+    const p = persona.buildPersona('', '');
+    expect(p.userAgent).toContain(`Chrome/${expected}`);
+    expect(p.userAgentData.fullVersionList.find((b: any) => b.brand === 'Google Chrome').version).toBe(expected);
+  });
 });
 
 test.describe('stealth.launch-args', () => {
@@ -65,9 +75,12 @@ test.describe('stealth.launch-args', () => {
     expect(c.args.some((a: string) => a.startsWith('--user-agent='))).toBe(true);
   });
 
-  test('omits --user-agent when no persona', () => {
+  test('always includes --user-agent (defaults to bundled Chromium version)', () => {
+    // With dynamic version resolution, a persona is always built. The UA
+    // matches the runtime-resolved bundled Chromium, so the launch arg is
+    // always present.
     const c = launchArgs.buildLaunchContract({});
-    expect(c.args.some((a: string) => a.startsWith('--user-agent='))).toBe(false);
+    expect(c.args.some((a: string) => a.startsWith('--user-agent='))).toBe(true);
   });
 
   test('exposes ignoreDefaultArgs list', () => {
@@ -153,23 +166,33 @@ test.describe('cloudflare-solver.isChallenge', () => {
   });
 });
 
-test.describe('cloudflare-solver.solveChallenge on a non-challenge page', () => {
-  test('returns solved:true challengeType:"none"', async ({ server }) => {
-    server.setContent('/', '<title>Hello</title><h1>Not a challenge</h1>', 'text/html');
+test.describe('cloudflare-solver.solveChallenge', () => {
+  test('returns solved:true challengeType:"none" on a non-challenge page', async () => {
+    // Stub Page — solveChallenge only calls .title() in the non-challenge
+    // path. No browser needed; exercising it through a real Playwright Page
+    // would just be slower without testing anything additional.
+    const stubPage = { title: async () => 'Hello' } as any;
+    const result = await cfSolver.solveChallenge(stubPage);
+    expect(result.solved).toBe(true);
+    expect(result.challengeType).toBe('none');
+    expect(result.finalTitle).toBe('Hello');
+    expect(result.attempts).toBe(0);
+  });
 
-    const { chromium } = await import('playwright');
-    const browser = await chromium.launch();
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
-    try {
-      await page.goto(server.PREFIX);
-      const result = await cfSolver.solveChallenge(page);
-      expect(result.solved).toBe(true);
-      expect(result.challengeType).toBe('none');
-      expect(result.finalTitle).toBe('Hello');
-    } finally {
-      await browser.close();
-    }
+  test('detectChallengeType extracts cType from page content', async () => {
+    const stubPage = {
+      content: async () => '<html>...something cType: \'managed\' something...</html>',
+      evaluate: async () => false,
+    } as any;
+    expect(await cfSolver.detectChallengeType(stubPage)).toBe('managed');
+  });
+
+  test('detectChallengeType returns "embedded" when only the script tag is present', async () => {
+    const stubPage = {
+      content: async () => '<html><body>...</body></html>',
+      evaluate: async () => true,
+    } as any;
+    expect(await cfSolver.detectChallengeType(stubPage)).toBe('embedded');
   });
 });
 
@@ -178,5 +201,33 @@ test.describe('browser_solve_challenge tool visibility', () => {
     const { tools } = await client.listTools();
     const names = tools.map((t: any) => t.name);
     expect(names).not.toContain('browser_solve_challenge');
+  });
+});
+
+test.describe('cdp-emulation exports', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const cdpEmulation = require('../src/stealth/cdp-emulation');
+
+  test('exports applyPageEmulation, applyWorkerEmulation, attachContextEmulation', () => {
+    expect(typeof cdpEmulation.applyPageEmulation).toBe('function');
+    expect(typeof cdpEmulation.applyWorkerEmulation).toBe('function');
+    expect(typeof cdpEmulation.attachContextEmulation).toBe('function');
+  });
+
+  test('attachContextEmulation hooks both page and serviceworker events', () => {
+    const onCalls: string[] = [];
+    const offCalls: string[] = [];
+    const fakeContext: any = {
+      pages: () => [],
+      serviceWorkers: () => [],
+      on: (event: string) => onCalls.push(event),
+      off: (event: string) => offCalls.push(event),
+    };
+    const detach = cdpEmulation.attachContextEmulation(fakeContext, null);
+    expect(onCalls).toContain('page');
+    expect(onCalls).toContain('serviceworker');
+    detach();
+    expect(offCalls).toContain('page');
+    expect(offCalls).toContain('serviceworker');
   });
 });

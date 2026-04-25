@@ -10,27 +10,61 @@
  * expanded to a platform-appropriate UA).
  */
 
+const fs = require('fs');
 const os = require('os');
 
-const DEFAULT_CHROME_VERSION = '144.0.0.0';
+// Frozen fallback if browsers.json can't be read — kept current as of port date.
+// The dynamic resolver below will always prefer the actually-installed Chromium
+// version, so this only matters in pathological environments (corrupted install,
+// ESM-only env, etc.).
+const FALLBACK_CHROME_VERSION = '146.0.7680.0';
+
+let cachedDefault = null;
 
 /**
- * Resolve a UA string. If `userAgent` is provided, it's used as-is. Otherwise
- * a platform-appropriate UA is built from `chromeVersion`. Returns '' if
- * neither is set.
+ * Read the bundled Chromium version from playwright-core's browsers.json.
+ * Cached after the first successful read. Falls back to FALLBACK_CHROME_VERSION
+ * when discovery fails.
+ *
+ * Doing this at runtime (rather than baking a constant) keeps the persona's UA
+ * matched to whatever Playwright actually launches — so the UA doesn't drift
+ * into a bot signal as Playwright rolls Chromium forward.
+ */
+function getDefaultChromeVersion() {
+  if (cachedDefault) return cachedDefault;
+  try {
+    const browsersJsonPath = require.resolve('playwright-core/browsers.json');
+    const data = JSON.parse(fs.readFileSync(browsersJsonPath, 'utf8'));
+    const chromium = (data?.browsers || []).find(b => b.name === 'chromium');
+    if (chromium?.browserVersion) {
+      cachedDefault = chromium.browserVersion;
+      return cachedDefault;
+    }
+  } catch (_) { /* swallow — fall through to fallback */ }
+  cachedDefault = FALLBACK_CHROME_VERSION;
+  return cachedDefault;
+}
+
+/**
+ * Resolve a UA string. If `userAgent` is provided, it's used as-is. If
+ * `chromeVersion` is provided, a platform-appropriate UA is built from it.
+ * If neither is set, falls back to the bundled Chromium version so callers
+ * who pass `--stealth full` with no further args still get a coherent persona
+ * matching the Chromium they're about to launch.
  */
 function resolveUserAgent(userAgent, chromeVersion) {
   if (userAgent) return userAgent;
-  if (!chromeVersion) return '';
+  const version = chromeVersion || getDefaultChromeVersion();
+  if (!version) return '';
 
   const platform = os.platform();
   switch (platform) {
     case 'darwin':
-      return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
+      return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`;
     case 'win32':
-      return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
+      return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`;
     default:
-      return `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
+      return `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`;
   }
 }
 
@@ -58,7 +92,10 @@ function buildPersona(userAgent, chromeVersion) {
     };
   }
 
-  const major = (chromeVersion || '').split('.')[0] || '144';
+  // Pull major from chromeVersion if given; otherwise from the runtime-resolved
+  // bundled-Chromium version (so brands match the UA we just built).
+  const effectiveVersion = chromeVersion || getDefaultChromeVersion();
+  const major = effectiveVersion.split('.')[0] || '146';
 
   let navigatorPlatform = 'Linux x86_64';
   let uaDataPlatform = 'Linux';
@@ -82,7 +119,7 @@ function buildPersona(userAgent, chromeVersion) {
     architecture = 'arm';
   }
 
-  const fullVersion = chromeVersion || DEFAULT_CHROME_VERSION;
+  const fullVersion = effectiveVersion;
 
   const brands = [
     { brand: 'Not(A:Brand', version: '99' },
@@ -115,4 +152,9 @@ function buildPersona(userAgent, chromeVersion) {
   };
 }
 
-module.exports = { buildPersona, resolveUserAgent, DEFAULT_CHROME_VERSION };
+module.exports = {
+  buildPersona,
+  resolveUserAgent,
+  getDefaultChromeVersion,
+  FALLBACK_CHROME_VERSION,
+};

@@ -53,9 +53,8 @@ function isChallenge(title) {
 async function detectChallengeType(page) {
   const content = await page.content().catch(() => '');
 
-  for (const cType of ['non-interactive', 'managed', 'interactive']) {
-    if (content.includes(`cType: '${cType}'`)) return cType;
-  }
+  const match = content.match(/cType: '(non-interactive|managed|interactive)'/);
+  if (match) return match[1];
 
   const hasEmbedded = await page.evaluate(() => {
     return !!document.querySelector('script[src*="challenges.cloudflare.com/turnstile/v"]');
