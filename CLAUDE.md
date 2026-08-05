@@ -111,3 +111,26 @@ node tests/benchmark-pruning.js potterybarn
 ```
 
 Fixtures are saved in `tests/fixtures/*.yaml`.
+
+## CI gotchas (fork-specific)
+
+Three traps, all from being a fork of `microsoft/playwright-mcp`. All three had
+`main` red from 2026-07-17 until 2026-08-05.
+
+- **`npm run lint` rewrites `README.md`** — it is `node update-readme.js`, which
+  regenerates the options/tools tables from CLI metadata. The `lint` job then runs
+  `git diff --exit-code`. Add or change a CLI flag and you **must** run `npm run lint`
+  and commit the regenerated `README.md`, or CI fails on "Ensure no changes".
+
+- **New top-level files under `packages/playwright-mcp/` need a `Dockerfile` COPY** —
+  the runtime stage copies an explicit list, not the whole package. `cli.js` requires
+  `./src/*` (enhanced backend, stealth, smart snapshot), so `src/` is copied
+  separately; a multi-source `COPY` would flatten its contents. Miss this and the
+  container dies at startup with `Cannot find module …`, which surfaces in
+  `test_mcp_docker` as `MCP error -32000: Connection closed` on *every* test.
+
+- **Upstream's `Publish` workflow does not apply here** — this fork is consumed from a
+  local checkout (see `ddc/.mcp.json`) and publishes nothing to npm. Its daily canary
+  cron was dropped; don't restore it when rolling upstream. Both publish jobs still pin
+  node 20 while `npm install -g npm@latest` now needs node >=22.22.2, so a manual
+  dispatch will fail with `EBADENGINE` until that pin is bumped.
