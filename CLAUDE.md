@@ -112,10 +112,40 @@ node tests/benchmark-pruning.js potterybarn
 
 Fixtures are saved in `tests/fixtures/*.yaml`.
 
-## CI gotchas (fork-specific)
+## Relationship to `microsoft/playwright-mcp`
 
-Three traps, all from being a fork of `microsoft/playwright-mcp`. All three had
-`main` red from 2026-07-17 until 2026-08-05.
+**This is a copy, not a GitHub fork** (`isFork: false`, no parent) — an independent
+private repo seeded from upstream's history in Nov 2025, with `upstream` as a git
+remote. That distinction matters: GitHub suppresses scheduled workflows in real forks,
+but treats this one as first-class, so every inherited cron actually ran.
+
+**Do not try to `git merge upstream/main`.** Since our merge-base (`43e31e8`,
+2026-02-26) upstream has:
+
+1. **Flattened the monorepo** — `packages/playwright-mcp/*` moved to the repo root
+   (`chore: flatten repo to single-package layout` #1567). A merge produces
+   modify/delete conflicts on every file we own, and our `src/` collides with a root
+   `src/` that now exists upstream.
+2. **Emptied itself** — upstream's `src/` is now a single `README.md`. The whole MCP
+   engine moved into the `playwright` / `playwright-core` npm packages.
+
+**Upstream bug fixes therefore arrive via npm, not git.** `cli.js` resolves the engine
+at runtime out of `playwright/lib/mcp/*`, so bumping the dependency *is* the upgrade
+path. Use the inherited `roll.js` for it — despite being upstream scaffolding, it is the
+single most useful file we inherited. Keep the `upstream` remote for reading and
+cherry-picking only.
+
+Our own diff is small and almost purely additive (~8.8k insertions, 10 deletions, 7
+upstream files touched), so hand-porting a specific upstream fix is usually easy.
+
+Microsoft's release automation (`publish.yml`) and policy docs (`SECURITY.md`,
+`CONTRIBUTING.md`) were removed in 2026-08-05 — they published to Microsoft's npm scope
+and Azure ACR and routed vulnerability reports to MSRC. Don't restore them.
+
+## CI gotchas
+
+Three traps, all inherited from upstream. All three had `main` red from 2026-07-17
+until 2026-08-05.
 
 - **`npm run lint` rewrites `README.md`** — it is `node update-readme.js`, which
   regenerates the options/tools tables from CLI metadata. The `lint` job then runs
@@ -129,8 +159,10 @@ Three traps, all from being a fork of `microsoft/playwright-mcp`. All three had
   container dies at startup with `Cannot find module …`, which surfaces in
   `test_mcp_docker` as `MCP error -32000: Connection closed` on *every* test.
 
-- **Upstream's `Publish` workflow does not apply here** — this fork is consumed from a
-  local checkout (see `ddc/.mcp.json`) and publishes nothing to npm. Its daily canary
-  cron was dropped; don't restore it when rolling upstream. Both publish jobs still pin
-  node 20 while `npm install -g npm@latest` now needs node >=22.22.2, so a manual
-  dispatch will fail with `EBADENGINE` until that pin is bumped.
+- **`ci.yml` is the only workflow, and it is ours to maintain** — upstream's `Publish`
+  workflow used to sit alongside it, publishing an `@playwright/mcp` canary to npm on a
+  daily cron. This repo is consumed from a local checkout (see `ddc/.mcp.json`) and
+  publishes nothing, so that job could only ever fail; it spent 2026-07-18 to 08-05
+  mailing a daily failure (`EBADENGINE`: node-20 pin vs `npm@latest` needing >=22.22.2)
+  and masking the two real failures above. It has been deleted. Any workflow arriving
+  from upstream deserves the same question: *does this repo publish anything?* No.
