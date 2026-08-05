@@ -379,7 +379,7 @@ Playwright MCP server supports following arguments. They can be provided in the 
 
 | Option | Description |
 |--------|-------------|
-| --allowed-hosts <hosts...> | comma-separated list of hosts this server is allowed to serve from. Defaults to the host the server is bound to. Pass '*' to disable the host check.<br>*env* `PLAYWRIGHT_MCP_ALLOWED_HOSTNAMES` |
+| --allowed-hosts <hosts...> | comma-separated list of hosts this server is allowed to serve from. Defaults to the host the server is bound to. Pass '*' to disable the host check.<br>*env* `PLAYWRIGHT_MCP_ALLOWED_HOSTS` |
 | --allowed-origins <origins> | semicolon-separated list of TRUSTED origins to allow the browser to request. Default is to allow all. Important: *does not* serve as a security boundary and *does not* affect redirects.<br>*env* `PLAYWRIGHT_MCP_ALLOWED_ORIGINS` |
 | --allow-unrestricted-file-access | allow access to files outside of the workspace roots. Also allows unrestricted access to file:// URLs. By default access to file system is restricted to workspace root directories (or cwd if no roots are configured) only, and navigation to file:// URLs is blocked.<br>*env* `PLAYWRIGHT_MCP_ALLOW_UNRESTRICTED_FILE_ACCESS` |
 | --blocked-origins <origins> | semicolon-separated list of origins to block the browser from requesting. Blocklist is evaluated before allowlist. If used without the allowlist, requests not matching the blocklist are still allowed. Important: *does not* serve as a security boundary and *does not* affect redirects.<br>*env* `PLAYWRIGHT_MCP_BLOCKED_ORIGINS` |
@@ -423,6 +423,11 @@ Playwright MCP server supports following arguments. They can be provided in the 
 | --user-agent <ua string> | specify user agent string<br>*env* `PLAYWRIGHT_MCP_USER_AGENT` |
 | --user-data-dir <path> | path to the user data directory. If not specified, a temporary directory will be created.<br>*env* `PLAYWRIGHT_MCP_USER_DATA_DIR` |
 | --viewport-size <size> | specify browser viewport size in pixels, for example "1280x720"<br>*env* `PLAYWRIGHT_MCP_VIEWPORT_SIZE` |
+| --smart-snapshot | automatically prune all snapshots for token efficiency (~5x reduction)<br>*env* `PLAYWRIGHT_MCP_SMART_SNAPSHOT` |
+| --extension-path <path> | path to a Chrome extension directory to load<br>*env* `PLAYWRIGHT_MCP_EXTENSION_PATH` |
+| --stealth <level> | enable bot-detection evasion: off | light | medium | full (default: off)<br>*env* `PLAYWRIGHT_MCP_STEALTH` |
+| --stealth-chrome-version <version> | Chrome version used to derive stealth persona UA (e.g. "144.0.7559.133")<br>*env* `PLAYWRIGHT_MCP_STEALTH_CHROME_VERSION` |
+| --stealth-user-agent <ua> | explicit UA string for the stealth persona (overrides --stealth-chrome-version)<br>*env* `PLAYWRIGHT_MCP_STEALTH_USER_AGENT` |
 
 <!--- End of options generated section -->
 

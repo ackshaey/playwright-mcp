@@ -1,8 +1,10 @@
 name: Publish
+# Fork note: upstream runs the canary npm publish on a daily cron. This fork is
+# consumed from a local checkout (see ddc/.mcp.json) and publishes nothing to the
+# npm registry, so the schedule is intentionally omitted here -- it only produced
+# a daily failing run. Manual dispatch and release triggers are kept for parity.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 8 * * *'
   release:
     types: [published]
 

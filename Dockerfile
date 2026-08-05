@@ -62,6 +62,10 @@ USER ${USERNAME}
 
 COPY --from=browser --chown=${USERNAME}:${USERNAME} ${PLAYWRIGHT_BROWSERS_PATH} ${PLAYWRIGHT_BROWSERS_PATH}
 COPY --chown=${USERNAME}:${USERNAME} packages/playwright-mcp/cli.js packages/playwright-mcp/package.json ./
+# Fork-only enhancement layer (smart snapshot, stealth, enhanced backend). cli.js
+# requires ./src/*, so the image cannot start without it. Separate COPY because a
+# multi-source COPY flattens directory contents into the destination.
+COPY --chown=${USERNAME}:${USERNAME} packages/playwright-mcp/src ./src
 
 # Run in headless and only with chromium (other browsers need more dependencies not included in this image)
 ENTRYPOINT ["node", "cli.js", "--headless", "--browser", "chromium", "--no-sandbox"]
