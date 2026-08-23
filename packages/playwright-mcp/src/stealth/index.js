@@ -69,11 +69,21 @@ function applyStealthToLaunchConfig(config, options = {}) {
   launchOptions.args = mergeArgs(launchOptions.args || [], contract.args);
   launchOptions.ignoreDefaultArgs = [...new Set([...(launchOptions.ignoreDefaultArgs || []), ...IGNORE_DEFAULT_ARGS])];
 
-  // Force chromium channel when stealth is on — branded Chrome blocks many
-  // of the flags above (notably --load-extension and some automation flags).
-  // Respect any other explicit channel the user set (msedge, firefox, etc.).
-  // Emit a diagnostic when we change it so the user isn't silently retargeted.
-  if (launchOptions.channel === 'chrome') {
+  // An explicit executablePath (e.g. a managed Chrome-for-Testing binary passed via
+  // --executable-path) fully selects the browser: setting a channel on top of it is
+  // redundant and, worse, would make Playwright ignore the binary. Leave it untouched.
+  // This is the supported way to run stealth on a *current* Chrome-for-Testing, which
+  // both loads unpacked extensions (branded Chrome no longer does — removed in Chrome
+  // 142) and presents an authentic, current-Chrome TLS/JA4 fingerprint that Akamai Bot
+  // Manager accepts. The bundled Chromium is often several versions stale, and that
+  // stale JA4 is exactly what gets denied (see agents_context/forklift_browser_automation.md).
+  if (launchOptions.executablePath) {
+    console.error(`[playwright-mcp stealth] Using explicit executablePath (${launchOptions.executablePath}); not forcing a channel.`);
+  } else if (launchOptions.channel === 'chrome') {
+    // Force chromium channel when stealth is on — branded Chrome blocks many of the
+    // flags above (notably --load-extension and some automation flags). Respect any
+    // other explicit channel the user set (msedge, firefox, etc.). Emit a diagnostic
+    // so the user isn't silently retargeted.
     console.error('[playwright-mcp stealth] Switching browser channel from "chrome" to "chromium" — branded Chrome disables the automation-related flags stealth needs.');
     launchOptions.channel = 'chromium';
   } else if (!launchOptions.channel) {

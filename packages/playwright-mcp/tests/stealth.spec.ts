@@ -129,6 +129,16 @@ test.describe('stealth.applyStealthToLaunchConfig', () => {
     stealth.applyStealthToLaunchConfig(config, { level: 'full', chromeVersion: '144.0.0.0' });
     expect(config.browser.launchOptions.channel).toBe('msedge');
   });
+
+  test('does not set a channel when an explicit executablePath is given', () => {
+    // A managed Chrome-for-Testing binary (--executable-path) fully selects the browser.
+    // Forcing channel:'chromium' on top of it would make Playwright ignore the binary,
+    // reverting to the stale bundled Chromium whose TLS/JA4 Akamai denies.
+    const config: any = { browser: { launchOptions: { executablePath: '/opt/cft/chrome' } } };
+    stealth.applyStealthToLaunchConfig(config, { level: 'full', chromeVersion: '144.0.0.0' });
+    expect(config.browser.launchOptions.channel).toBeUndefined();
+    expect(config.browser.launchOptions.executablePath).toBe('/opt/cft/chrome');
+  });
 });
 
 test.describe('stealth.bootstrap', () => {
