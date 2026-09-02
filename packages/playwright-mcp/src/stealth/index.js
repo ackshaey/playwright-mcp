@@ -15,6 +15,7 @@
  */
 
 const { buildLaunchContract, IGNORE_DEFAULT_ARGS } = require('./launch-args');
+const { getExecutableChromeVersion } = require('./persona');
 const { buildBootstrap, normalizeLevel } = require('./bootstrap');
 const { attachContextEmulation } = require('./cdp-emulation');
 const {
@@ -57,9 +58,25 @@ function applyStealthToLaunchConfig(config, options = {}) {
   const level = validateLevel(options.level);
   if (!isStealthEnabled(level)) return { level, persona: null };
 
+  // When the caller pins a binary via executablePath but gives no explicit
+  // persona, derive the persona version from that binary (`--version`) rather
+  // than from playwright-core's bundled-Chromium version — otherwise the UA
+  // announces one Chrome while TLS/JA4 and client hints carry another, and
+  // that self-inconsistent identity is itself a bot signal (PerimeterX
+  // press-and-hold, DDC-1298).
+  let chromeVersion = options.chromeVersion;
+  if (!chromeVersion && !options.userAgent) {
+    const executablePath = config?.browser?.launchOptions?.executablePath;
+    const derived = getExecutableChromeVersion(executablePath);
+    if (derived) {
+      console.error(`[playwright-mcp stealth] Persona version ${derived} derived from executablePath.`);
+      chromeVersion = derived;
+    }
+  }
+
   const contract = buildLaunchContract({
     userAgent: options.userAgent,
-    chromeVersion: options.chromeVersion,
+    chromeVersion,
   });
 
   config.browser = config.browser || {};

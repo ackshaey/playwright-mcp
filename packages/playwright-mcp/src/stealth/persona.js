@@ -45,26 +45,59 @@ function getDefaultChromeVersion() {
   return cachedDefault;
 }
 
+const { execFileSync } = require('child_process');
+
+const executableVersionCache = new Map();
+
+/**
+ * Resolve the Chrome version of an actual browser binary by running
+ * `<binary> --version` (prints e.g. "Google Chrome for Testing 152.0.7977.54"
+ * or "Chromium 146.0.7680.0"). Cached per path. Returns '' when the binary
+ * can't be executed or prints nothing parseable — callers fall back to
+ * browsers.json. Keeping the persona matched to the *launched* binary is the
+ * whole point: a UA announcing one version while TLS/JA4 and client hints
+ * carry another is a self-inconsistent identity that PerimeterX scores as a
+ * bot (press-and-hold interstitial no human can pass — Joss & Main, DDC-1298).
+ */
+function getExecutableChromeVersion(executablePath) {
+  if (!executablePath) return '';
+  if (executableVersionCache.has(executablePath)) return executableVersionCache.get(executablePath);
+  let version = '';
+  try {
+    const out = execFileSync(executablePath, ['--version'], { timeout: 5000, encoding: 'utf8' });
+    const m = out.match(/(\d+\.\d+\.\d+\.\d+)/);
+    if (m) version = m[1];
+  } catch (_) { /* swallow — fall back to browsers.json */ }
+  executableVersionCache.set(executablePath, version);
+  return version;
+}
+
 /**
  * Resolve a UA string. If `userAgent` is provided, it's used as-is. If
  * `chromeVersion` is provided, a platform-appropriate UA is built from it.
  * If neither is set, falls back to the bundled Chromium version so callers
  * who pass `--stealth full` with no further args still get a coherent persona
  * matching the Chromium they're about to launch.
+ *
+ * The UA carries a *reduced* version (`<major>.0.0.0`), exactly as real Chrome
+ * has sent since the UA-reduction rollout (Chrome 101+); the full build number
+ * belongs only in the client-hints fullVersionList. A full build number in the
+ * UA string is itself an automation tell.
  */
 function resolveUserAgent(userAgent, chromeVersion) {
   if (userAgent) return userAgent;
   const version = chromeVersion || getDefaultChromeVersion();
   if (!version) return '';
+  const reduced = `${version.split('.')[0]}.0.0.0`;
 
   const platform = os.platform();
   switch (platform) {
     case 'darwin':
-      return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`;
+      return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${reduced} Safari/537.36`;
     case 'win32':
-      return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`;
+      return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${reduced} Safari/537.36`;
     default:
-      return `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`;
+      return `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${reduced} Safari/537.36`;
   }
 }
 
@@ -156,5 +189,6 @@ module.exports = {
   buildPersona,
   resolveUserAgent,
   getDefaultChromeVersion,
+  getExecutableChromeVersion,
   FALLBACK_CHROME_VERSION,
 };

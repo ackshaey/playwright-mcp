@@ -30,10 +30,13 @@ test.describe('stealth.persona', () => {
 
   test('derives a macOS persona from chromeVersion', () => {
     const p = persona.buildPersona('', '144.0.7559.133');
-    expect(p.userAgent).toContain('Chrome/144.0.7559.133');
+    // The UA is reduced like real Chrome's (major.0.0.0); the full build
+    // number appears only in the client-hints fullVersionList.
+    expect(p.userAgent).toContain('Chrome/144.0.0.0');
     expect(p.userAgent).toMatch(/Macintosh|Windows|Linux/);
     expect(p.userAgentData).not.toBeNull();
     expect(p.userAgentData.brands.find((b: any) => b.brand === 'Google Chrome').version).toBe('144');
+    expect(p.userAgentData.fullVersionList.find((b: any) => b.brand === 'Google Chrome').version).toBe('144.0.7559.133');
   });
 
   test('honours explicit userAgent over chromeVersion', () => {
@@ -56,8 +59,16 @@ test.describe('stealth.persona', () => {
   test('with no chromeVersion falls back to bundled Chromium version', () => {
     const expected = persona.getDefaultChromeVersion();
     const p = persona.buildPersona('', '');
-    expect(p.userAgent).toContain(`Chrome/${expected}`);
+    expect(p.userAgent).toContain(`Chrome/${expected.split('.')[0]}.0.0.0`);
     expect(p.userAgentData.fullVersionList.find((b: any) => b.brand === 'Google Chrome').version).toBe(expected);
+  });
+
+  test('resolves the version of a real executable, caches, and swallows failures', () => {
+    // Use the node binary as a stand-in "browser": --version prints v22.x.y —
+    // no 4-part Chrome version, so resolution correctly yields ''.
+    expect(persona.getExecutableChromeVersion(process.execPath)).toBe('');
+    expect(persona.getExecutableChromeVersion('/nonexistent/binary')).toBe('');
+    expect(persona.getExecutableChromeVersion('')).toBe('');
   });
 });
 
